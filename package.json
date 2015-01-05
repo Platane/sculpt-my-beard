@@ -1,0 +1,24 @@
+{
+  "name": "facial-hair",
+  "version": "0.1.0",
+
+  "author": "Platane <me@platane.me>",
+
+  "dependencies": {
+    "promise" : "*"
+  },
+
+  "devDependencies" : {
+    "browserify" : "*",
+    "less" :"*",
+    "gulp" : "*",
+    "gulp-watch" : "*",
+    "gulp-autoprefixer" : "*",
+    "gulp-rename" : "*",
+    "gulp-browserify" : "*"
+  },
+
+  "scripts" : {
+    "prepublish" : "node ./node_modules/browserify/bin/cmd.js js/app.js -o js/bundle.js --debug"
+  }
+}
