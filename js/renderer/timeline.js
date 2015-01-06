@@ -5,27 +5,17 @@ var Abstract = require('../utils/Abstract')
 
 var render = function( ){
     var face = this.model.face
-    var camera = this.model.camera
-    var proj = function( p ){
-        var pp = camera.project( p )
-        pp.type = p.type
-        return pp
-    }
 
-    for( var i in face.chunk )
-        this.dom[ i ].setAttribute( 'd',
-            svg.renderBezier( face.chunk[ i ].bezierPath.map( proj ) )
-        )
 }
 
 var label_tpl = [
-'<div class="row">',
+'<div class="tl-row">',
 '</div>',
-]
+].join('')
 var row_tpl = [
-'<div class="row">',
+'<div class="tl-row">',
 '</div>',
-]
+].join('')
 
 var tpl = [
 '<div class="tl">',
@@ -38,6 +28,8 @@ var tpl = [
 '</div>',
 ].join('')
 
+
+
 var build = function( ){
     var face = this.model.face
 
@@ -46,6 +38,8 @@ var build = function( ){
     var labels = this.domEl.querySelector('.tl-block-label'),
         lines = this.domEl.querySelector('.tl-block-lines')
 
+
+    var k=0
     for( var i in face.chunk ){
         var label = dom.domify( label_tpl )
         var row = dom.domify( row_tpl )
@@ -55,14 +49,16 @@ var build = function( ){
     }
 }
 
-var init = function( modelBall, domSvg ){
+var init = function( modelBall, body ){
 
     this.model = {
         face: modelBall.face,
         camera: modelBall.camera
     }
 
-    build.call( this, domSvg )
+    build.call( this )
+
+    body.appendChild( this.domEl )
 
     ed.listen( 'render' , render.bind( this ) , this )
 

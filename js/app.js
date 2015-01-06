@@ -1,6 +1,7 @@
 var faceRenderer = Object.create( require('./renderer/svg/face') )
   , pointControlRenderer = Object.create( require('./renderer/svg/pointControl') )
   , basicEvent = Object.create( require('./renderer/svg/basicEvent') )
+  , timeLineRenderer = Object.create( require('./renderer/timeline') )
 
   , face = Object.create( require('./model/Face') )
   , camera = Object.create( require('./model/Camera') )
@@ -20,15 +21,12 @@ var modelBall = {
 }
 
 // init renderer
-var width=window.innerWidth,
-    height=window.innerHeight
-
 var domSvg = document.querySelector('svg')
-domSvg.setAttribute('width', width)
-domSvg.setAttribute('height', height)
 faceRenderer.init( modelBall, domSvg )
 pointControlRenderer.init( modelBall, domSvg )
 basicEvent.init( modelBall, domSvg )
+
+timeLineRenderer.init( modelBall, document.body )
 
 // controller
 dragPointCtrl.init( modelBall ).enable()

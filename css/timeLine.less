@@ -1,0 +1,96 @@
+.tl {
+
+    @colors: rgb(69, 132, 64), rgb(128, 132, 64), rgb(155, 95, 58), #90313F, #316590;
+
+
+    box-shadow: 2px -2px 10px -2px rgba(50, 50, 50, 0.4);
+
+    * {
+        box-sizing: border-box;
+    }
+
+    width: 100%;
+    display: flex;
+
+    .tl-row {
+        height: 36px;
+        background: rgba(255, 255, 255, 0.7);
+    }
+
+    .tl-block-label {
+        width: 200px;
+        flex-shrink: 0.1;
+        flex-grow: 0;
+
+
+        .tl-row {
+
+            &:before {
+                content: '';
+                position: absolute;
+                display: block;
+                top: 2px;
+                bottom: 2px;
+                left: 0;
+                right:5px;
+                border-radius: 0 3px 3px 0;
+            }
+
+            position: relative;
+            .loop( @i ) when ( @i > 0 ) {
+                .loop(( @i - 1 ));
+
+                &:nth-child( @{i} ) {
+
+                    &:before{
+                        background: linear-gradient(85deg,
+                            fade( extract( @colors, @i ), 40% ),
+                            fade( extract( @colors, @i ), 80% ) );
+                    }
+
+                }
+            };
+            .loop( length( @colors ) );
+        }
+
+    }
+
+    .tl-lines-viewport {
+        width: 200px;
+        flex-shrink: 1;
+        flex-grow: 1;
+    }
+    .tl-block-lines {
+        .tl-row {
+
+            &:before {
+                @line-width: 2px;
+                content: '';
+                position: absolute;
+                display: block;
+                top: calc( ~"50% - " @line-width/2 );
+                height: @line-width;
+                left: 5px;
+                right:0;
+            }
+
+            position: relative;
+            .loop( @i ) when ( @i > 0 ) {
+                .loop(( @i - 1 ));
+
+                &:nth-child( @{i} ) {
+
+                    &:before{
+                        background: fade( lighten( extract( @colors, @i ), 0% ), 60% );
+                    }
+
+                    .key{
+                        background: extract( @colors, @i );
+                    }
+                }
+            };
+            .loop( length( @colors ) );
+        }
+    }
+
+}
