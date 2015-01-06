@@ -1,6 +1,6 @@
-var Abstract = require('../utils/Abstract')
-  , ed = require('../system/eventDispatcher')
-  , u = require('../utils/point')
+var Abstract = require('../../utils/Abstract')
+  , ed = require('../../system/eventDispatcher')
+  , u = require('../../utils/point')
 
 var init = function( type ){
 

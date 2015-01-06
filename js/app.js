@@ -1,35 +1,50 @@
 var faceRenderer = Object.create( require('./renderer/svg/face') )
   , pointControlRenderer = Object.create( require('./renderer/svg/pointControl') )
-  , basicEvent = Object.create( require('./renderer/svg/basicEvent') )
+  , basicEvent = Object.create( require('./renderer/basicEvent') )
   , timeLineRenderer = Object.create( require('./renderer/timeline') )
 
+
   , face = Object.create( require('./model/Face') )
-  , camera = Object.create( require('./model/Camera') )
+  , timeLine = Object.create( require('./model/timeLine') )
+
+  , camera = Object.create( require('./model/app-state/Camera') )
+  , timeLineState = Object.create( require('./model/app-state/timeLineState') )
+
 
   , dragPointCtrl = Object.create( require('./controller/dragPoint') )
+  , timeLineKeyPointCtrl = Object.create( require('./controller/timeLine/key') )
+
 
   , ed = require('./system/eventDispatcher')
+
+  require('./utils/doubleClick')
 
 // init model
 face.init()
 camera.init()
+timeLineState.init()
+timeLine.init()
 
 // init system
 var modelBall = {
     face: face,
     camera: camera,
+    timeLineState: timeLineState,
+    timeLine: timeLine,
 }
 
 // init renderer
 var domSvg = document.querySelector('svg')
 faceRenderer.init( modelBall, domSvg )
 pointControlRenderer.init( modelBall, domSvg )
-basicEvent.init( modelBall, domSvg )
+
+basicEvent.init( modelBall )
 
 timeLineRenderer.init( modelBall, document.body )
 
 // controller
 dragPointCtrl.init( modelBall ).enable()
+timeLineKeyPointCtrl.init( modelBall ).enable()
 
 
 // start render loop

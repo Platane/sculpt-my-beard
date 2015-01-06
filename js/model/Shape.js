@@ -33,9 +33,9 @@ var recompute = function(){
 
 var pack = function(){
     return {
-        vertex: this.vertex.split().map( u.copy ),
+        vertex: this.vertex.slice().map( u.copy ),
         // TODO deep copy this
-        sharpness: this.sharpness.split()
+        sharpness: this.sharpness.slice()
     }
 }
 

@@ -22,10 +22,10 @@ var recompute = function(){
 
 var pack = function(){
     return {
-        line: this.line.split().map( u.copy ),
-        width: this.width.split(),
+        line: this.line.slice().map( u.copy ),
+        width: this.width.slice(),
         // TODO deep copy this
-        sharpness: this.sharpness.split()
+        sharpness: this.sharpness.slice()
     }
 }
 
