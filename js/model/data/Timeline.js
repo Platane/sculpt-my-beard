@@ -1,5 +1,6 @@
-var Abstract = require('../utils/Abstract')
-  , ed = require('../system/eventDispatcher')
+var Abstract = require('../../utils/Abstract')
+  , historizable = require('../mixin/historizable')
+  , ed = require('../../system/eventDispatcher')
 
 
 /*
@@ -47,6 +48,7 @@ var setKeyDate = function( chunk, key, date ){
 }
 
 module.exports = Object.create( Abstract )
+.extend( historizable )
 .extend({
     init: init,
     addKey: addKey,

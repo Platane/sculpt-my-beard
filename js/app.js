@@ -4,15 +4,18 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
   , timeLineRenderer = Object.create( require('./renderer/timeline') )
 
 
-  , face = Object.create( require('./model/Face') )
-  , timeLine = Object.create( require('./model/timeLine') )
+  , face = Object.create( require('./model/data/Face') )
+  , timeLine = Object.create( require('./model/data/timeLine') )
 
   , camera = Object.create( require('./model/app-state/Camera') )
   , timeLineState = Object.create( require('./model/app-state/timeLineState') )
 
+  , history = Object.create( require('./model/history') )
+
 
   , dragPointCtrl = Object.create( require('./controller/dragPoint') )
   , timeLineKeyPointCtrl = Object.create( require('./controller/timeLine/key') )
+  , ctrlZ = Object.create( require('./controller/ctrlZ') )
 
 
   , ed = require('./system/eventDispatcher')
@@ -24,6 +27,7 @@ face.init()
 camera.init()
 timeLineState.init()
 timeLine.init()
+history.init()
 
 // init system
 var modelBall = {
@@ -31,6 +35,7 @@ var modelBall = {
     camera: camera,
     timeLineState: timeLineState,
     timeLine: timeLine,
+    history: history
 }
 
 // init renderer
@@ -45,6 +50,7 @@ timeLineRenderer.init( modelBall, document.body )
 // controller
 dragPointCtrl.init( modelBall ).enable()
 timeLineKeyPointCtrl.init( modelBall ).enable()
+ctrlZ.init( modelBall ).enable()
 
 
 // start render loop
@@ -94,3 +100,12 @@ var pl_render = function(){
 ed.listen( 'change:shape', pl_render )
 ed.listen( 'change:camera:zoom', pl_render )
 ed.listen( 'change:camera:origin', pl_render )
+
+
+var pl_historize = function( event ){
+    if( !event.wip && !event.no_history )
+        history.save( timeLine )
+}
+history.save( timeLine )
+ed.listen( 'change:shape', pl_historize )
+ed.listen( 'change:timeLine', pl_historize )

@@ -1,7 +1,9 @@
-var Abstract = require('../utils/Abstract')
-  , ed = require('../system/eventDispatcher')
-  , pj = require('../system/pathJob')
-  , u = require('../utils/point')
+var Abstract = require('../../utils/Abstract')
+  , historizable = require('../mixin/historizable')
+
+  , ed = require('../../system/eventDispatcher')
+  , pj = require('../../system/pathJob')
+  , u = require('../../utils/point')
 
 var init = function( ){
 
@@ -50,7 +52,9 @@ var unpack = function( o ){
     return this
 }
 
-module.exports = Object.create( Abstract ).extend({
+module.exports = Object.create( Abstract )
+.extend( historizable )
+.extend({
     init: init,
     recompute: recompute,
     pack: pack,

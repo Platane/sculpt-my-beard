@@ -1,7 +1,7 @@
-var Shape = require('../model/Shape')
-  , ed = require('../system/eventDispatcher')
-  , pj = require('../system/pathJob')
-  , u = require('../utils/point')
+var Shape = require('./Shape')
+  , ed = require('../../system/eventDispatcher')
+  , pj = require('../../system/pathJob')
+  , u = require('../../utils/point')
 
 var init = function(){
 

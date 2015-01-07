@@ -60,7 +60,7 @@ var render = function( ){
     var proj = this.model.timeLineState.unproject
 
     // for each chunk
-    for( var k in timeLine.keys ){
+    for( var k in this.domLines ){
 
         // clean up
         var c = this.domLines[ k ].children;
@@ -68,7 +68,7 @@ var render = function( ){
             c[ i ].remove()
 
         // for each key
-        for( var i=timeLine.keys[ k ].length; i--; ){
+        for( var i=(timeLine.keys[ k ]||[]).length; i--; ){
 
             var dk = dom.domify( key_tpl )
             dk.setAttribute( 'data-i', i )

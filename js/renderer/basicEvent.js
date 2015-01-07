@@ -13,6 +13,8 @@ var init = function( modelBall, domSvg ){
     document.addEventListener( 'mousemove', handler, false )
     document.addEventListener( 'mouseup', handler, false )
 
+    document.addEventListener( 'keydown', handler, false )
+
     return this
 }
 

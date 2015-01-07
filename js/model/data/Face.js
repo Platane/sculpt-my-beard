@@ -1,8 +1,9 @@
-var Abstract = require('../utils/Abstract')
-  , ed = require('../system/eventDispatcher')
+var Abstract = require('../../utils/Abstract')
+  , ed = require('../../system/eventDispatcher')
 
-  , Shape = require('../model/Shape')
-  , Line = require('../model/Line')
+  , historizable = require('../mixin/historizable')
+  , Shape = require('./Shape')
+  , Line = require('./Line')
 
 var init = function( type ){
 
@@ -32,6 +33,7 @@ var unpack = function( o ){
 }
 
 module.exports = Object.create( Abstract )
+.extend( historizable )
 .extend({
     init: init,
     pack: pack,
