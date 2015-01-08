@@ -12,6 +12,7 @@
 
     width: 100%;
     display: flex;
+    align-items: flex-end;
 
     .tl-row {
         height: 36px;
@@ -38,12 +39,20 @@
         border: solid 1px #333;
     }
 
-    .tl-block-label {
+    .tl-left {
         width: 200px;
         flex-shrink: 0.1;
         flex-grow: 0;
+        position: relative;
+    }
+    .tl-right {
+        width: 200px;
+        flex-shrink: 1;
+        flex-grow: 1;
+        position: relative;
+    }
 
-
+    .tl-block-label {
         .tl-row {
 
             &:before {
@@ -73,13 +82,6 @@
             };
             .loop( length( @colors ) );
         }
-
-    }
-
-    .tl-lines-viewport {
-        width: 200px;
-        flex-shrink: 1;
-        flex-grow: 1;
     }
     .tl-block-lines {
         cursor: default;

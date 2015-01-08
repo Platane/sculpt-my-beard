@@ -1,0 +1,31 @@
+@import 'colorScheme.less';
+
+.tl-ruler {
+
+    height: 20px;
+    width : 100%;
+    position: relative;
+    z-index: 2;
+
+}
+.tl-cursor {
+
+    position: absolute;
+    height: 200px;
+    width: 2px;
+    background: @dark;
+
+
+    &:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: cal
+        width: 12px;
+        height: 12px;
+        transform: rotate3d(0,0,1,45deg);
+        background: @dark;
+
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5)
+    }
+}

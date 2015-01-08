@@ -20,6 +20,20 @@ module.exports = {
 				break;
 		return el
 	},
+    offset : function( el ){
+        // TODO consider scroll
+        var o = {
+            left:0,
+            top:0
+        }
+        while( el && el.offsetLeft !== null){
+            o.left += el.offsetLeft
+            o.top += el.offsetTop
+
+            el = el.parentElement
+        }
+        return o
+    },
 	bind : function( el , eventName , fn ){
 
 		var l = eventName.split(' ')

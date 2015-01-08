@@ -6,6 +6,8 @@ var init = function( type ){
     this.origin = 0
     this.zoom = 1
 
+    this.cursor = 0
+
     this.project = project.bind( this )
     this.unproject = unproject.bind( this )
 

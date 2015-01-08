@@ -1,6 +1,7 @@
-var Abstract = require('../utils/Abstract')
-  , dom = require('../utils/domHelper')
-  , ed = require('../system/eventDispatcher')
+var Abstract = require('../../utils/Abstract')
+  , dom = require('../../utils/domHelper')
+  , ed = require('../../system/eventDispatcher')
+  , Ruler = require('./ruler')
 
 
 var key_tpl = [
@@ -21,22 +22,26 @@ var row_tpl = [
 
 var tpl = [
 '<div class="tl">',
-    '<div class="tl-block-label">',
+    '<div class="tl-left">',
+        '<div class="tl-block-label"></div>',
     '</div>',
-    '<div class="tl-lines-viewport">',
-        '<div class="tl-block-lines">',
-        '</div>',
+    '<div class="tl-right">',
+        '<div class="tl-block-lines"></div>',
     '</div>',
 '</div>',
 ].join('')
 
 
 var getDate = function( mouseEvent ){
-    var o = this.domEl.querySelector('.tl-lines-viewport').offsetLeft
+    var o = dom.offset( this.domEl.querySelector('.tl-block-lines') ).left
     var x = mouseEvent.pageX
     return this.model.timeLineState.unproject( x-o )
 }
 var relayEvent = function( event ){
+
+    // only consider main button ( button == 0 )
+    if( event.button )
+        return
 
     var key, line
     if( key = dom.getParent( event.target, 'tl-key' ) )
@@ -89,6 +94,8 @@ var build = function( ){
     var labels = this.domEl.querySelector('.tl-block-label'),
         lines = this.domEl.querySelector('.tl-block-lines')
 
+    this.domEl.querySelector('.tl-right').insertBefore( this.ruler.domEl, lines )
+
     this.domLines = {}
 
     var k=0
@@ -114,6 +121,8 @@ var init = function( modelBall, body ){
         timeLineState: modelBall.timeLineState,
         timeLine: modelBall.timeLine,
     }
+
+    this.ruler = Object.create( Ruler ).init( modelBall )
 
     build.call( this )
 
