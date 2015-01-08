@@ -30,8 +30,9 @@ var disable = function(){
 var lineClick = function( event ){
     var shape = this.model.face.chunk[ event.chunk ]
     var date = event.date
+    var tls = this.model.timeLineState
 
-    this.model.timeLine.addKey( event.chunk, date, shape.pack() );
+    this.model.timeLine.addKey( event.chunk, tls.quantify(date), shape.pack() );
 
     ed.dispatch( 'change:timeLine', {
         wip: false
@@ -53,6 +54,8 @@ var keyDown = function( event ){
 }
 var keyMove = function( event ){
 
+    var tls = this.model.timeLineState
+
     if( Math.abs( this.h - event.mouseEvent.pageY ) > 50 ){
 
         if( !this._removed ) {
@@ -68,7 +71,7 @@ var keyMove = function( event ){
 
     } else {
 
-        var newDate = this.model.timeLineState.unproject( this._origin + event.mouseEvent.pageX - this._anchor )
+        var newDate = tls.unproject( this._origin + event.mouseEvent.pageX - this._anchor )
 
         if( !this._removed ) {
 
@@ -88,6 +91,10 @@ var keyUp = function( event ){
 
     ed.unlisten( 'ui-mousemove', this )
     ed.unlisten( 'ui-mouseup', this )
+
+    var tls = this.model.timeLineState
+
+    this.model.timeLine.setKeyDate( this._chunk, this._key, tls.quantify( this._key.date ) )
 
     ed.dispatch( 'change:timeLine', {
         wip: false

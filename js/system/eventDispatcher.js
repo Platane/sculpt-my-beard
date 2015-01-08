@@ -12,7 +12,7 @@ var dispatch = function( eventName, data ){
             case 'render3D-camera-change':
                 break;
             default:
-                console.log(eventName)
+                console.log(eventName, data)
         }
 
     this._lock = true

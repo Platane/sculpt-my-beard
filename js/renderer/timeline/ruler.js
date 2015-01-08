@@ -7,19 +7,20 @@ var Abstract = require('../../utils/Abstract')
 
 
 var getDate = function( mouseEvent ){
-    var o = this.domEl.querySelector('.tl-lines-viewport').offsetLeft
+    var o = dom.offset( this.domEl ).left
     var x = mouseEvent.pageX
     return this.model.timeLineState.unproject( x-o )
 }
 var relayEvent = function( event ){
-/*
-    return ed.dispatch( 'ui-tlKey-'+event.type, {
-
-    })*/
+    return ed.dispatch( 'ui-tlCursor-'+event.type, {
+        date: getDate.call(this, event ),
+        mouseEvent: event
+    })
 }
 
 var render = function( ){
-
+    var timeLineState = this.model.timeLineState
+    this.domCursor.style.left = (timeLineState.project( timeLineState.cursor ) -2)+'px'
 }
 
 var tpl = [

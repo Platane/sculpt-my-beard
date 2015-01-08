@@ -55,5 +55,4 @@ module.exports = Object.create( Abstract )
     setKeyDate: setKeyDate,
     removeKey: removeKey,
 
-    grain: 10
 })

@@ -62,7 +62,7 @@ var relayEvent = function( event ){
 
 var render = function( ){
     var timeLine = this.model.timeLine
-    var proj = this.model.timeLineState.unproject
+    var proj = this.model.timeLineState.project
 
     // for each chunk
     for( var k in this.domLines ){

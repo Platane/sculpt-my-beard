@@ -15,6 +15,7 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
 
   , dragPointCtrl = Object.create( require('./controller/dragPoint') )
   , timeLineKeyPointCtrl = Object.create( require('./controller/timeLine/key') )
+  , timeLineCursorCtrl = Object.create( require('./controller/timeLine/cursor') )
   , ctrlZ = Object.create( require('./controller/ctrlZ') )
 
 
@@ -51,6 +52,7 @@ timeLineRenderer.init( modelBall, document.body )
 dragPointCtrl.init( modelBall ).enable()
 timeLineKeyPointCtrl.init( modelBall ).enable()
 ctrlZ.init( modelBall ).enable()
+timeLineCursorCtrl.init( modelBall ).enable()
 
 
 // start render loop
