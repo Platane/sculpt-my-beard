@@ -8,24 +8,26 @@
     z-index: 2;
 
 }
+
 .tl-cursor {
 
     position: absolute;
     height: 200px;
     width: 2px;
     background: @dark;
-
+    box-shadow: 1px 0px 2px 0 rgba(0, 0, 0, 0.5);
 
     &:before{
         content: '';
         display: block;
         position: absolute;
-        top: cal
+        top: 3px;
+        left: -5px;
         width: 12px;
         height: 12px;
         transform: rotate3d(0,0,1,45deg);
         background: @dark;
 
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5)
+        box-shadow: 2px 0px 2px 0 rgba(0, 0, 0, 0.5);
     }
 }

@@ -19,6 +19,6 @@
   },
 
   "scripts" : {
-    "prepublish" : "node ./node_modules/browserify/bin/cmd.js js/app.js -o js/bundle.js --debug"
+    "prepublish" : "node ./node_modules/browserify/bin/cmd.js js/app.js -o js/bundle.js --debug && node ./node_modules/less/bin/lessc ./css/style.less > ./css/style.css"
   }
 }
