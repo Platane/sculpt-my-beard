@@ -32,7 +32,7 @@ var lineClick = function( event ){
     var date = event.date
     var tls = this.model.timeLineState
 
-    this.model.timeLine.addKey( event.chunk, tls.quantify(date), shape.pack() );
+    this.model.timeLine.addOrSetKey( event.chunk, tls.quantify(date), shape.pack() );
 
     ed.dispatch( 'change:timeLine', {
         wip: false
@@ -77,7 +77,7 @@ var keyMove = function( event ){
 
             this.model.timeLine.setKeyDate( this._chunk, this._key, newDate )
         } else {
-            this._key = this.model.timeLine.addKey( this._chunk, newDate, this._key.pack )
+            this._key = this.model.timeLine.addOrSetKey( this._chunk, newDate, this._key.pack )
 
             this._removed = false
         }

@@ -16,12 +16,17 @@ var init = function( type ){
 
 var sortFn = function(a, b){return a.date<b.date ? -1 : 1}
 
-var addKey = function( chunk, date, pack ){
+var addOrSetKey = function( chunk, date, pack ){
 
     // TODO smart thing
 
     if( !this.keys[ chunk ] )
         this.keys[ chunk ] = []
+
+    for(var i=this.keys[ chunk ].length; i--;)
+        if( this.keys[ chunk ][ i ].date == date )
+            return void (this.keys[ chunk ][ i ].pack = pack)
+
     var k
     this.keys[ chunk ].push(k = {
         date: date,
@@ -51,7 +56,7 @@ module.exports = Object.create( Abstract )
 .extend( historizable )
 .extend({
     init: init,
-    addKey: addKey,
+    addOrSetKey: addOrSetKey,
     setKeyDate: setKeyDate,
     removeKey: removeKey,
 

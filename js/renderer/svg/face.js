@@ -12,10 +12,12 @@ var render = function( ){
         return pp
     }
 
-    for( var i in face.chunk )
+    for( var i in face.chunk ) {
+        face.chunk[ i ].recompute()
         this.dom[ i ].setAttribute( 'd',
             svg.renderBezier( face.chunk[ i ].bezierPath.map( proj ) )
         )
+    }
 }
 
 var build = function( domSvg ){

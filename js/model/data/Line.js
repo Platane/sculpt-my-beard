@@ -32,11 +32,7 @@ var pack = function(){
 var unpack = function( o ){
     this.line = o.line
     this.width = o.width
-    this.sharpness = o.sharpness
-
-    ed.dispatch( 'change:shape', {
-        shape: this
-    })
+    this.sharpness = o.sharpness || []
 
     return this
 }

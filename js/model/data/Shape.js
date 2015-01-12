@@ -13,19 +13,7 @@ var init = function( ){
 
     this.bezierPath = [];
 
-    // listen to change
-    ed.listen( 'change:point' , changed.bind( this ), this )
-
     return this
-}
-var changed = function( event ){
-    if( event.shape !== this )
-        return
-
-    this.recompute()
-    ed.dispatch( 'change:shape', {
-        shape: this
-    })
 }
 
 var recompute = function(){
@@ -43,11 +31,7 @@ var pack = function(){
 
 var unpack = function( o ){
     this.vertex = o.vertex
-    this.sharpness = o.sharpness
-
-    ed.dispatch( 'change:shape', {
-        shape: this
-    })
+    this.sharpness = o.sharpness || []
 
     return this
 }

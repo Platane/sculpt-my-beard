@@ -18,6 +18,9 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
   , timeLineCursorCtrl = Object.create( require('./controller/timeLine/cursor') )
   , ctrlZ = Object.create( require('./controller/ctrlZ') )
 
+  , staticApplyCtrl = Object.create( require('./staticController/applyTimeLine') )
+  , staticRecomputeCtrl = Object.create( require('./staticController/recompute') )
+
 
   , ed = require('./system/eventDispatcher')
 
@@ -54,6 +57,9 @@ timeLineKeyPointCtrl.init( modelBall ).enable()
 ctrlZ.init( modelBall ).enable()
 timeLineCursorCtrl.init( modelBall ).enable()
 
+
+staticApplyCtrl.init( modelBall ).enable()
+staticRecomputeCtrl.init( modelBall ).enable()
 
 // start render loop
 
