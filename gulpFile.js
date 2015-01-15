@@ -19,6 +19,17 @@ gulp.task('browserify', function () {
     )
 });
 
+gulp.task('browserify-test', function () {
+
+    exec(
+        'node ./node_modules/browserify/bin/cmd.js test/jasmine-bundle-src.js -o test/jasmine-bundle.js --debug ' ,
+        function( err , out , code ){
+            if(err)
+                console.log( err )
+            }
+        )
+    });
+
 gulp.task('less', function () {
 
     var lessify = function(options){
@@ -79,9 +90,11 @@ gulp.task('watch', function () {
 
 	gulp.watch( ['css/**/*.less'] , ['less'] )
 
-	gulp.watch( ['tests/**/*' , 'js/**/*', '!js/bundle.js'] , ['browserify'] )
+	gulp.watch( ['js/**/*', '!js/bundle.js'] , ['browserify', 'browserify-test'] )
+
+	gulp.watch( ['test/**/*' , '!test/jasmine-bundle.js'] , ['browserify-test'] )
 
 });
 
 
-gulp.task('default', [ 'browserify' , 'less' , 'watch' ]);
+gulp.task('default', [ 'browserify-test', 'browserify' , 'less' , 'watch' ]);

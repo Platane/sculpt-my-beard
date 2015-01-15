@@ -14,7 +14,7 @@ var lerpPoints = function( apts, bpts, alpha ){
 
     var res = []
 
-    for(var i=apts.length; i--;)
+    for(var i=0; i<apts.length; i++)
         res.push( u.lerp( apts[i], bpts[i], alpha ) )
 
     return res
@@ -35,7 +35,7 @@ var lerpNumber = function( apts, bpts, alpha ){
 
     var aalpha = 1-alpha
 
-    for(var i=apts.length; i--;)
+    for(var i=0; i<apts.length; i++)
         res.push( aalpha * apts[i] + alpha * bpts[i] )
 
     return res

@@ -65,7 +65,7 @@ var Abstract = require('../utils/Abstract')
 
          else {
 
-             for( var i=1; date<k[i].date; i++ );
+             for( var i=1; i<k.length && k[i].date<date; i++ );
 
              var a = k[i-1],
                  b = k[i]

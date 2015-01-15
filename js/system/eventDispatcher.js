@@ -54,11 +54,15 @@ var unlisten = function( eventName, key ){
 var hasListener = function( eventName, key ){
     return !!( listener[ eventName ] || [] ).length
 }
+var reset = function( eventName, key ){
+    listener = {}
+}
 
 module.exports = Object.create( Abstract )
 .extend({
     dispatch: dispatch,
     listen: listen,
     unlisten: unlisten,
-    hasListener: hasListener
+    hasListener: hasListener,
+    reset: reset
 })

@@ -15,10 +15,13 @@
     "gulp-watch" : "*",
     "gulp-autoprefixer" : "*",
     "gulp-rename" : "*",
-    "gulp-browserify" : "*"
+    "gulp-browserify" : "*",
+    "jasmine-core" : "2.1.x",
+    "jasmine-node" : "*"
   },
 
   "scripts" : {
-    "prepublish" : "node ./node_modules/browserify/bin/cmd.js js/app.js -o js/bundle.js --debug && node ./node_modules/less/bin/lessc ./css/style.less > ./css/style.css"
+    "prepublish" : "node ./node_modules/browserify/bin/cmd.js js/app.js -o js/bundle.js --debug && node ./node_modules/less/bin/lessc ./css/style.less > ./css/style.css",
+    "test" : "node ./node_modules/jasmine-node/bin/jasmine-node --matchall ./test/specs/"
   }
 }

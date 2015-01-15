@@ -1,11 +1,10 @@
 var Abstract = require('../../utils/Abstract')
-  , ed = require('../../system/eventDispatcher')
 
   , historizable = require('../mixin/historizable')
   , Shape = require('./Shape')
   , Line = require('./Line')
 
-var init = function( type ){
+var init = function( ){
 
     this.chunk = {
         mustach_left: Object.create( Line ).init(),
