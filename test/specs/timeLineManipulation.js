@@ -68,7 +68,7 @@ describe('applyTimeLine', function(){
         })
         it('should create a key with a deep copy as pack', function(){
             this.shape.width[ 0 ] = 5
-            this.shape.line.x = 5
+            this.shape.line[ 0 ].x = 5
             expect( this.timeLine.keys[ this.la ][ 0 ].pack.width[ 0 ] ).toBe( 4 )
             expect( this.timeLine.keys[ this.la ][ 0 ].pack.line[ 0 ].x ).toBe( 100 )
         })

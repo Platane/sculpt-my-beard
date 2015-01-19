@@ -26,6 +26,9 @@ var bezify = function( pts, sharpness ){
 
     var default_sharpness
 
+    if( pts.length<2 )
+        return []
+
     if( !sharpness || typeof sharpness == 'number' )
         default_sharpness = sharpness || 0.25
     else

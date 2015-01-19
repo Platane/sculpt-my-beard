@@ -29,18 +29,10 @@ var pack = function(){
     }
 }
 
-var unpack = function( o ){
-    this.vertex = o.vertex
-    this.sharpness = o.sharpness || []
-
-    return this
-}
-
 module.exports = Object.create( Abstract )
 .extend( historizable )
 .extend({
     init: init,
     recompute: recompute,
     pack: pack,
-    unpack: unpack,
 })

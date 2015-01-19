@@ -41,6 +41,7 @@ var modelBall = {
     timeLine: timeLine,
     history: history
 }
+window.modelBall = modelBall
 
 // init renderer
 var domSvg = document.querySelector('svg')
@@ -80,18 +81,13 @@ ed.listen( 'please-render' , render.bind( this ) , this )
 // bootstrap
 face.chunk.mustach_left.line = [
     {x: 50, y: 100},
-    {x: 150, y: 130},
-    {x: 270, y: 200},
-    {x: 400, y: 120},
-    {x: 500, y: 120},
-    {x: 600, y: 160},
+    //{x: 150, y: 130},
+    //{x: 270, y: 200}
 ]
 face.chunk.mustach_left.width = [
     40,
-    20,
-    35,
-    61,
-    25,
+    //20,
+    //35
 ]
 face.chunk.mustach_left.recompute()
 

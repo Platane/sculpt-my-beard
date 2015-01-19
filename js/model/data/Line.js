@@ -29,17 +29,8 @@ var pack = function(){
     }
 }
 
-var unpack = function( o ){
-    this.line = o.line
-    this.width = o.width
-    this.sharpness = o.sharpness || []
-
-    return this
-}
-
 module.exports = Object.create( Shape ).extend({
     init: init,
     recompute: recompute,
     pack: pack,
-    unpack: unpack,
 })

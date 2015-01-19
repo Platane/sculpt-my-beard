@@ -76,6 +76,30 @@ describe('pack stuff', function(){
             })
         })
     })
+})
 
+describe('unpack stuff', function(){
+    beforeEach(function(){
+        this.face = Object.create(Face).init()
+        this.shape = Object.create(Shape).init()
+        this.line = Object.create(Line).init()
+    })
+    describe('pack Line', function(){
+        describe('points', function(){
+            beforeEach(function(){
+                this.line.line = [{x: 6, y:4}]
 
+                this.pack = this.line.pack()
+            })
+            beforeEach(function(){
+                this.line.unpack( this.pack )
+
+                this.line.line[0].x = 0
+            })
+            it('unpacked object should not be linked to the pack', function(){
+                expect( this.pack.line[0].x ).toBe(6);
+                expect( this.line.line[0].x ).toBe(0);
+            })
+        })
+    })
 })

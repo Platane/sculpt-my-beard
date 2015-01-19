@@ -15,7 +15,7 @@ var deepCopy = function( o ){
 
 var unpack = function( o ){
     for( var i in o )
-        this[ i ] = o[ i ]
+        this[ i ] = deepCopy( o[ i ] )
     return this
 }
 
