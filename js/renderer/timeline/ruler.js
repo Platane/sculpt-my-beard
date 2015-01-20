@@ -25,7 +25,8 @@ var render = function( ){
 
 var tpl = [
 '<div class="tl-ruler">',
-    '<div class="tl-cursor"></div>',
+    '<div class="tl-cursor">',
+    '</div>',
     '<div class="tl-ruler-grid"></div>',
 '</div>',
 ].join('')

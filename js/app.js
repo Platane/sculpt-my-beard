@@ -24,6 +24,10 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
 
   , ed = require('./system/eventDispatcher')
 
+
+  , layoutManager = require('./layout')
+
+
   require('./utils/doubleClick')
 
 // init model
@@ -44,13 +48,13 @@ var modelBall = {
 window.modelBall = modelBall
 
 // init renderer
-var domSvg = document.querySelector('svg')
+var domSvg = document.querySelector('.app-draw-zone')
 faceRenderer.init( modelBall, domSvg )
 pointControlRenderer.init( modelBall, domSvg )
 
 basicEvent.init( modelBall )
 
-timeLineRenderer.init( modelBall, document.body )
+timeLineRenderer.init( modelBall, document.querySelector('.app-timeLine') )
 
 // controller
 dragPointCtrl.init( modelBall ).enable()
@@ -61,6 +65,10 @@ timeLineCursorCtrl.init( modelBall ).enable()
 
 staticApplyCtrl.init( modelBall ).enable()
 staticRecomputeCtrl.init( modelBall ).enable()
+
+// layout
+layoutManager.render()
+
 
 // start render loop
 

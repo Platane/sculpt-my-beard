@@ -74,11 +74,11 @@ gulp.task('less', function () {
 
     return gulp.src( './css/style.less' )
     .pipe( lessify({
-        compress: false,
+        compress: !false,
         paths: ['./css'],
     }))
     .pipe(autoprefixer({
-        cascade: true,
+        cascade: !true,
         browsers: ['last 2 versions'],
     }))
     .pipe(rename('style.css'))

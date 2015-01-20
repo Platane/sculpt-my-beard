@@ -114,7 +114,7 @@ var build = function( ){
     }
 }
 
-var init = function( modelBall, body ){
+var init = function( modelBall, timeLineEL ){
 
     this.model = {
         face: modelBall.face,
@@ -126,7 +126,11 @@ var init = function( modelBall, body ){
 
     build.call( this )
 
-    body.appendChild( this.domEl )
+    timeLineEL.className += ' tl'
+    for( var i = this.domEl.children.length; i--; )
+        timeLineEL.appendChild( this.domEl.children[i] )
+    this.domEl = timeLineEL
+
 
     ed.listen( 'change:timeLine' , render.bind( this ) , this )
     ed.listen( 'render' , render.bind( this ) , this )

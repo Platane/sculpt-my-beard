@@ -1,23 +1,19 @@
 @import 'svg.less';
 @import 'timeLine.less';
+@import 'whiteBoard.less';
 @import 'ruler.less';
+@import 'page.less';
 
-body {
-    background: linear-gradient(45deg, rgba(138,82,38,0.6) 0%, rgba(181,168,85,0.6) 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-svg {
+// CC licensed font
+// http://on.be.net/VlvAus
+@font-face {
+    font-family: 'axis';
+    src:
+       url('../asset/font/axis.ttf') format('truetype'),
+       url('../asset/font/axis.otf') format('otf'),
+       url('../asset/font/axis.eot') format('enbedded-opentype'),
+       url('../asset/font/axis.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
 
-    width: 90%;
-    max-width: 1280px;
-    height: 540px;
-    background: rgba(255, 255, 255, 0.7);
-    border-bottom: solid 6px #fff;
-    position: relative;
-    border-radius: 3px;
-    box-shadow: 2px 2px 10px -2px rgba(50, 50, 50, 0.4);
-    margin-top: 14px;
 }

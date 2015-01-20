@@ -1,14 +1,54 @@
 <html>
-
-<link rel="stylesheet" href="css/style.css">
+<head>
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
 <body style="margin:0">
 
-<svg>
-</svg>
+<svg style="display:none"><defs>
+        <g id="svg_hexagon">
+            <path class="svg_shape" d="M 50 0 L 93.3 25 L 93.3 75 L 50 100 L 6.7 75 L 6.7 25 z"></path>
+        </g>
+</defs></svg>
+
+
+
+<!-- header -->
+<header class="page-header">
+    <div class="parallax-viewport">
+        <div class="hexagon icon-hexagon">
+            <svg viewBox="0 0 100 100"><use xlink:href = "#svg_hexagon"></use></svg>
+        </div>
+        <h1>Scultp my beard</h1>
+    </div>
+</header>
+
+
+
+
+<!-- app container -->
+<section class="page-app">
+
+    <div class="app-main">
+        <div class="app-vertical-toolbar"></div>
+        <svg class="app-draw-zone"></svg>
+    </div>
+
+    <div class="app-timeLine"></div>
+
+</section>
+
+
+
+<!-- footer -->
+<footer class="page-footer">
+    credit :
+    <p> http://on.be.net/VlvAus for Axis font </p>
+    <p> http://magdeleine.co/ for header image </p>
+</footer>
+
 
 <script src="./js/bundle.js"></script>
-
 
 </body>
 </html>
