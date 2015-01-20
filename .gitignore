@@ -1,6 +1,12 @@
-*
-!.gitignore
-!index.html
-!asset/**/*
+js
+css
+test
+node_modules
+npm-debug.log
+.tmp
+.travis.yml
+gulpFile.js
+deploy.sh
+package.json
 !js/bundle.js
 !css/style.css
