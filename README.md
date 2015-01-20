@@ -1,6 +1,6 @@
 # Sculpt my Beard
 
-[![](https://img.shields.io/travis/Platane/sculpt-my-beard/master.svg?style=flat)](https://travis-ci.org/Platane/sculpt-my-beard)
+[![](https://img.shields.io/travis/Platane/sculpt-my-beard/master.svg?style=flat-square)](https://travis-ci.org/Platane/sculpt-my-beard)
 
 work in progress
 
