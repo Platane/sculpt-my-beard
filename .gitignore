@@ -1,0 +1,6 @@
+*
+!.gitignore
+!index.html
+!asset/**/*
+!js/bundle.js
+!css/style.css
