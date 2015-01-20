@@ -1,7 +1,7 @@
 var faceRenderer = Object.create( require('./renderer/svg/face') )
   , pointControlRenderer = Object.create( require('./renderer/svg/pointControl') )
   , basicEvent = Object.create( require('./renderer/basicEvent') )
-  , timeLineRenderer = Object.create( require('./renderer/timeline/timeline') )
+  , timeLineRenderer = Object.create( require('./renderer/timeLine/timeLine') )
 
 
   , face = Object.create( require('./model/data/Face') )
