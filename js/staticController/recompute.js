@@ -1,5 +1,5 @@
 var Abstract = require('../utils/Abstract')
-, ed = require('../system/eventDispatcher')
+  , ed = require('../system/eventDispatcher')
 
 var init = function( modelBall ){
 

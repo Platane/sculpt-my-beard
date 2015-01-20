@@ -5,10 +5,10 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
 
 
   , face = Object.create( require('./model/data/Face') )
-  , timeLine = Object.create( require('./model/data/timeLine') )
+  , timeLine = Object.create( require('./model/data/TimeLine') )
 
   , camera = Object.create( require('./model/app-state/Camera') )
-  , timeLineState = Object.create( require('./model/app-state/timeLineState') )
+  , timeLineState = Object.create( require('./model/app-state/TimeLineState') )
 
   , history = Object.create( require('./model/history') )
 
@@ -70,22 +70,6 @@ staticRecomputeCtrl.init( modelBall ).enable()
 layoutManager.render()
 
 
-// start render loop
-
-
-
-function render(){
-
-    //ed.dispatch('pre-render')
-    ed.dispatch('render')
-    //ed.dispatch('post-render')
-
-}
-
-// TODO throttle this
-ed.listen( 'please-render' , render.bind( this ) , this )
-
-
 // bootstrap
 face.chunk.mustach_left.line = [
     {x: 50, y: 100},
@@ -99,12 +83,24 @@ face.chunk.mustach_left.width = [
 ]
 face.chunk.mustach_left.recompute()
 
+
+
+// TODO put that on a static controller
+// render
+
+function render(){
+
+    //ed.dispatch('pre-render')
+    ed.dispatch('render')
+    //ed.dispatch('post-render')
+
+}
+
+// TODO throttle this
+ed.listen( 'please-render' , render.bind( this ) , this )
+
 render()
 
-
-
-
-//
 
 var pl_render = function(){
     ed.dispatch( 'please-render' )

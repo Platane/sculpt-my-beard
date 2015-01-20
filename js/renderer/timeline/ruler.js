@@ -1,6 +1,6 @@
 var Abstract = require('../../utils/Abstract')
-, dom = require('../../utils/domHelper')
-, ed = require('../../system/eventDispatcher')
+  , dom = require('../../utils/domHelper')
+  , ed = require('../../system/eventDispatcher')
 
 
 
