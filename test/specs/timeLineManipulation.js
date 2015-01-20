@@ -1,6 +1,6 @@
 var TimeLine = require('../../js/model/data/TimeLine')
   , Face = require('../../js/model/data/Face')
-  , TimeLineState = require('../../js/model/app-state/timeLineState')
+  , TimeLineState = require('../../js/model/app-state/TimeLineState')
   , ed = require('../../js/system/eventDispatcher')
   , ApplyTimeLine = require('../../js/staticController/applyTimeLine')
 
