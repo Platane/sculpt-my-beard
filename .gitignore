@@ -6,7 +6,7 @@ npm-debug.log
 .tmp
 .travis.yml
 gulpFile.js
-deploy.sh
+deploy.js
 package.json
 !js/bundle.js
 !css/style.css
