@@ -97,4 +97,6 @@ gulp.task('watch', function () {
 });
 
 
+gulp.task('build', [ 'browserify' , 'less' ]);
+
 gulp.task('default', [ 'browserify-test', 'browserify' , 'less' , 'watch' ]);
