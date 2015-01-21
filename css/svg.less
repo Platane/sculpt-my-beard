@@ -1,10 +1,30 @@
+@import 'colorScheme.less';
+
 path.hair-chunk {
-    fill: none;
-    stroke: #B12;
-    stroke-width: 1;
+    fill: @dark;
+    stroke: none;
 }
 circle.control-tic {
-    fill: rgba(189, 15, 220, 0.2);
-    stroke: #B12;
-    stroke-width: 0.1;
+    fill: @bright;
+    stroke: @bright;
+    stroke-width: 0;
+
+    &:hover {
+        stroke-width: 5;
+    }
 }
+
+
+.loop( @i ) when ( @i > 0 ) {
+    .loop(( @i - 1 ));
+
+    path.hair-chunk-@{i}.color-filled {
+        fill: extract( @chunk-colors, @i );
+        stroke: none;
+    }
+    path.hair-chunk-@{i}.color-stroked {
+        stroke: extract( @chunk-colors, @i );
+        fill: none;
+    }
+}
+.loop( length( @chunk-colors ) );

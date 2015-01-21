@@ -72,16 +72,35 @@ staticRecomputeCtrl.init( modelBall ).enable()
 
 // bootstrap
 face.chunk.mustach_left.line = [
-    {x: 50, y: 20},
-    {x: 50, y: 30},
-    {x: 70, y: 20}
+    {x: 99, y: 25},
+    {x: 130, y: 36.5},
+    {x: 189.75, y: 36.7},
+    {x: 201.5, y: 84}
 ]
 face.chunk.mustach_left.width = [
-    40,
-    20,
-    35
+    10,
+    12,
+    15,
+    6
 ]
+
+face.chunk.mustach_right.line = [
+    {x: 200-99, y: 25},
+    {x: 200-130, y: 36.5},
+    {x: 200-189.75, y: 36.7},
+    {x: 200-201.5, y: 84}
+]
+face.chunk.mustach_right.width = [
+    10,
+    12,
+    15,
+    6
+]
+
+
+
 face.chunk.mustach_left.recompute()
+face.chunk.mustach_right.recompute()
 
 
 

@@ -3,7 +3,7 @@ module.exports = {
 		return el.classList.contains(c)
 	},
 	addClass : function( el , c ){
-		el.className += ' '+c
+		el.setAttribute('class', el.getAttribute('class') +' '+ c )
 	},
 	removeClass : function( el , c ){
 		var nc=""
