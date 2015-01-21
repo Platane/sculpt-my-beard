@@ -2,6 +2,10 @@ var child_process = require('child_process')
   , Promise = require('promise')
   , fs = require('fs')
 
+var willPrint = function( x ){
+    return function(){ console.log( x ) }
+}
+
 var exec = function( cmd ){
     return new Promise(function(resolve, reject){
         child_process.exec( cmd, function(err, out, code){
@@ -53,16 +57,21 @@ var bumpVersion = function(incr){
 exec('git stash')
 
 //change branch to gh-master and checkout master
+.then( willPrint( '-- change to gh-pages and checkout master' ) )
 .then( exec.bind(null, 'git fetch') )
 .then( exec.bind(null, 'git checkout gh-pages') )
 .then( exec.bind(null, 'git checkout master -- .') )
 .then( exec.bind(null, 'git reset') )
 
 // build
+.then( willPrint( '-- build' ) )
+.then( willPrint( '--    npm install' ) )
 .then( exec.bind(null, 'npm install') )
+.then( willPrint( '--    gulp build' ) )
 .then( exec.bind(null, 'node ./node_modules/gulp/bin/gulp.js build') )
 
 // edit gitignore
+.then( willPrint( '-- edit gitignore and refresh repo' ) )
 .then( function(){
     var gitignore = [
         'js',
@@ -87,12 +96,14 @@ exec('git stash')
 .then( exec.bind(null, 'git add . > .tmp') )
 .then( exec.bind(null, 'git add -f css/style.css js/bundle.js') ) // problem with gitignore I guess neithermind go buldozer
 
+// commit
+.then( willPrint( '-- commit and push' ) )
 .then( function(){
     return readVersion()
     .then(function( version ){
-        return exec( 'git commit -m v'+version )
+        return exec( 'git commit -m "v'+version+'"' )
     })
 })
 .then( exec.bind(null, 'git push') )
-.then( exec.bind(null, 'git master') )
+.then( exec.bind(null, 'git checkout master') )
 .then(null, console.log.bind( console ))
