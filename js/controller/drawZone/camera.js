@@ -7,6 +7,8 @@ var init = function( modelBall ){
         camera: modelBall.camera
     }
 
+    this.mouseMove = mouseMove.bind( this )
+    this.mouseUp = mouseUp.bind( this )
     this.mouseDown = mouseDown.bind( this )
     this.wheel = wheel.bind( this )
 
@@ -20,7 +22,7 @@ var enable = function(){
 }
 var disable = function(){
     ed.unlisten( 'ui-tic-mousedown', this )
-    ed.unlisten( 'ui-mousemove', this )
+    ed.unlisten( 'ui-zone-mousemove', this )
     ed.unlisten( 'ui-mouseup', this )
 }
 
@@ -37,42 +39,40 @@ var wheel = function( event ){
 
 }
 var mouseDown = function( event ){
-/*
-    this._shape = this.model.face.chunk[ event.chunk ]
-    this._point = this._shape[ event.pool ][ event.i ]
+
+    if ( !event.primaryTarget )
+        return
+
     this._origin = {
-        x: this._point.x,
-        y: this._point.y
+        x: this.model.camera.origin.x,
+        y: this.model.camera.origin.y
     }
     this._anchor = {
-        x: event.mouseEvent.pageX,
-        y: event.mouseEvent.pageY
+        x: event.x,
+        y: event.y
     }
 
-    ed.listen( 'ui-mousemove', this.ticMove, this )
-    ed.listen( 'ui-mouseup', this.ticUp, this )*/
+    ed.listen( 'ui-zone-mousemove', this.mouseMove, this )
+    ed.listen( 'ui-mouseup', this.mouseUp, this )
 }
 
-var ticMove = function( event ){
-    this._point.x = this._origin.x + event.mouseEvent.pageX - this._anchor.x
-    this._point.y = this._origin.y + event.mouseEvent.pageY - this._anchor.y
+var mouseMove = function( event ){
 
-    ed.dispatch( 'change:point', {
-        point: this._point,
-        shape: this._shape,
+    this.model.camera.origin.x = this._origin.x + ( this._anchor.x - event.x ) / this.model.camera._zoom
+    this.model.camera.origin.y = this._origin.y + ( this._anchor.y - event.y ) / this.model.camera._zoom
+
+    ed.dispatch( 'change:camera', {
         wip: true
     })
 }
 
-var ticUp = function( event ){
+var mouseUp = function( event ){
 
-    ed.dispatch( 'change:point', {
-        point: this._point,
-        shape: this._shape,
+    ed.dispatch( 'change:camera', {
         wip: false
     })
 
-    ed.unlisten( 'ui-mousemove', this )
+    ed.unlisten( 'ui-zone-mousemove', this )
     ed.unlisten( 'ui-mouseup', this )
 }
 

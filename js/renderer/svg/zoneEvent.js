@@ -20,35 +20,41 @@ var relayEvent = function( event ){
     var x = event.pageX - o.left
     var y = event.pageY - o.top
 
-    if( event.type == 'wheel' ) {
-        event.stopPropagation()
-        event.preventDefault()
-    }
 
-    if( classes.indexOf('control-tic')>=0 && event.type != 'wheel' )
-        return ed.dispatch( 'ui-tic-'+event.type, {
+    var backPrimaryTarget = true
+
+    if( classes.indexOf('control-tic')>=0 && event.type != 'wheel' ) {
+        ed.dispatch( 'ui-tic-'+event.type, {
             mouseEvent: event,
             pool  : event.target.getAttribute('data-pool'),
             chunk : event.target.getAttribute('data-chunk'),
             i     : event.target.getAttribute('data-i'),
             x     : x,
-            y     : y
+            y     : y,
+            primaryTarget : true
         })
+        backPrimaryTarget = false
+    }
 
-    if( classes.indexOf('app-draw-zone')>=0 || event.type == 'wheel' )
-        return ed.dispatch( 'ui-zone-'+event.type, {
-            mouseEvent: event,
-            x     : x,
-            y     : y
-        })
+    ed.dispatch( 'ui-zone-'+event.type, {
+        mouseEvent: event,
+        x     : x,
+        y     : y,
+        primaryTarget : backPrimaryTarget
+    })
+
+    if( event.type == 'wheel' ) {
+        event.stopPropagation()
+        event.preventDefault()
+    }
 }
 
 
 var init = function( modelBall, domSvg ){
 
     domSvg.addEventListener( 'mousedown', relayEvent, false )
-    //domSvg.addEventListener( 'mousemove', relayEvent, false )
-    //domSvg.addEventListener( 'mouseup', relayEvent, false )
+    domSvg.addEventListener( 'mousemove', relayEvent, false )
+    domSvg.addEventListener( 'mouseup', relayEvent, false )
 
     domSvg.addEventListener( 'wheel', relayEvent, false )
 

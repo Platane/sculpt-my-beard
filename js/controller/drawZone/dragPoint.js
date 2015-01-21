@@ -4,7 +4,8 @@ var Abstract = require('../../utils/Abstract')
 var init = function( modelBall ){
 
     this.model = {
-        face: modelBall.face
+        face: modelBall.face,
+        camera: modelBall.camera,
     }
 
     this.ticDown = ticDown.bind( this )
@@ -20,7 +21,7 @@ var enable = function(){
 }
 var disable = function(){
     ed.unlisten( 'ui-tic-mousedown', this )
-    ed.unlisten( 'ui-mousemove', this )
+    ed.unlisten( 'ui-zone-mousemove', this )
     ed.unlisten( 'ui-mouseup', this )
 }
 
@@ -32,17 +33,17 @@ var ticDown = function( event ){
         y: this._point.y
     }
     this._anchor = {
-        x: event.mouseEvent.pageX,
-        y: event.mouseEvent.pageY
+        x: event.x,
+        y: event.y
     }
 
-    ed.listen( 'ui-mousemove', this.ticMove, this )
+    ed.listen( 'ui-zone-mousemove', this.ticMove, this )
     ed.listen( 'ui-mouseup', this.ticUp, this )
 }
 
 var ticMove = function( event ){
-    this._point.x = this._origin.x + event.mouseEvent.pageX - this._anchor.x
-    this._point.y = this._origin.y + event.mouseEvent.pageY - this._anchor.y
+    this._point.x = this._origin.x + ( event.x - this._anchor.x ) / this.model.camera._zoom
+    this._point.y = this._origin.y + ( event.y - this._anchor.y ) / this.model.camera._zoom
 
     ed.dispatch( 'change:point', {
         point: this._point,
@@ -59,7 +60,7 @@ var ticUp = function( event ){
         wip: false
     })
 
-    ed.unlisten( 'ui-mousemove', this )
+    ed.unlisten( 'ui-zone-mousemove', this )
     ed.unlisten( 'ui-mouseup', this )
 }
 
