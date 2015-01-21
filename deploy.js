@@ -140,6 +140,7 @@ exec('git stash')
 .then( exec.bind(null, 'git checkout master') )
 
 // bump version on master
+.then( willPrint( '-- bump version' ) )
 .then( bumpVersion.bind(null, incr) )
 .then( exec.bind(null, 'git add package.json') )
 .then( function(){
