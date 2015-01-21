@@ -53,8 +53,21 @@ var bumpVersion = function(incr){
     return Promise.resolve()
 }
 
+
+// parse option
+var incr = "0.0.1"
+process.argv.forEach(function (val, index, array) {
+    if (val == '-i')
+        incr = array[ index +1 ]
+});
+var somethingStashed
+
+
 // save state
 exec('git stash')
+.then( function( res ){
+    somethingStashed = res.indexOf('No local changes')<0
+})
 
 //change branch to gh-master and checkout master
 .then( willPrint( '-- change to gh-pages and checkout master' ) )
@@ -71,7 +84,6 @@ exec('git stash')
 .then( exec.bind(null, 'env PRODUCTION_BUILD="1" node ./node_modules/gulp/bin/gulp.js build') )
 
 // pause
-.then( willPrint( '-- before' ) )
 .then(function(){
     return new Promise(function(resolve, reject){
         process.stdin.resume();
@@ -121,11 +133,31 @@ exec('git stash')
 .then( function(){
     return readVersion()
     .then(function( version ){
-        return exec( 'git commit -m "v'+version+'"' )
+        return exec( 'git commit -m "v'+incrVersion( incr, version )+'"' )
     })
 })
 .then( exec.bind(null, 'git push') )
 .then( exec.bind(null, 'git checkout master') )
+
+// bump version on master
+.then( bumpVersion.bind(null, incr) )
+.then( exec.bind(null, 'git add package.json') )
+.then( function(){
+    return readVersion()
+    .then(function( version ){
+        return exec( 'git commit -m "bump version to '+version+'"' )
+    })
+})
+.then( exec.bind(null, 'git push') )
+
+
+// restore state
+.then(function(){
+    if (somethingStashed)
+        return exec('git stash pop')
+    else
+        return Promise.resolve()
+})
 
 // catch error
 .then(null, console.log.bind( console ))

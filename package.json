@@ -15,7 +15,7 @@
     "gulp-watch" : "*",
     "gulp-autoprefixer" : "*",
     "gulp-rename" : "*",
-    "gulp-browserify" : "*",
+    "gulp-uglify" : "*",
     "jasmine-core" : "2.1.x",
     "jasmine-node" : "*"
   },
