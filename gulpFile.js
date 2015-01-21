@@ -2,19 +2,27 @@ var gulp = require('gulp')
   , exec = require('child_process').exec
   , watch = require('gulp-watch')
   , rename = require('gulp-rename')
-  , browserify = require('gulp-browserify')
   , autoprefixer = require('gulp-autoprefixer')
   , less =require('less')
   , Stream = require('stream').Stream
+  , uglify = require('gulp-uglify')
 
+
+var production = !!process.env.PRODUCTION_BUILD
+console.log( 'production '+production )
 
 gulp.task('browserify', function () {
 
     exec(
-        'node ./node_modules/browserify/bin/cmd.js js/app.js -o js/bundle.js --debug ' ,
+        'node ./node_modules/browserify/bin/cmd.js js/app.js -o js/bundle.js '+( production ? '' : '--debug ') ,
         function( err , out , code ){
             if(err)
                 console.log( err )
+
+            if ( production )
+                    gulp.src( './js/bundle.js' )
+                    .pipe( uglify() )
+                    .pipe( gulp.dest('./js/') )
         }
     )
 });
@@ -74,11 +82,11 @@ gulp.task('less', function () {
 
     return gulp.src( './css/style.less' )
     .pipe( lessify({
-        compress: !false,
+        compress: production,
         paths: ['./css'],
     }))
     .pipe(autoprefixer({
-        cascade: !true,
+        cascade: !production,
         browsers: ['last 2 versions'],
     }))
     .pipe(rename('style.css'))

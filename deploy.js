@@ -68,7 +68,27 @@ exec('git stash')
 .then( willPrint( '--    npm install' ) )
 .then( exec.bind(null, 'npm install') )
 .then( willPrint( '--    gulp build' ) )
-.then( exec.bind(null, 'node ./node_modules/gulp/bin/gulp.js build') )
+.then( exec.bind(null, 'env PRODUCTION_BUILD="1" node ./node_modules/gulp/bin/gulp.js build') )
+
+// pause
+.then( willPrint( '-- before' ) )
+.then(function(){
+    return new Promise(function(resolve, reject){
+        process.stdin.resume();
+        process.stdin.setEncoding('utf8');
+
+        console.log('  is the version sane ?');
+
+        process.stdin.on('data', function (text) {
+            process.stdin.pause();
+            if (text[0] == 'n' || text[0] == 'N')
+                reject('interrupt by user: version not sane')
+            else
+                resolve()
+        })
+    })
+})
+
 
 // edit gitignore
 .then( willPrint( '-- edit gitignore and refresh repo' ) )
@@ -106,4 +126,6 @@ exec('git stash')
 })
 .then( exec.bind(null, 'git push') )
 .then( exec.bind(null, 'git checkout master') )
+
+// catch error
 .then(null, console.log.bind( console ))
