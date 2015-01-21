@@ -47,13 +47,13 @@ var layouts_strategies = {}
 layouts_strategies[0] = function( w, h ){
 
     var max_margin = 30
-    var tl_min_h = 200
+    var tl_min_h = 180
 
     h = Math.max(h, 550)
 
     // vertical
 
-    var tlh = tl_min_h
+    var tlh = Math.max( Math.min( h * 0.3, 320 ), tl_min_h )
 
     var mh = h - tlh - max_margin
 

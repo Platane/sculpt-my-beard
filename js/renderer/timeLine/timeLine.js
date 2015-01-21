@@ -4,6 +4,11 @@ var Abstract = require('../../utils/Abstract')
   , Ruler = require('./ruler')
 
 
+var toolBar_tpl = [
+
+].join('')
+
+
 var key_tpl = [
 '<div class="tl-key">',
 '</div>',
@@ -11,7 +16,9 @@ var key_tpl = [
 
 var label_tpl = [
 '<div class="tl-row">',
+    '<svg class="tl-icon" viewBox="0 0 100 100"><path d="M50 0L93.3 25L93.3 75L50 100L6.7 75L6.7 25z"></path></svg>',
     '<span class="tl-label"></span>',
+    '<div class="tl-toolBar"></div>',
 '</div>',
 ].join('')
 
@@ -23,6 +30,7 @@ var row_tpl = [
 var tpl = [
 '<div class="tl">',
     '<div class="tl-left">',
+        '<div class="tl-global-label"></div>',
         '<div class="tl-block-label"></div>',
     '</div>',
     '<div class="tl-right">',
