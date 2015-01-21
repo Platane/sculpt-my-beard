@@ -1,8 +1,9 @@
 {
-  "name": "facial-hair",
+  "name": "sculpt-my-beard",
   "version":"0.1.1",
+  "description": "app to easily make svg animation",
 
-  "author": "Platane <me@platane.me>",
+  "author": "@Platane",
 
   "dependencies": {
     "promise" : "*"
