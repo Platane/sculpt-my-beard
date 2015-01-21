@@ -96,14 +96,63 @@ var renderLayout = function(){
     layouts_strategies[0]( document.body.offsetWidth, window.innerHeight );
 }
 
-var timeout = 0
+var layoutTimeout = 0
 var askRender = function(){
-    window.clearTimeout(timeout)
-    timeout = window.setTimeout( renderLayout, 200 )
+    window.clearTimeout(layoutTimeout)
+    layoutTimeout = window.setTimeout( renderLayout, 200 )
 }
+renderLayout()
 
 window.addEventListener('resize', askRender, false )
 
-module.exports = {
-    render: renderLayout
+
+
+
+
+
+var $pageApp = document.querySelector('.page-app')
+var autoScroll = false
+var testScroll = function(){
+
+    var scrollY = getSroll(document.body).y
+
+    if ( Math.abs(scrollY - $pageApp.offsetTop) < 180 ) {
+        autoScroll = true
+        scrollTo(document.body, 0, $pageApp.offsetTop)
+    }
 }
+
+var down = false
+var pending = false
+
+var scrollTimeout = 0
+var askScroll = function(){
+    if (autoScroll)
+        return void ( autoScroll = false )
+
+    window.clearTimeout(scrollTimeout)
+
+    if ( down )
+        pending = true
+    else  {
+        pending = false
+        scrollTimeout = window.setTimeout( testScroll, 550 )
+    }
+}
+var trackMouseDown = function( event ){
+    if (event.type == 'mouseup') {
+        if (pending) {
+            pending = false
+            window.clearTimeout(scrollTimeout)
+            scrollTimeout = window.setTimeout( testScroll, 550 )
+        }
+        down = false
+    } else if (event.type == 'mousedown' && event.which == 1 && event.currentTarget == document)
+        down = true
+}
+
+window.addEventListener('scroll', askScroll, false )
+window.addEventListener('resize', askScroll, false )
+
+document.addEventListener('mousedown', trackMouseDown, false )
+document.addEventListener('mouseup', trackMouseDown, false )

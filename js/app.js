@@ -25,9 +25,7 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
   , ed = require('./system/eventDispatcher')
 
 
-  , layoutManager = require('./layout')
-
-
+  require('./layout')
   require('./utils/doubleClick')
 
 // init model
@@ -66,8 +64,6 @@ timeLineCursorCtrl.init( modelBall ).enable()
 staticApplyCtrl.init( modelBall ).enable()
 staticRecomputeCtrl.init( modelBall ).enable()
 
-// layout
-layoutManager.render()
 
 
 // bootstrap
