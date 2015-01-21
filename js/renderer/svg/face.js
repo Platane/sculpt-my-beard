@@ -18,10 +18,10 @@ var render = function( ){
         this.dom[ i ].setAttribute( 'd',
             svg.renderBezier( face.chunk[ i ].bezierPath.map( proj ) )
         )
-        dom.removeClass( this.dom[ i ], 'color-filled' )
-        dom.removeClass( this.dom[ i ], 'color-stroked' )
+        //dom.removeClass( this.dom[ i ], 'color-filled' )
+        //dom.removeClass( this.dom[ i ], 'color-stroked' )
 
-        dom.addClass( this.dom[ i ], 'color-filled' )
+        //dom.addClass( this.dom[ i ], 'color-filled' )
     }
 }
 
@@ -35,6 +35,7 @@ var build = function( domSvg ){
         this.dom[ i ] = svg.create('path')
         this.dom[ i ].setAttribute('class', 'hair-chunk '+i+' hair-chunk-'+(k++))
         domSvg.appendChild( this.dom[ i ] )
+        dom.addClass( this.dom[ i ], 'color-filled' )
     }
 }
 
