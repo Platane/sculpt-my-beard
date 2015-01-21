@@ -20,7 +20,7 @@ var relayEvent = function( event ){
 
 var render = function( ){
     var timeLineState = this.model.timeLineState
-    this.domCursor.style.left = (timeLineState.project( timeLineState.cursor ) -2)+'px'
+    this.domCursor.style.left = (timeLineState.project( timeLineState.cursor ) -0.5)+'px'
 }
 
 var tpl = [

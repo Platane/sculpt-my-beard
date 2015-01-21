@@ -10,24 +10,33 @@
 }
 
 .tl-cursor {
+    @arrow: 12px;
+    @line: 1px;
 
     position: absolute;
-    height: 200px;
-    width: 2px;
-    background: @dark;
-    box-shadow: 1px 0px 2px 0 rgba(0, 0, 0, 0.5);
+    height: 280px;
+    top: 8px;
+    width: @line;
+    background: @bright;
+    box-shadow: 0.5px 0px 2px 0.5px rgba(50, 50, 50, 0.2);
 
-    &:before{
+    &:before,
+    &:after {
         content: '';
         display: block;
         position: absolute;
-        top: 3px;
-        left: -5px;
-        width: 12px;
-        height: 12px;
-        transform: rotate3d(0,0,1,45deg);
-        background: @dark;
-
-        box-shadow: 2px 0px 2px 0 rgba(0, 0, 0, 0.5);
+        width: @line;
+        height: 0;
+        left: -@arrow;
+        border-left: solid @arrow transparent;
+        border-right: solid @arrow transparent;
+    }
+    &:before{
+        top: -5px;
+        border-top: solid @arrow+2px @bright;
+    }
+    &:after{
+        bottom: -5px;
+        border-bottom: solid @arrow+2px @bright;
     }
 }

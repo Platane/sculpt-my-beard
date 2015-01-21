@@ -7,14 +7,14 @@ var handler = function( event ){
     })
 }
 
-var init = function( modelBall, domSvg ){
+var init = function( modelBall ){
 
     document.addEventListener( 'mousedown', handler, false )
     document.addEventListener( 'mousemove', handler, false )
     document.addEventListener( 'mouseup', handler, false )
 
     document.addEventListener( 'keydown', handler, false )
-
+    
     return this
 }
 

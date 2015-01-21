@@ -1,5 +1,6 @@
 var faceRenderer = Object.create( require('./renderer/svg/face') )
   , pointControlRenderer = Object.create( require('./renderer/svg/pointControl') )
+  , zoneEventRenderer = Object.create( require('./renderer/svg/zoneEvent') )
   , basicEvent = Object.create( require('./renderer/basicEvent') )
   , timeLineRenderer = Object.create( require('./renderer/timeLine/timeLine') )
 
@@ -13,7 +14,8 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
   , history = Object.create( require('./model/history') )
 
 
-  , dragPointCtrl = Object.create( require('./controller/dragPoint') )
+  , dragPointCtrl = Object.create( require('./controller/drawZone/dragPoint') )
+  , cameraCtrl = Object.create( require('./controller/drawZone/camera') )
   , timeLineKeyPointCtrl = Object.create( require('./controller/timeLine/key') )
   , timeLineCursorCtrl = Object.create( require('./controller/timeLine/cursor') )
   , ctrlZ = Object.create( require('./controller/ctrlZ') )
@@ -49,6 +51,7 @@ window.modelBall = modelBall
 var domSvg = document.querySelector('.app-draw-zone')
 faceRenderer.init( modelBall, domSvg )
 pointControlRenderer.init( modelBall, domSvg )
+zoneEventRenderer.init( modelBall, domSvg )
 
 basicEvent.init( modelBall )
 
@@ -56,6 +59,7 @@ timeLineRenderer.init( modelBall, document.querySelector('.app-timeLine') )
 
 // controller
 dragPointCtrl.init( modelBall ).enable()
+cameraCtrl.init( modelBall ).enable()
 timeLineKeyPointCtrl.init( modelBall ).enable()
 ctrlZ.init( modelBall ).enable()
 timeLineCursorCtrl.init( modelBall ).enable()
@@ -68,14 +72,14 @@ staticRecomputeCtrl.init( modelBall ).enable()
 
 // bootstrap
 face.chunk.mustach_left.line = [
-    {x: 50, y: 100},
-    //{x: 150, y: 130},
-    //{x: 270, y: 200}
+    {x: 50, y: 20},
+    {x: 50, y: 30},
+    {x: 70, y: 20}
 ]
 face.chunk.mustach_left.width = [
     40,
-    //20,
-    //35
+    20,
+    35
 ]
 face.chunk.mustach_left.recompute()
 
@@ -102,8 +106,7 @@ var pl_render = function(){
     ed.dispatch( 'please-render' )
 }
 ed.listen( 'change:shape', pl_render )
-ed.listen( 'change:camera:zoom', pl_render )
-ed.listen( 'change:camera:origin', pl_render )
+ed.listen( 'change:camera', pl_render )
 
 
 var pl_historize = function( event ){

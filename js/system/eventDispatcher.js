@@ -9,7 +9,6 @@ var dispatch = function( eventName, data ){
     if(true)
         switch(eventName){
             case 'ui-mousemove':
-            case 'render3D-camera-change':
                 break;
             default:
                 console.log(eventName, data)

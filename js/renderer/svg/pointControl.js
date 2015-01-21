@@ -60,22 +60,6 @@ var build = function( domSvg ){
     }
 }
 
-var down = function( event ){
-    if( !event.target.getAttribute( 'data-pool' ) )
-        return
-
-    var i = event.target.getAttribute( 'data-i' ),
-        chunk = event.target.getAttribute( 'data-chunk' ),
-        pool = event.target.getAttribute( 'data-pool' )
-
-    ed.dispatch( 'ui-tic-mousedown' , {
-        i: i,
-        chunk: chunk,
-        pool: pool,
-        mouseEvent: event
-    })
-}
-
 var init = function( modelBall, domSvg ){
 
     this.model = {
@@ -84,10 +68,6 @@ var init = function( modelBall, domSvg ){
     }
 
     build.call( this, domSvg )
-
-
-    domSvg.addEventListener( 'mousedown', down, false )
-
 
     ed.listen( 'render' , render.bind( this ) , this )
 
