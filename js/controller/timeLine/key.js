@@ -9,7 +9,6 @@ var init = function( modelBall ){
         timeLineState: modelBall.timeLineState,
     }
 
-    this.lineClick = lineClick.bind( this )
     this.keyDown = keyDown.bind( this )
     this.keyMove = keyMove.bind( this )
     this.keyUp = keyUp.bind( this )
@@ -19,12 +18,12 @@ var init = function( modelBall ){
 
 var enable = function(){
     this.disable()
-    ed.listen( 'ui-tlLine-doubleclick', this.lineClick, this )
     ed.listen( 'ui-tlKey-mousedown', this.keyDown, this )
 }
 var disable = function(){
-    ed.unlisten( 'ui-tlLine-doubleclick', this )
-    ed.unlisten( 'ui-tlKey-doubleclick', this )
+    ed.unlisten( 'ui-tlKey-mousedown', this )
+    ed.unlisten( 'ui-tl-mousemove', this )
+    ed.unlisten( 'ui-mouseup', this )
 }
 
 var lineClick = function( event ){
@@ -40,23 +39,21 @@ var lineClick = function( event ){
 }
 var keyDown = function( event ){
     this._chunk = event.chunk
-    this._origin = this.model.timeLineState.project( event.date )
-    this.h = event.mouseEvent.pageY
-    this._anchor = event.mouseEvent.pageX
+    this.h = event.y
     this._key = this.model.timeLine.keys[ event.chunk ][ event.i ]
     this._removed = false
 
 
-    ed.unlisten( 'ui-mousemove', this )
+    ed.unlisten( 'ui-tl-mousemove', this )
     ed.unlisten( 'ui-mouseup', this )
-    ed.listen( 'ui-mousemove', this.keyMove, this )
+    ed.listen( 'ui-tl-mousemove', this.keyMove, this )
     ed.listen( 'ui-mouseup', this.keyUp, this )
 }
 var keyMove = function( event ){
 
     var tls = this.model.timeLineState
 
-    if( Math.abs( this.h - event.mouseEvent.pageY ) > 50 ){
+    if( Math.abs( this.h - event.y ) > 30 ){
 
         if( !this._removed ) {
 
@@ -71,13 +68,11 @@ var keyMove = function( event ){
 
     } else {
 
-        var newDate = tls.unproject( this._origin + event.mouseEvent.pageX - this._anchor )
-
         if( !this._removed ) {
 
-            this.model.timeLine.setKeyDate( this._chunk, this._key, newDate )
+            this.model.timeLine.setKeyDate( this._chunk, this._key, event.date )
         } else {
-            this._key = this.model.timeLine.addOrSetKey( this._chunk, newDate, this._key.pack )
+            this._key = this.model.timeLine.addOrSetKey( this._chunk, event.date, this._key.pack )
 
             this._removed = false
         }
@@ -89,7 +84,7 @@ var keyMove = function( event ){
 }
 var keyUp = function( event ){
 
-    ed.unlisten( 'ui-mousemove', this )
+    ed.unlisten( 'ui-tl-mousemove', this )
     ed.unlisten( 'ui-mouseup', this )
 
     var tls = this.model.timeLineState

@@ -5,6 +5,7 @@ var init = function( type ){
 
     this.origin = 0
     this.zoom = 30
+    this.window = 30
 
     this.cursor = 0
 
@@ -17,13 +18,13 @@ var init = function( type ){
 }
 
 var project = function( x ){
-    return ( x - this.origin ) * this.zoom
+    return ( x - this.origin ) / this.window
 }
 var projectQ = function( x ){
     return this.quantify( this.project( x ) )
 }
 var unproject = function( x ){
-    return  x / this.zoom  + this.origin
+    return  x * this.window + this.origin
 }
 var quantify = function( x ){
     return Math.round( x )

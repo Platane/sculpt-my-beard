@@ -1,7 +1,6 @@
 var Abstract = require('../../utils/Abstract')
   , dom = require('../../utils/domHelper')
   , ed = require('../../system/eventDispatcher')
-  , Ruler = require('./ruler')
 
 
 var toolBar_tpl = [
@@ -34,41 +33,81 @@ var tpl = [
         '<div class="tl-block-label"></div>',
     '</div>',
     '<div class="tl-right">',
+        '<div class="tl-right-push"></div>',
         '<div class="tl-block-lines"></div>',
+        '<div class="tl-cursor"></div>',
     '</div>',
 '</div>',
 ].join('')
 
 
 var getDate = function( mouseEvent ){
-    var o = dom.offset( this.domEl.querySelector('.tl-block-lines') ).left
+    var o = dom.offset( this.domBlockLines ).left
     var x = mouseEvent.pageX
-    return this.model.timeLineState.unproject( x-o )
+    return this.model.timeLineState.unproject( (x-o)/this.domBlockLines.offsetWidth )
 }
 var relayEvent = function( event ){
 
-    // only consider main button ( button == 0 )
-    if( event.button )
+    // only consider main button
+    if( event.which !== 1 )
         return
 
+    var o = dom.offset( this.domBlockLines )
+    var x = event.pageX - o.left
+    var y = event.pageY - o.top
+    var date = this.model.timeLineState.unproject( x/this.domBlockLines.offsetWidth )
+
     var key, line
-    if( key = dom.getParent( event.target, 'tl-key' ) )
-        return ed.dispatch( 'ui-tlKey-'+event.type, {
+    var primaryTarget = true
+    if( dom.getParent( event.target, 'tl-cursor' ) ){
+        ed.dispatch( 'ui-tlCursor-'+event.type, {
+            date: date,
+            y: y,
+            x: x,
+            mouseEvent: event,
+            primaryTarget: primaryTarget
+        })
+        primaryTarget = false
+    }
+
+    if( key = dom.getParent( event.target, 'tl-key' ) ) {
+        ed.dispatch( 'ui-tlKey-'+event.type, {
             mouseEvent: event,
             chunk: dom.getParent( key, 'tl-row' ).getAttribute('data-chunk'),
             i: key.getAttribute('data-i'),
-            date: getDate.call( this, event )
+            date: date,
+            y: y,
+            x: x,
+            primaryTarget: primaryTarget
         })
+        primaryTarget = false
+    }
 
-    if( line = dom.getParent( event.target, 'tl-row' ) )
-        return ed.dispatch( 'ui-tlLine-'+event.type, {
+    if( line = dom.getParent( event.target, 'tl-row' ) ) {
+        ed.dispatch( 'ui-tlLine-'+event.type, {
             mouseEvent: event,
             chunk: line.getAttribute('data-chunk'),
-            date: getDate.call( this, event )
+            date: date,
+            y: y,
+            x: x,
+            primaryTarget: primaryTarget
         })
+        primaryTarget = false
+    }
+
+    ed.dispatch( 'ui-tl-'+event.type, {
+        mouseEvent: event,
+        date: date,
+        y: y,
+        x: x,
+        primaryTarget: primaryTarget
+    })
+
+
+    event.preventDefault()
 }
 
-var render = function( ){
+var renderKeys = function( ){
     var timeLine = this.model.timeLine
     var proj = this.model.timeLineState.project
 
@@ -83,15 +122,23 @@ var render = function( ){
         // for each key
         for( var i=(timeLine.keys[ k ]||[]).length; i--; ){
 
+            var x = proj( timeLine.keys[ k ][ i ].date )
+
+            if (x<-0.01 || x>1.01)
+                continue
+
             var dk = dom.domify( key_tpl )
             dk.setAttribute( 'data-i', i )
-            dk.style.left = (proj( timeLine.keys[ k ][ i ].date ) -5)+'px'
+            dk.style.left = 'calc( '+(x*100)+'% - 5px )'
 
             this.domLines[ k ].appendChild( dk )
 
         }
     }
-
+}
+var renderCursor = function( ){
+    var proj = this.model.timeLineState.project
+    this.domCursor.style.left = 'calc( '+(proj( this.model.timeLineState.cursor )*100)+'% - 0.5px )'
 }
 
 var build = function( ){
@@ -102,7 +149,7 @@ var build = function( ){
     var labels = this.domEl.querySelector('.tl-block-label'),
         lines = this.domEl.querySelector('.tl-block-lines')
 
-    this.domEl.querySelector('.tl-right').insertBefore( this.ruler.domEl, lines )
+    this.domCursor = this.domEl.querySelector('.tl-cursor')
 
     this.domLines = {}
 
@@ -120,6 +167,8 @@ var build = function( ){
 
         this.domLines[ i ] = row
     }
+
+    this.domBlockLines = lines
 }
 
 var init = function( modelBall, timeLineEL ){
@@ -130,8 +179,6 @@ var init = function( modelBall, timeLineEL ){
         timeLine: modelBall.timeLine,
     }
 
-    this.ruler = Object.create( Ruler ).init( modelBall )
-
     build.call( this )
 
     timeLineEL.className += ' tl'
@@ -140,17 +187,21 @@ var init = function( modelBall, timeLineEL ){
     this.domEl = timeLineEL
 
 
-    ed.listen( 'change:timeLine' , render.bind( this ) , this )
-    ed.listen( 'render' , render.bind( this ) , this )
+    ed.listen( 'change:timeLine' , renderKeys.bind( this ) , this )
+    ed.listen( 'change:timeLineState-cursor' , renderCursor.bind( this ) , this )
+    ed.listen( 'change:timeLineState-viewport' , renderCursor.bind( this ) , this )
+    ed.listen( 'change:timeLineState-viewport' , renderKeys.bind( this ) , this )
 
-    this.domEl.querySelector('.tl-block-lines').addEventListener('mousedown', relayEvent.bind(this), false )
-    this.domEl.querySelector('.tl-block-lines').addEventListener('doubleclick', relayEvent.bind(this), false )
+
+    this.domEl.querySelector('.tl-right').addEventListener('mousedown', relayEvent.bind(this), false )
+    this.domEl.querySelector('.tl-right').addEventListener('mouseup', relayEvent.bind(this), false )
+    this.domEl.querySelector('.tl-right').addEventListener('mousemove', relayEvent.bind(this), false )
+    this.domEl.querySelector('.tl-right').addEventListener('wheel', relayEvent.bind(this), false )
 
     return this
 }
 
 module.exports = Object.create( Abstract )
 .extend({
-    init: init,
-    render: render
+    init: init
 })

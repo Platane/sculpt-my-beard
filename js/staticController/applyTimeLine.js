@@ -19,11 +19,11 @@ var Abstract = require('../utils/Abstract')
  var enable = function(){
      this.disable()
      ed.listen( 'change:shape', this.changeShape, this )
-     ed.listen( 'change:timeLineState', this.changeCursor, this )
+     ed.listen( 'change:timeLineState-cursor', this.changeCursor, this )
  }
  var disable = function(){
      ed.unlisten( 'change:shape', this )
-     ed.unlisten( 'change:timeLineState', this )
+     ed.unlisten( 'change:timeLineState-cursor', this )
  }
 
  var changeShape = function( event ){

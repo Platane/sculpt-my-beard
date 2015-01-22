@@ -39,6 +39,7 @@ var getSroll=function(el){
 
 var $main = document.querySelector('.app-draw-zone')
 var $tl = document.querySelector('.app-timeLine')
+var $tlm = document.querySelector('.app-timeLineMap')
 var $cont = document.querySelector('.page-app')
 var $body = document.body
 
@@ -46,16 +47,18 @@ var layouts_strategies = {}
 
 layouts_strategies[0] = function( w, h ){
 
-    var max_margin = 30
+    var max_margin = 60
     var tl_min_h = 180
 
     h = Math.max(h, 550)
 
     // vertical
 
-    var tlh = Math.max( Math.min( h * 0.3, 320 ), tl_min_h )
+    var tlmh = 40
 
-    var mh = h - tlh - max_margin
+    var tlh = Math.max( Math.min( (h-tlmh) * 0.3, 320 ), tl_min_h )
+
+    var mh = h - tlh - max_margin - tlmh
 
     if ( mh > 400 )
         mh *= 0.95
@@ -63,12 +66,15 @@ layouts_strategies[0] = function( w, h ){
     if ( mh > 600 )
         mh = 600
 
-    var m = ( h - mh - tlh ) /4
+    var m = ( h - mh - tlh - tlmh ) /6
 
     $main.style.top = m+'px'
     $main.style.height = mh+'px'
 
-    $tl.style.top = (m*3+mh)+'px'
+    $tlm.style.top = (m*4+mh)+'px'
+    $tlm.style.height = tlmh+'px'
+
+    $tl.style.top = (m*5+mh+tlmh)+'px'
     $tl.style.height = tlh+'px'
 
     $cont.style.height = h+'px'
@@ -81,8 +87,8 @@ layouts_strategies[0] = function( w, h ){
     if ( mw>1000 )
         mw = 1000
 
-    $main.style.left = $tl.style.left = ((w-mw)/2)+'px'
-    $main.style.width = $tl.style.width = mw+'px'
+    $main.style.left =  $tlm.style.left = $tl.style.left = ((w-mw)/2)+'px'
+    $main.style.width = $tlm.style.width = $tl.style.width = mw+'px'
 
 
 

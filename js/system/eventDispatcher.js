@@ -11,7 +11,7 @@ var dispatch = function( eventName, data ){
             case 'ui-mousemove':
                 break;
             default:
-                console.log(eventName, data)
+            //    console.log(eventName, data)
         }
 
     this._lock = true

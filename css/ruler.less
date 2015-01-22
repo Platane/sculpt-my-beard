@@ -1,21 +1,16 @@
 @import 'colorScheme.less';
 
-.tl-ruler {
-
-    height: 20px;
-    width : 100%;
+.tl-right {
     position: relative;
-    z-index: 2;
-
 }
 
 .tl-cursor {
-    @arrow: 12px;
+    @arrow: 16px;
     @line: 1px;
 
     position: absolute;
-    height: 280px;
-    top: 8px;
+    height: calc( ~"83.33% + 6px" );
+    bottom: 2px;
     width: @line;
     background: @bright;
     box-shadow: 0.5px 0px 2px 0.5px rgba(50, 50, 50, 0.2);
@@ -37,6 +32,6 @@
     }
     &:after{
         bottom: -5px;
-        border-bottom: solid @arrow+2px @bright;
+        //border-bottom: solid @arrow+2px @bright;
     }
 }

@@ -20,24 +20,25 @@ var enable = function(){
 }
 var disable = function(){
     ed.unlisten( 'ui-tlCursor-mousedown', this )
+    ed.unlisten( 'ui-tl-mousemove', this )
+    ed.unlisten( 'ui-mouseup', this )
 }
 
 var CurDown = function( event ){
-    this._origin = this.model.timeLineState.project( event.date )
-    this._anchor = event.mouseEvent.pageX
 
-    ed.unlisten( 'ui-mousemove', this )
+    if ( !event.primaryTarget )
+        return
+
+    ed.unlisten( 'ui-tl-mousemove', this )
     ed.unlisten( 'ui-mouseup', this )
-    ed.listen( 'ui-mousemove', this.CurMove, this )
+    ed.listen( 'ui-tl-mousemove', this.CurMove, this )
     ed.listen( 'ui-mouseup', this.CurUp, this )
 }
 var CurMove = function( event ){
-    var tls = this.model.timeLineState
-    var newDate = tls.unproject( this._origin + event.mouseEvent.pageX - this._anchor )
 
-    tls.cursor = newDate
+    this.model.timeLineState.cursor = event.date
 
-    ed.dispatch( 'change:timeLineState', {
+    ed.dispatch( 'change:timeLineState-cursor', {
         wip: true
     })
 }
@@ -47,10 +48,10 @@ var CurUp = function( event ){
 
     tls.cursor = tls.quantify( tls.cursor )
 
-    ed.unlisten( 'ui-mousemove', this )
+    ed.unlisten( 'ui-tl-mousemove', this )
     ed.unlisten( 'ui-mouseup', this )
 
-    ed.dispatch( 'change:timeLineState', {
+    ed.dispatch( 'change:timeLineState-cursor', {
         wip: false
     })
 }

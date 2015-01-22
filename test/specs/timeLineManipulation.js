@@ -102,7 +102,7 @@ describe('applyTimeLine', function(){
             describe('between ', function(){
                 beforeEach(function(){
                     this.timeLineState.cursor = 12
-                    ed.dispatch('change:timeLineState',{
+                    ed.dispatch('change:timeLineState-cursor',{
                         shape: this.shape
                     })
                 })
@@ -161,7 +161,7 @@ describe('applyTimeLine', function(){
             describe('between ', function(){
                 beforeEach(function(){
                     this.timeLineState.cursor = 12
-                    ed.dispatch('change:timeLineState',{
+                    ed.dispatch('change:timeLineState-cursor',{
                         shape: this.shape
                     })
                 })
@@ -176,7 +176,7 @@ describe('applyTimeLine', function(){
             describe('between others', function(){
                 beforeEach(function(){
                     this.timeLineState.cursor = 36
-                    ed.dispatch('change:timeLineState',{
+                    ed.dispatch('change:timeLineState-cursor',{
                         shape: this.shape
                     })
                 })
@@ -191,7 +191,7 @@ describe('applyTimeLine', function(){
             describe('before all', function(){
                 beforeEach(function(){
                     this.timeLineState.cursor = 3
-                    ed.dispatch('change:timeLineState',{
+                    ed.dispatch('change:timeLineState-cursor',{
                         shape: this.shape
                     })
                 })
@@ -206,7 +206,7 @@ describe('applyTimeLine', function(){
             describe('after all', function(){
                 beforeEach(function(){
                     this.timeLineState.cursor = 124
-                    ed.dispatch('change:timeLineState',{
+                    ed.dispatch('change:timeLineState-cursor',{
                         shape: this.shape
                     })
                 })

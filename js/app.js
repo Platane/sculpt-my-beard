@@ -3,6 +3,7 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
   , zoneEventRenderer = Object.create( require('./renderer/svg/zoneEvent') )
   , basicEvent = Object.create( require('./renderer/basicEvent') )
   , timeLineRenderer = Object.create( require('./renderer/timeLine/timeLine') )
+  , timeLineMapRenderer = Object.create( require('./renderer/timeLine/map') )
 
 
   , face = Object.create( require('./model/data/Face') )
@@ -56,6 +57,7 @@ zoneEventRenderer.init( modelBall, domSvg )
 basicEvent.init( modelBall )
 
 timeLineRenderer.init( modelBall, document.querySelector('.app-timeLine') )
+timeLineMapRenderer.init( modelBall, document.querySelector('.app-timeLineMap') )
 
 // controller
 dragPointCtrl.init( modelBall ).enable()

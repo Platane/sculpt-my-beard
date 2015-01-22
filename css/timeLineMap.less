@@ -1,0 +1,21 @@
+@import 'colorScheme.less';
+
+.app-timeLineMap {
+    background-color: @lightBack;
+}
+.tlm-frame {
+    position: absolute;
+    display: block;
+    z-index: 2;
+    border: solid 1px @dark;
+    height: calc( ~" 100% - 12px " );
+    top: 5px;
+}
+.tlm-cursor {
+    position: absolute;
+    display: block;
+    width: 2px;
+    height: calc( ~" 100% + 10px " );
+    top: -5px;
+    background-color: @bright;
+}
