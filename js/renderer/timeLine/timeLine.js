@@ -55,7 +55,8 @@ var relayEvent = function( event ){
     var o = dom.offset( this.domBlockLines )
     var x = event.pageX - o.left
     var y = event.pageY - o.top
-    var date = this.model.timeLineState.unproject( x/this.domBlockLines.offsetWidth )
+    var xPer = x/this.domBlockLines.offsetWidth
+    var date = this.model.timeLineState.unproject( xPer )
 
     var key, line
     var primaryTarget = true
@@ -64,6 +65,7 @@ var relayEvent = function( event ){
             date: date,
             y: y,
             x: x,
+            xPer: xPer,
             mouseEvent: event,
             primaryTarget: primaryTarget
         })
@@ -78,6 +80,7 @@ var relayEvent = function( event ){
             date: date,
             y: y,
             x: x,
+            xPer: xPer,
             primaryTarget: primaryTarget
         })
         primaryTarget = false
@@ -90,9 +93,10 @@ var relayEvent = function( event ){
             date: date,
             y: y,
             x: x,
+            xPer: xPer,
             primaryTarget: primaryTarget
         })
-        primaryTarget = false
+        //primaryTarget = false
     }
 
     ed.dispatch( 'ui-tl-'+event.type, {
@@ -100,6 +104,7 @@ var relayEvent = function( event ){
         date: date,
         y: y,
         x: x,
+        xPer: xPer,
         primaryTarget: primaryTarget
     })
 
@@ -137,8 +142,9 @@ var renderKeys = function( ){
     }
 }
 var renderCursor = function( ){
-    var proj = this.model.timeLineState.project
-    this.domCursor.style.left = 'calc( '+(proj( this.model.timeLineState.cursor )*100)+'% - 0.5px )'
+    var x = this.model.timeLineState.project( this.model.timeLineState.cursor )
+    this.domCursor.style.left = 'calc( '+(x*100)+'% - 0.5px )'
+    this.domCursor.style.display = x>0&&x<1 ? '' : 'none'
 }
 
 var build = function( ){

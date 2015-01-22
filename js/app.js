@@ -19,6 +19,7 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
   , cameraCtrl = Object.create( require('./controller/drawZone/camera') )
   , timeLineKeyPointCtrl = Object.create( require('./controller/timeLine/key') )
   , timeLineCursorCtrl = Object.create( require('./controller/timeLine/cursor') )
+  , viewportTrCtrl = Object.create( require('./controller/timeLine/viewport-translate') )
   , ctrlZ = Object.create( require('./controller/ctrlZ') )
 
   , staticApplyCtrl = Object.create( require('./staticController/applyTimeLine') )
@@ -65,6 +66,7 @@ cameraCtrl.init( modelBall ).enable()
 timeLineKeyPointCtrl.init( modelBall ).enable()
 ctrlZ.init( modelBall ).enable()
 timeLineCursorCtrl.init( modelBall ).enable()
+viewportTrCtrl.init( modelBall ).enable()
 
 
 staticApplyCtrl.init( modelBall ).enable()
