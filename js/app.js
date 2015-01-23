@@ -18,7 +18,8 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
   , dragPointCtrl = Object.create( require('./controller/drawZone/dragPoint') )
   , cameraCtrl = Object.create( require('./controller/drawZone/camera') )
   , timeLineKeyPointCtrl = Object.create( require('./controller/timeLine/key') )
-  , timeLineCursorCtrl = Object.create( require('./controller/timeLine/cursor') )
+  , timeLineCursorDragCtrl = Object.create( require('./controller/timeLine/cursor-drag') )
+  , timeLineCursorClickCtrl = Object.create( require('./controller/timeLine/cursor-click') )
   , viewportTrCtrl = Object.create( require('./controller/timeLine/viewport-translate') )
   , ctrlZ = Object.create( require('./controller/ctrlZ') )
 
@@ -31,6 +32,7 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
 
   require('./layout')
   require('./utils/doubleClick')
+  require('./utils/shortClick')
 
 // init model
 face.init()
@@ -65,7 +67,8 @@ dragPointCtrl.init( modelBall ).enable()
 cameraCtrl.init( modelBall ).enable()
 timeLineKeyPointCtrl.init( modelBall ).enable()
 ctrlZ.init( modelBall ).enable()
-timeLineCursorCtrl.init( modelBall ).enable()
+timeLineCursorDragCtrl.init( modelBall ).enable()
+timeLineCursorClickCtrl.init( modelBall ).enable()
 viewportTrCtrl.init( modelBall ).enable()
 
 

@@ -203,6 +203,7 @@ var init = function( modelBall, timeLineEL ){
     this.domEl.querySelector('.tl-right').addEventListener('mouseup', relayEvent.bind(this), false )
     this.domEl.querySelector('.tl-right').addEventListener('mousemove', relayEvent.bind(this), false )
     this.domEl.querySelector('.tl-right').addEventListener('wheel', relayEvent.bind(this), false )
+    this.domEl.querySelector('.tl-right').addEventListener('shortclick', relayEvent.bind(this), false )
 
     return this
 }
