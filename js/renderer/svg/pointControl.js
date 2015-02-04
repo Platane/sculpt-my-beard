@@ -60,7 +60,7 @@ var build = function( domSvg ){
     }
 }
 
-var init = function( modelBall, domSvg ){
+var init = function( modelBall, ed, domSvg ){
 
     this.model = {
         face: modelBall.face,

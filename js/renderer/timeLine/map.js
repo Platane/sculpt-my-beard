@@ -112,7 +112,7 @@ var build = function( container ){
 
 }
 
-var init = function( modelBall, container ){
+var init = function( modelBall, ed, container ){
 
     this.model = {
         timeLineState: modelBall.timeLineState,

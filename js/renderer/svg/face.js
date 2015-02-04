@@ -1,5 +1,4 @@
 var Abstract = require('../../utils/Abstract')
-  , ed = require('../../system/eventDispatcher')
   , dom = require('../../utils/domHelper')
   , svg = require('./svg-util')
 
@@ -39,7 +38,7 @@ var build = function( domSvg ){
     }
 }
 
-var init = function( modelBall, domSvg ){
+var init = function( modelBall, ed, domSvg ){
 
     this.model = {
         face: modelBall.face,
@@ -47,6 +46,8 @@ var init = function( modelBall, domSvg ){
     }
 
     build.call( this, domSvg )
+
+    this.ed = ed
 
     ed.listen( 'render' , render.bind( this ) , this )
 

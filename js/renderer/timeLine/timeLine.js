@@ -177,7 +177,7 @@ var build = function( ){
     this.domBlockLines = lines
 }
 
-var init = function( modelBall, timeLineEL ){
+var init = function( modelBall, ed, timeLineEL ){
 
     this.model = {
         face: modelBall.face,

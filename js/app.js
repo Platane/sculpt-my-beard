@@ -4,6 +4,7 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
   , basicEvent = Object.create( require('./renderer/basicEvent') )
   , timeLineRenderer = Object.create( require('./renderer/timeLine/timeLine') )
   , timeLineMapRenderer = Object.create( require('./renderer/timeLine/map') )
+  , toolkitRenderer = Object.create( require('./renderer/toolbar/toolkit') )
 
 
   , face = Object.create( require('./model/data/Face') )
@@ -11,6 +12,7 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
 
   , camera = Object.create( require('./model/app-state/Camera') )
   , timeLineState = Object.create( require('./model/app-state/TimeLineState') )
+  , toolkitState = Object.create( require('./model/app-state/Toolkit') )
 
   , history = Object.create( require('./model/history') )
 
@@ -21,6 +23,7 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
   , timeLineCursorDragCtrl = Object.create( require('./controller/timeLine/cursor-drag') )
   , timeLineCursorClickCtrl = Object.create( require('./controller/timeLine/cursor-click') )
   , viewportTrCtrl = Object.create( require('./controller/timeLine/viewport-translate') )
+  , toolkitCtrl = Object.create( require('./controller/toolbar/toolkit') )
   , ctrlZ = Object.create( require('./controller/ctrlZ') )
 
   , staticApplyCtrl = Object.create( require('./staticController/applyTimeLine') )
@@ -36,9 +39,10 @@ var faceRenderer = Object.create( require('./renderer/svg/face') )
 
 // init model
 face.init()
+timeLine.init()
 camera.init()
 timeLineState.init()
-timeLine.init()
+toolkitState.init()
 history.init()
 
 // init system
@@ -47,33 +51,37 @@ var modelBall = {
     camera: camera,
     timeLineState: timeLineState,
     timeLine: timeLine,
+    toolkit: toolkitState,
     history: history
 }
 window.modelBall = modelBall
 
 // init renderer
 var domSvg = document.querySelector('.app-draw-zone')
-faceRenderer.init( modelBall, domSvg )
-pointControlRenderer.init( modelBall, domSvg )
-zoneEventRenderer.init( modelBall, domSvg )
+faceRenderer.init( modelBall, ed, domSvg )
+pointControlRenderer.init( modelBall, ed, domSvg )
+zoneEventRenderer.init( modelBall, ed, domSvg )
 
-basicEvent.init( modelBall )
+basicEvent.init( modelBall ,ed )
 
-timeLineRenderer.init( modelBall, document.querySelector('.app-timeLine') )
-timeLineMapRenderer.init( modelBall, document.querySelector('.app-timeLineMap') )
+timeLineRenderer.init( modelBall, ed , document.querySelector('.app-timeLine') )
+timeLineMapRenderer.init( modelBall, ed , document.querySelector('.app-timeLineMap') )
+
+toolkitRenderer.init( modelBall, ed , document.querySelector('.app-vertical-toolbar') )
 
 // controller
-dragPointCtrl.init( modelBall ).enable()
-cameraCtrl.init( modelBall ).enable()
-timeLineKeyPointCtrl.init( modelBall ).enable()
-ctrlZ.init( modelBall ).enable()
-timeLineCursorDragCtrl.init( modelBall ).enable()
-timeLineCursorClickCtrl.init( modelBall ).enable()
-viewportTrCtrl.init( modelBall ).enable()
+dragPointCtrl.init( modelBall, ed ).enable()
+cameraCtrl.init( modelBall, ed ).enable()
+timeLineKeyPointCtrl.init( modelBall, ed ).enable()
+ctrlZ.init( modelBall, ed ).enable()
+timeLineCursorDragCtrl.init( modelBall, ed ).enable()
+timeLineCursorClickCtrl.init( modelBall, ed ).enable()
+viewportTrCtrl.init( modelBall, ed ).enable()
+toolkitCtrl.init( modelBall, ed ).enable()
 
 
-staticApplyCtrl.init( modelBall ).enable()
-staticRecomputeCtrl.init( modelBall ).enable()
+staticApplyCtrl.init( modelBall, ed ).enable()
+staticRecomputeCtrl.init( modelBall, ed ).enable()
 
 
 

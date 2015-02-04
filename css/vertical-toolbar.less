@@ -1,0 +1,128 @@
+@import 'colorScheme.less';
+
+.app-vertical-toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+
+    overflow: hidden;
+
+    width: 13%;
+    min-width: 90px;
+
+
+    background-color: @lightBack;
+    box-shadow: 5px 0 8px -5px @shadow-color;
+
+    font-family: axis, helvetica;
+    text-transform: uppercase;
+    color: @dark;
+
+
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+
+.tb-switch {
+
+    @size: 30px;
+
+    @keyframes on-to-off {
+        0% {
+            transform: translate3d( 0,0,0 );
+        }
+        100% {
+            transform: translate3d( @size,0,0 );
+        }
+    }
+    @keyframes on-to-off-reverse {
+        0% {
+            transform: translate3d( 0,0,0 );
+        }
+        100% {
+            transform: translate3d( -@size,0,0 );
+        }
+    }
+    @keyframes off-to-on {
+        0% {
+            transform: translate3d( @size,0,0 );
+        }
+        80% {
+            transform: none;
+        }
+        82% {
+            transform: scale(1.1, 1.1);
+        }
+        100% {
+            transform: none;
+        }
+    }
+    @keyframes off-to-on-reverse {
+        0% {
+            transform: translate3d( -@size,0,0 );
+        }
+        100% {
+            transform: translate3d( 0,0,0 );
+        }
+        80% {
+            transform: none;
+        }
+        82% {
+            transform: scale(1.1, 1.1);
+        }
+        100% {
+            transform: none;
+        }
+    }
+
+
+    position: relative;
+
+    svg {
+        width: @size * 2;
+        height: @size;
+    }
+    .tb-switch-back {
+        fill: @dark;
+    }
+    .tb-switch-front {
+        fill: @bright;
+        transform: translate3d( -@size,0,0 );
+        animation: on-to-off-reverse 500ms ease;
+    }
+    .tb-switch-front-viewport {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: @size;
+        height: @size;
+        overflow: hidden;
+
+        //background: fade( @dark, 20% );
+        //border: solid 1px @dark;
+        box-sizing: border-box;
+
+        transform: translate3d( @size,0,0 );
+
+        animation: on-to-off 500ms ease;
+    }
+
+    &.enabled{
+        .tb-switch-front-viewport {
+            transform: translate3d( 0,0,0 );
+            animation: off-to-on 500ms ease;
+        }
+        .tb-switch-front {
+            transform: translate3d( 0,0,0 );
+            animation: off-to-on-reverse 500ms ease;
+        }
+    }
+}

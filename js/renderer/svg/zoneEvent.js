@@ -50,7 +50,7 @@ var relayEvent = function( event ){
 }
 
 
-var init = function( modelBall, domSvg ){
+var init = function( modelBall, ed, domSvg ){
 
     domSvg.addEventListener( 'mousedown', relayEvent, false )
     domSvg.addEventListener( 'mousemove', relayEvent, false )

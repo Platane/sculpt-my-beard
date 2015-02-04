@@ -1,5 +1,4 @@
 var Abstract = require('../../utils/Abstract')
-  , ed = require('../../system/eventDispatcher')
 
 var init = function( type ){
 

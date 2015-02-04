@@ -37,7 +37,7 @@ var getSroll=function(el){
 
 
 
-var $main = document.querySelector('.app-draw-zone')
+var $main = document.querySelector('.app-main')
 var $tl = document.querySelector('.app-timeLine')
 var $tlm = document.querySelector('.app-timeLineMap')
 var $cont = document.querySelector('.page-app')
@@ -84,8 +84,8 @@ layouts_strategies[0] = function( w, h ){
     var mw = w*0.8
     if ( mw<500 )
         mw = w*0.95
-    if ( mw>1000 )
-        mw = 1000
+    if ( mw>1400 )
+        mw = 1400
 
     $main.style.left =  $tlm.style.left = $tl.style.left = ((w-mw)/2)+'px'
     $main.style.width = $tlm.style.width = $tl.style.width = mw+'px'
