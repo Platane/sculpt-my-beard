@@ -32,11 +32,20 @@
 
 .tb-switch {
 
-    @size: 30px;
+    @size: 40px;
+    @margin: @size * 0.12;
+    @color: @bright;
+
 
     @keyframes on-to-off {
         0% {
-            transform: translate3d( 0,0,0 );
+            transform: none;
+        }
+        50% {
+            transform: translate3d( @size*1.15,0,0 );
+        }
+        80% {
+            transform: translate3d( @size*0.9,0,0 );
         }
         100% {
             transform: translate3d( @size,0,0 );
@@ -44,7 +53,13 @@
     }
     @keyframes on-to-off-reverse {
         0% {
-            transform: translate3d( 0,0,0 );
+            transform: none;
+        }
+        50% {
+            transform: translate3d( -@size*1.15,0,0 );
+        }
+        80% {
+            transform: translate3d( -@size*0.9,0,0 );
         }
         100% {
             transform: translate3d( -@size,0,0 );
@@ -54,11 +69,11 @@
         0% {
             transform: translate3d( @size,0,0 );
         }
-        80% {
-            transform: none;
+        50% {
+            transform: translate3d( -@size*0.15,0,0 );
         }
-        82% {
-            transform: scale(1.1, 1.1);
+        80% {
+            transform: translate3d( @size*0.1,0,0 );
         }
         100% {
             transform: none;
@@ -68,14 +83,11 @@
         0% {
             transform: translate3d( -@size,0,0 );
         }
-        100% {
-            transform: translate3d( 0,0,0 );
+        50% {
+            transform: translate3d( @size*0.15,0,0 );
         }
         80% {
-            transform: none;
-        }
-        82% {
-            transform: scale(1.1, 1.1);
+            transform: translate3d( -@size*0.1,0,0 );
         }
         100% {
             transform: none;
@@ -84,45 +96,57 @@
 
 
     position: relative;
+    background-color: @color;
+    display: block;
+
+    width: @size * 2 + @margin * 2;
+    height: @size + @margin * 2;
+
+    border-radius: 6px;
+    margin: 4px;
 
     svg {
         width: @size * 2;
         height: @size;
     }
     .tb-switch-back {
-        fill: @dark;
+        fill: #fff;
+        position: absolute;
+        top: @margin;
+        left: @margin;
     }
     .tb-switch-front {
-        fill: @bright;
+        fill: @color;
         transform: translate3d( -@size,0,0 );
-        animation: on-to-off-reverse 500ms ease;
+        animation: on-to-off-reverse 400ms linear;
     }
     .tb-switch-front-viewport {
         position: absolute;
-        top: 0;
-        left: 0;
+        top: @margin;
+        left: @margin;
 
         width: @size;
         height: @size;
+
+        border-radius: 4px;
+
         overflow: hidden;
 
-        //background: fade( @dark, 20% );
-        //border: solid 1px @dark;
-        box-sizing: border-box;
+        background: #fff;
 
         transform: translate3d( @size,0,0 );
 
-        animation: on-to-off 500ms ease;
+        animation: on-to-off 400ms linear;
     }
 
     &.enabled{
         .tb-switch-front-viewport {
-            transform: translate3d( 0,0,0 );
-            animation: off-to-on 500ms ease;
+            transform: none;
+            animation: off-to-on 400ms linear;
         }
         .tb-switch-front {
-            transform: translate3d( 0,0,0 );
-            animation: off-to-on-reverse 500ms ease;
+            transform: none;
+            animation: off-to-on-reverse 400ms linear;
         }
     }
 }

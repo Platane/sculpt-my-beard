@@ -11,14 +11,14 @@ var category_tpl = [
 
 var button_tpl = [
     '<li class="tb-switch">',
-        '<svg class="tb-switch-back" viewBox="0 0 200 100">',
-            '<use class="tb-swicth-icon-on" xlink:href = "#svg_hexagon"></use>',
-            '<use class="tb-swicth-icon-off" x="100" xlink:href = "#svg_hexagon"></use>',
+        '<svg class="tb-switch-back" viewBox="0 0 240 120">',
+            '<use class="tb-swicth-icon-on" y="10" x="10" xlink:href = "#svg_hexagon"></use>',
+            '<use class="tb-swicth-icon-off" y="10" x="130" xlink:href = "#svg_hexagon"></use>',
         '</svg>',
         '<div class="tb-switch-front-viewport">',
-            '<svg class="tb-switch-front" viewBox="0 0 200 100">',
-                '<use class="tb-swicth-icon-on" xlink:href = "#svg_hexagon"></use>',
-                '<use class="tb-swicth-icon-off" x="100" xlink:href = "#svg_hexagon"></use>',
+            '<svg class="tb-switch-front" viewBox="0 0 240 120">',
+                '<use class="tb-swicth-icon-on" y="10" x="10" xlink:href = "#svg_hexagon"></use>',
+                '<use class="tb-swicth-icon-off" y="10" x="130" xlink:href = "#svg_hexagon"></use>',
             '</svg>',
         '</div>',
     '</li>'
