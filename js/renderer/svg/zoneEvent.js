@@ -10,8 +10,10 @@ var relayEvent = function( event ){
     var classes = event.target.getAttribute('class').split(' ')
 
     var o = dom.offset( event.target )
-    var x = event.pageX - o.left
-    var y = event.pageY - o.top
+    var screenX = event.pageX - o.left
+    var screenY = event.pageY - o.top
+
+    var p = this.model.camera.unproject({x:screenX, y:screenY})
 
 
     var backPrimaryTarget = true
@@ -22,8 +24,23 @@ var relayEvent = function( event ){
             pool  : event.target.getAttribute('data-pool'),
             chunk : event.target.getAttribute('data-chunk'),
             i     : event.target.getAttribute('data-i'),
-            x     : x,
-            y     : y,
+            x     : p.x,
+            y     : p.y,
+            screenY     : screenY,
+            screenX     : screenX,
+            primaryTarget : true
+        })
+        backPrimaryTarget = false
+    }
+    else if( classes.indexOf('control-width-tic')>=0 && event.type != 'wheel' ) {
+        this.ed.dispatch( 'ui-width-tic-'+event.type, {
+            mouseEvent: event,
+            chunk : event.target.getAttribute('data-chunk'),
+            i     : event.target.getAttribute('data-i'),
+            x     : p.x,
+            y     : p.y,
+            screenY     : screenY,
+            screenX     : screenX,
             primaryTarget : true
         })
         backPrimaryTarget = false
@@ -31,8 +48,10 @@ var relayEvent = function( event ){
 
     this.ed.dispatch( 'ui-zone-'+event.type, {
         mouseEvent: event,
-        x     : x,
-        y     : y,
+        x     : p.x,
+        y     : p.y,
+        screenY     : screenY,
+        screenX     : screenX,
         primaryTarget : backPrimaryTarget
     })
 
@@ -44,6 +63,10 @@ var relayEvent = function( event ){
 
 
 var init = function( modelBall, ed, domSvg ){
+
+    this.model = {
+        camera: modelBall.camera,
+    }
 
     var relay = relayEvent.bind( this )
 

@@ -28,6 +28,7 @@ var domToolbar = document.querySelector('.app-vertical-toolbar')
 var renderBall = {
     face :                  require('./renderer/svg/face'),
     pointControl :          require('./renderer/svg/pointControl'),
+    widthControl :          require('./renderer/svg/widthControl'),
     zoneEvent :             require('./renderer/svg/zoneEvent'),
 
     basicEvent :            require('./renderer/basicEvent'),
@@ -38,6 +39,7 @@ var renderBall = {
     toolkit :               require('./renderer/toolbar/toolkit'),
 }
 renderBall.face.init( modelBall, ed, domDrawZone )
+renderBall.widthControl.init( modelBall, ed, domDrawZone )
 renderBall.pointControl.init( modelBall, ed, domDrawZone )
 renderBall.zoneEvent.init( modelBall, ed, domDrawZone )
 renderBall.basicEvent.init( modelBall, ed )
@@ -52,6 +54,7 @@ var ctrlBall = {
 
     // react to user input
     dragPoint :                 require('./controller/drawZone/dragPoint'),
+    dragWidth :                 require('./controller/drawZone/dragWidth'),
     drawZoneTranslate :         require('./controller/drawZone/translate'),
     drawZoneZoom :              require('./controller/drawZone/zoom'),
     timeLineMoveKey :           require('./controller/timeLine/key'),
@@ -101,10 +104,21 @@ face.chunk.mustach_right.width = [
     6
 ]
 
+face.chunk.beard_mid.vertex = [
+    {x: 100-50, y: 100},
+    {x: 100-20, y: 110},
+    {x: 100+20, y: 110},
+    {x: 100+50, y: 100},
+    {x: 100+10, y: 160},
+    {x: 100-10, y: 160}
+]
+
+
 
 
 face.chunk.mustach_left.recompute()
 face.chunk.mustach_right.recompute()
+face.chunk.beard_mid.recompute()
 
 
 
@@ -136,3 +150,5 @@ ed.listen( 'change:toolkit', pl_render ) // TODO only catch relevant stuff
 
 ed.dispatch( 'change:shape', {shape:face.chunk.mustach_right} )
 ed.dispatch( 'change:shape', {shape:face.chunk.mustach_left} )
+ed.dispatch( 'change:shape', {shape:face.chunk.beard_mid} )
+ed.dispatch( 'change:toolkit' )

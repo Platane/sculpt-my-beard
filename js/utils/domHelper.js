@@ -3,11 +3,14 @@ module.exports = {
 		return el.classList.contains(c)
 	},
 	addClass : function( el , c ){
-		el.setAttribute('class', el.getAttribute('class') +' '+ c )
+        if( !this.hasClass( el, c ) )
+		      el.setAttribute('class', el.getAttribute('class') +' '+ c )
 	},
 	removeClass : function( el , c ){
+        if( !this.hasClass( el, c ) )
+            return
 		var nc = ''
-        var cs = el.getAttribute('class').split(' ')
+        var cs = el.getAttribute('class').trim().split(' ')
 		for(var i=cs.length;i--; )
 			if( c != cs[i] )
 				nc += ' '+cs[i]

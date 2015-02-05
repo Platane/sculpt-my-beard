@@ -12,6 +12,7 @@
     width: 13%;
     min-width: 90px;
 
+    padding: 4px;
 
     background-color: @lightBack;
     box-shadow: 5px 0 8px -5px @shadow-color;
@@ -28,9 +29,8 @@
         padding: 0;
     }
 
-    .tb-category-label {
-        margin: 4px;
-    }
+
+
     .tb-category ul {
         display: flex;
         flex-direction: column;
@@ -43,7 +43,7 @@
 
     @size: 26px;
     @margin: @size * 0.12;
-    @color: extract( @chunk-colors, 1 );
+    @color: extract( @chunk-colors, 2 );
 
 
     @keyframes on-to-off {

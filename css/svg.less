@@ -19,15 +19,21 @@ circle.control-tic {
         stroke-width: 5;
     }
 }
+line.control-line {
+    fill: none;
+    stroke: @dark;
+}
 
 
 .loop( @i ) when ( @i > 0 ) {
     .loop(( @i - 1 ));
 
+    .color path.hair-chunk-@{i},
     path.hair-chunk-@{i}.color {
         fill: extract( @chunk-colors, @i );
         stroke: none;
     }
+    .color.stroke path.hair-chunk-@{i},
     path.hair-chunk-@{i}.color.stroke {
         stroke: extract( @chunk-colors, @i );
         fill: none;

@@ -25,8 +25,8 @@ var wheel = function( event ){
 
     if( this.model.camera.setZoom(
         this.model.camera.zoom + ( event.mouseEvent.deltaY<0 ? 1 : -1 ),
-        event.x,
-        event.y )
+        event.screenX,
+        event.screenY )
     )
         this.ed.dispatch( 'change:camera', {
             wip: false

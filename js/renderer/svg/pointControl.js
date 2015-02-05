@@ -55,9 +55,10 @@ var build = function( domSvg ){
 
     this.dom = {}
 
+    var k=1
     for( var i in face.chunk ){
         this.dom[ i ] = svg.create('g')
-        this.dom[ i ].className = 'control control-'+i
+        this.dom[ i ].setAttribute( 'class', 'control control-'+i+' control-'+(k++) )
         this.dom[ i ].setAttribute( 'data-chunk', i )
         domSvg.appendChild( this.dom[ i ] )
     }

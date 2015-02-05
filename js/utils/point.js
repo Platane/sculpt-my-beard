@@ -6,6 +6,14 @@ u.scalaire = function( a, b ){
 u.norme = function( a ){
     return Math.sqrt( u.scalaire( a, a ) )
 }
+u.distanceSqrt = function( a, b ){
+    var x = a.x - b.x
+    var y = a.y - b.y
+    return x*x + y*y
+}
+u.distance = function( a, b ){
+    return Math.sqrt( this.distanceSqrt( a, b ) )
+}
 u.normalize = function( a ){
     var n = u.norme( a )
     a.x /= n

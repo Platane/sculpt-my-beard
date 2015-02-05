@@ -16,7 +16,7 @@ var init = function( type ){
         },
         camera: {
             translate: true,
-            zoom: true,
+            zoom: false,
         }
     }
 
