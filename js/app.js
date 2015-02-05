@@ -29,6 +29,7 @@ var renderBall = {
     face :                  require('./renderer/svg/face'),
     pointControl :          require('./renderer/svg/pointControl'),
     widthControl :          require('./renderer/svg/widthControl'),
+    sharpnessControl :      require('./renderer/svg/sharpnessControl'),
     zoneEvent :             require('./renderer/svg/zoneEvent'),
 
     basicEvent :            require('./renderer/basicEvent'),
@@ -39,6 +40,7 @@ var renderBall = {
     toolkit :               require('./renderer/toolbar/toolkit'),
 }
 renderBall.face.init( modelBall, ed, domDrawZone )
+renderBall.sharpnessControl.init( modelBall, ed, domDrawZone )
 renderBall.widthControl.init( modelBall, ed, domDrawZone )
 renderBall.pointControl.init( modelBall, ed, domDrawZone )
 renderBall.zoneEvent.init( modelBall, ed, domDrawZone )

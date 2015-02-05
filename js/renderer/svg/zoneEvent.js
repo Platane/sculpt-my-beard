@@ -45,6 +45,20 @@ var relayEvent = function( event ){
         })
         backPrimaryTarget = false
     }
+    else if( classes.indexOf('control-sharpness-tic')>=0 && event.type != 'wheel' ) {
+        this.ed.dispatch( 'ui-sharpness-tic-'+event.type, {
+            mouseEvent: event,
+            chunk : event.target.getAttribute('data-chunk'),
+            i     : event.target.getAttribute('data-i'),
+            sens  : event.target.getAttribute('data-sens'),
+            x     : p.x,
+            y     : p.y,
+            screenY     : screenY,
+            screenX     : screenX,
+            primaryTarget : true
+        })
+        backPrimaryTarget = false
+    }
 
     this.ed.dispatch( 'ui-zone-'+event.type, {
         mouseEvent: event,

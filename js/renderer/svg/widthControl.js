@@ -65,8 +65,8 @@ var render = function( ){
             var b = (shape.line.length-2) - index
 
 
-            var la = line( exp[ a ].x, exp[ a ].y, p.x, p.y )
-            container.appendChild( la )
+            var l = line( exp[ a ].x, exp[ a ].y, exp[ b ].x, exp[ b ].y )
+            container.appendChild( l )
 
             var ta = tic( exp[ a ].x, exp[ a ].y )
             ta.setAttribute( 'class', 'control-width-tic' )
@@ -74,10 +74,6 @@ var render = function( ){
             ta.setAttribute( 'data-chunk', i )
             container.appendChild( ta )
 
-
-
-            var lb = line( exp[ b ].x, exp[ b ].y, p.x, p.y )
-            container.appendChild( lb )
 
             var tb = tic( exp[ b ].x, exp[ b ].y )
             tb.setAttribute( 'class', 'control-width-tic' )
