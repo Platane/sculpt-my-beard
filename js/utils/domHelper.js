@@ -6,11 +6,12 @@ module.exports = {
 		el.setAttribute('class', el.getAttribute('class') +' '+ c )
 	},
 	removeClass : function( el , c ){
-		var nc=""
-		for(var i=el.classList.length;i--; )
-			if( c != el.classList[i] )
-				nc += ' '+el.classList[i]
-		el.className = nc
+		var nc = ''
+        var cs = el.getAttribute('class').split(' ')
+		for(var i=cs.length;i--; )
+			if( c != cs[i] )
+				nc += ' '+cs[i]
+        el.setAttribute('class', nc )
 	},
 	getParent : function( el , c ){
 		while(true)

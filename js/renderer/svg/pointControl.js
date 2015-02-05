@@ -1,5 +1,4 @@
 var Abstract = require('../../utils/Abstract')
-  , ed = require('../../system/eventDispatcher')
   , svg = require('./svg-util')
 
 var tic = function( x, y ){
@@ -14,6 +13,7 @@ var tic = function( x, y ){
 var render = function( ){
     var face = this.model.face
     var proj = this.model.camera.project
+    var displayCtrl = this.model.toolkit.options.tool.movePoint
 
     for( var i in face.chunk ){
 
@@ -35,6 +35,9 @@ var render = function( ){
             c = 'control-path'
             d = 'vertex'
         }
+
+        if ( !displayCtrl )
+            continue
 
         pts.map( proj ).forEach(function( p, index ){
             var t = tic( p.x, p.y )
@@ -65,11 +68,14 @@ var init = function( modelBall, ed, domSvg ){
     this.model = {
         face: modelBall.face,
         camera: modelBall.camera,
+        toolkit: modelBall.toolkit,
     }
+
+    this.ed = ed
 
     build.call( this, domSvg )
 
-    ed.listen( 'render' , render.bind( this ) , this )
+    this.ed.listen( 'render' , render.bind( this ) , this )
 
     return this
 }

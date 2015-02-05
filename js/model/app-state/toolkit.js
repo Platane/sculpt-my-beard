@@ -5,7 +5,7 @@ var init = function( type ){
     this.options = {
         view: {
             color: true,
-            stroke: true,
+            stroke: false,
         },
         tool: {
             movePoint: true,

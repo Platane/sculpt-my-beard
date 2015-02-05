@@ -1,8 +1,14 @@
 @import 'colorScheme.less';
 
 path.hair-chunk {
+
     fill: @dark;
     stroke: none;
+
+    &.stroke {
+        fill: none;
+        stroke: @dark;
+    }
 }
 circle.control-tic {
     fill: @bright;
@@ -18,11 +24,11 @@ circle.control-tic {
 .loop( @i ) when ( @i > 0 ) {
     .loop(( @i - 1 ));
 
-    path.hair-chunk-@{i}.color-filled {
+    path.hair-chunk-@{i}.color {
         fill: extract( @chunk-colors, @i );
         stroke: none;
     }
-    path.hair-chunk-@{i}.color-stroked {
+    path.hair-chunk-@{i}.color.stroke {
         stroke: extract( @chunk-colors, @i );
         fill: none;
     }

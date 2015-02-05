@@ -130,5 +130,9 @@ var pl_render = function(){
 }
 ed.listen( 'change:shape', pl_render )
 ed.listen( 'change:camera', pl_render )
+ed.listen( 'change:toolkit', pl_render ) // TODO only catch relevant stuff
+
+
+
 ed.dispatch( 'change:shape', {shape:face.chunk.mustach_right} )
 ed.dispatch( 'change:shape', {shape:face.chunk.mustach_left} )

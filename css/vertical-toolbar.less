@@ -27,12 +27,21 @@
         margin: 0;
         padding: 0;
     }
+
+    .tb-category-label {
+        margin: 4px;
+    }
+    .tb-category ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 
 .tb-switch {
 
-    @size: 30px;
+    @size: 26px;
     @margin: @size * 0.12;
     @color: extract( @chunk-colors, 1 );
 

@@ -17,10 +17,21 @@ var render = function( ){
         this.dom[ i ].setAttribute( 'd',
             svg.renderBezier( face.chunk[ i ].bezierPath.map( proj ) )
         )
-        //dom.removeClass( this.dom[ i ], 'color-filled' )
-        //dom.removeClass( this.dom[ i ], 'color-stroked' )
+    }
 
-        //dom.addClass( this.dom[ i ], 'color-filled' )
+    renderStyle.call( this )
+}
+var renderStyle = function( ){
+
+    var face = this.model.face
+
+    var stroke = this.model.toolkit.options.view.stroke
+    var color = this.model.toolkit.options.view.color
+
+    for( var i in face.chunk ) {
+
+        dom[ stroke ? 'addClass' : 'removeClass' ]( this.dom[ i ], 'stroke' )
+        dom[ color ? 'addClass' : 'removeClass' ]( this.dom[ i ], 'color' )
     }
 }
 
@@ -34,7 +45,6 @@ var build = function( domSvg ){
         this.dom[ i ] = svg.create('path')
         this.dom[ i ].setAttribute('class', 'hair-chunk '+i+' hair-chunk-'+(k++))
         domSvg.appendChild( this.dom[ i ] )
-        dom.addClass( this.dom[ i ], 'color-filled' )
     }
 }
 
@@ -42,7 +52,8 @@ var init = function( modelBall, ed, domSvg ){
 
     this.model = {
         face: modelBall.face,
-        camera: modelBall.camera
+        camera: modelBall.camera,
+        toolkit: modelBall.toolkit,
     }
 
     build.call( this, domSvg )
