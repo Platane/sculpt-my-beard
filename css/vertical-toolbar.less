@@ -96,7 +96,7 @@
 
 
     position: relative;
-    background-color: @color;
+    background-color: fade( @dark, 30% );
     display: block;
 
     width: @size * 2 + @margin * 2;
@@ -149,4 +149,8 @@
             animation: off-to-on-reverse 400ms linear;
         }
     }
+}
+.tb-tooltip {
+    position: absolute;
+    z-index: 10;
 }

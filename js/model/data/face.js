@@ -1,8 +1,8 @@
 var Abstract = require('../../utils/Abstract')
 
   , historizable = require('../mixin/historizable')
-  , Shape = require('./Shape')
-  , Line = require('./Line')
+  , Shape = require('./shape')
+  , Line = require('./line')
 
 var init = function( ){
 

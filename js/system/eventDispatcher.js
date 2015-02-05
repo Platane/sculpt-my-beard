@@ -1,25 +1,26 @@
 var Abstract = require('../utils/Abstract')
 
-var listener = {};
+// use the stack only if its the same event listened
+
 
 var dispatch = function( eventName, data ){
 
-
-
-    if(true)
+    if(false && !this.nolog)
         switch(eventName){
-            case 'ui-mousemove':
+            case 'update':
                 break;
             default:
-            //    console.log(eventName, data)
+                console.log( '[ '+eventName+' ] ', data)
         }
 
     this._lock = true
 
-    var l = listener[ eventName ] || []
+    var l = (this.listener || {})[ eventName ] || []
     for( var i = 0; i<l.length; i++)
         l[i].fn(data, eventName)
 
+
+    // as the listen / unlisten is locked during the event loop, redo it here
     this._lock = false
     while( (this._stack||[]).length ){
         var o = this._stack.shift()
@@ -33,28 +34,29 @@ var listen = function( eventName, fn , key ){
     if ( this._lock )
         return void ( this._stack = this._stack || [] ).push({ fn:'listen', args: arguments })
 
-    ;( listener[ eventName ] = listener[ eventName ] || [] ).push({
+    this.listener = this.listener || {}
+    ;( this.listener[ eventName ] = this.listener[ eventName ] || [] ).push({
         fn: fn,
         key: key
     })
     return this
 }
-var unlisten = function( eventName, key ){
+var unlisten = function( eventName, keyOrFn ){
 
     if ( this._lock )
         return void ( this._stack = this._stack || [] ).push({ fn:'unlisten', args: arguments })
 
-    var l = ( listener[ eventName ] = listener[ eventName ] || [] )
+    var l = (this.listener || {})[ eventName ] || []
     for( var i = l.length; i--;)
-        if( l[i].key == key )
+        if( l[i].key == keyOrFn || l[i].fn == keyOrFn )
             l.splice(i,1)
     return this
 }
 var hasListener = function( eventName, key ){
-    return !!( listener[ eventName ] || [] ).length
+    return !!( (this.listener || {})[ eventName ] || [] ).length
 }
 var reset = function( eventName, key ){
-    listener = {}
+    this.listener = {}
 }
 
 module.exports = Object.create( Abstract )

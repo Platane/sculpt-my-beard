@@ -1,7 +1,6 @@
 var Abstract = require('../../utils/Abstract')
   , historizable = require('../mixin/historizable')
 
-  , ed = require('../../system/eventDispatcher')
   , pj = require('../../system/pathJob')
   , u = require('../../utils/point')
 

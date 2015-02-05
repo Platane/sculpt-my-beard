@@ -48,10 +48,19 @@ var build = function( domContainer ){
             this.dom[ k ].setAttribute( 'data-category', i )
             this.dom[ k ].setAttribute( 'data-option', k )
             ul.appendChild( this.dom[ k ] )
+
+            this.dom[ k ].addEventListener('mouseenter', showTooltip.bind( this ), false )
+            this.dom[ k ].addEventListener('mouseleave', hideTooltip.bind( this ), false )
         }
     }
 
     update.call( this )
+
+
+    // tooltip
+    this.domTooltip = document.createElement('div')
+    this.domTooltip.className = 'tb-tooltip'
+    document.body.appendChild( this.domTooltip )
 }
 
 var update = function( ){
@@ -77,6 +86,22 @@ var init = function( modelBall, ed, dom ){
     dom.addEventListener('click', onClick.bind( this ), false )
 
     return this
+}
+
+var showTooltip = function( event ){
+    if( dom.hasClass( event.target , 'tb-switch') ){
+
+        var o = dom.offset( event.target )
+
+        this.domTooltip.style.display = ''
+        this.domTooltip.style.top = ( o.top )+'px'
+        this.domTooltip.style.left = ( o.left + event.target.offsetWidth )+'px'
+
+        this.domTooltip.innerHTML  = event.target.getAttribute('data-option')
+    }
+}
+var hideTooltip = function( event ){
+    this.domTooltip.style.display = 'none'
 }
 
 var onClick = function( event ){

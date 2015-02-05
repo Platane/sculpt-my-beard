@@ -1,5 +1,4 @@
-var Shape = require('./Shape')
-  , ed = require('../../system/eventDispatcher')
+var Shape = require('./shape')
   , pj = require('../../system/pathJob')
   , u = require('../../utils/point')
 

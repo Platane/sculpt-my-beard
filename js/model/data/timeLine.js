@@ -1,6 +1,5 @@
 var Abstract = require('../../utils/Abstract')
   , historizable = require('../mixin/historizable')
-  , ed = require('../../system/eventDispatcher')
 
 
 /*
