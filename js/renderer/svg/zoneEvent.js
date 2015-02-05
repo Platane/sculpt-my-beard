@@ -1,12 +1,5 @@
 var Abstract = require('../../utils/Abstract')
-  , ed = require('../../system/eventDispatcher')
   , dom = require('../../utils/domHelper')
-
-var handler = function( event ){
-    ed.dispatch( 'ui-'+event.type, {
-        mouseEvent: event
-    })
-}
 
 var relayEvent = function( event ){
 
@@ -24,7 +17,7 @@ var relayEvent = function( event ){
     var backPrimaryTarget = true
 
     if( classes.indexOf('control-tic')>=0 && event.type != 'wheel' ) {
-        ed.dispatch( 'ui-tic-'+event.type, {
+        this.ed.dispatch( 'ui-tic-'+event.type, {
             mouseEvent: event,
             pool  : event.target.getAttribute('data-pool'),
             chunk : event.target.getAttribute('data-chunk'),
@@ -36,14 +29,14 @@ var relayEvent = function( event ){
         backPrimaryTarget = false
     }
 
-    ed.dispatch( 'ui-zone-'+event.type, {
+    this.ed.dispatch( 'ui-zone-'+event.type, {
         mouseEvent: event,
         x     : x,
         y     : y,
         primaryTarget : backPrimaryTarget
     })
 
-    if( event.type == 'wheel' ) {
+    if( event.type == 'wheel' && this.ed.hasEvent( 'ui-zone-wheel' )) {
         event.stopPropagation()
         event.preventDefault()
     }
@@ -57,6 +50,8 @@ var init = function( modelBall, ed, domSvg ){
     domSvg.addEventListener( 'mouseup', relayEvent, false )
 
     domSvg.addEventListener( 'wheel', relayEvent, false )
+
+    this.ed = ed
 
     this.domSvg = domSvg
 
