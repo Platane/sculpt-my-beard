@@ -20,7 +20,7 @@ var enable = function(){
     this.ed.listen( 'ui-zone-mousedown', this.mouseDown )
 }
 var disable = function(){
-    this.ed.unlisten( 'ui-tic-mousedown', this.mouseDown )
+    this.ed.unlisten( 'ui-zone-mousedown', this.mouseDown )
     this.ed.unlisten( 'ui-zone-mousemove', this.mouseMove )
     this.ed.unlisten( 'ui-mouseup', this.mouseUp )
 }

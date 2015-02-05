@@ -36,7 +36,7 @@ var relayEvent = function( event ){
         primaryTarget : backPrimaryTarget
     })
 
-    if( event.type == 'wheel' && this.ed.hasEvent( 'ui-zone-wheel' )) {
+    if( event.type == 'wheel' && this.ed.hasListener( 'ui-zone-wheel' )) {
         event.stopPropagation()
         event.preventDefault()
     }
@@ -45,11 +45,13 @@ var relayEvent = function( event ){
 
 var init = function( modelBall, ed, domSvg ){
 
-    domSvg.addEventListener( 'mousedown', relayEvent, false )
-    domSvg.addEventListener( 'mousemove', relayEvent, false )
-    domSvg.addEventListener( 'mouseup', relayEvent, false )
+    var relay = relayEvent.bind( this )
 
-    domSvg.addEventListener( 'wheel', relayEvent, false )
+    domSvg.addEventListener( 'mousedown', relay , false )
+    domSvg.addEventListener( 'mousemove', relay, false )
+    domSvg.addEventListener( 'mouseup', relay, false )
+
+    domSvg.addEventListener( 'wheel', relay, false )
 
     this.ed = ed
 

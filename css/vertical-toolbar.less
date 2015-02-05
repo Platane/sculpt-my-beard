@@ -32,9 +32,9 @@
 
 .tb-switch {
 
-    @size: 40px;
+    @size: 30px;
     @margin: @size * 0.12;
-    @color: @bright;
+    @color: extract( @chunk-colors, 1 );
 
 
     @keyframes on-to-off {

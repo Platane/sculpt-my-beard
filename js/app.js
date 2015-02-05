@@ -1,18 +1,9 @@
-var faceRenderer = Object.create( require('./renderer/svg/face') )
-  , pointControlRenderer = Object.create( require('./renderer/svg/pointControl') )
-  , zoneEventRenderer = Object.create( require('./renderer/svg/zoneEvent') )
-  , basicEvent = Object.create( require('./renderer/basicEvent') )
-  , timeLineRenderer = Object.create( require('./renderer/timeLine/timeLine') )
-  , timeLineMapRenderer = Object.create( require('./renderer/timeLine/map') )
-  , toolkitRenderer = Object.create( require('./renderer/toolbar/toolkit') )
+var ed = require('./system/eventDispatcher')
 
 
-  , ed = require('./system/eventDispatcher')
-
-
-  require('./layout')
-  require('./utils/doubleClick')
-  require('./utils/shortClick')
+require('./layout')
+require('./utils/doubleClick')
+require('./utils/shortClick')
 
 
 // init model
@@ -29,17 +20,32 @@ for( var i in modelBall )
 
 
 // init renderer
-var domSvg = document.querySelector('.app-draw-zone')
-faceRenderer.init( modelBall, ed, domSvg )
-pointControlRenderer.init( modelBall, ed, domSvg )
-zoneEventRenderer.init( modelBall, ed, domSvg )
+var domDrawZone = document.querySelector('.app-draw-zone')
+var domTimeLine = document.querySelector('.app-timeLine')
+var domTimeLineMap = document.querySelector('.app-timeLineMap')
+var domToolbar = document.querySelector('.app-vertical-toolbar')
 
-basicEvent.init( modelBall ,ed )
+var renderBall = {
+    face :                  require('./renderer/svg/face'),
+    pointControl :          require('./renderer/svg/pointControl'),
+    zoneEvent :             require('./renderer/svg/zoneEvent'),
 
-timeLineRenderer.init( modelBall, ed , document.querySelector('.app-timeLine') )
-timeLineMapRenderer.init( modelBall, ed , document.querySelector('.app-timeLineMap') )
+    basicEvent :            require('./renderer/basicEvent'),
 
-toolkitRenderer.init( modelBall, ed , document.querySelector('.app-vertical-toolbar') )
+    timeLine :              require('./renderer/timeLine/timeLine'),
+    timeLineMap :           require('./renderer/timeLine/map'),
+
+    toolkit :               require('./renderer/toolbar/toolkit'),
+}
+renderBall.face.init( modelBall, ed, domDrawZone )
+renderBall.pointControl.init( modelBall, ed, domDrawZone )
+renderBall.zoneEvent.init( modelBall, ed, domDrawZone )
+renderBall.basicEvent.init( modelBall, ed )
+renderBall.timeLine.init( modelBall, ed, domTimeLine )
+renderBall.timeLineMap.init( modelBall, ed, domTimeLineMap )
+renderBall.toolkit.init( modelBall, ed, domToolbar )
+
+
 
 // controller
 var ctrlBall = {
@@ -56,8 +62,9 @@ var ctrlBall = {
     ctrlZ :                     require('./controller/ctrlZ'),
 
     // react to alteration event
-    applyTimeLine:              require('./staticController/applyTimeLine') ,
-    recompute:                  require('./staticController/recompute') ,
+    applyTimeLine:              require('./staticController/applyTimeLine'),
+    recompute:                  require('./staticController/recompute'),
+    optionnalCtrl:                  require('./staticController/optionnalCtrl'),
 }
 for( var i in ctrlBall ){
     ctrlBall[ i ] = Object.create( ctrlBall[ i ] ).init( modelBall, ed, ctrlBall )
