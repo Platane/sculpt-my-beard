@@ -73,6 +73,7 @@ exec('git stash')
 .then( willPrint( '-- change to gh-pages and checkout master' ) )
 .then( exec.bind(null, 'git fetch') )
 .then( exec.bind(null, 'git checkout gh-pages') )
+.then( exec.bind(null, 'git pull') )
 .then( exec.bind(null, 'git checkout master -- .') )
 .then( exec.bind(null, 'git reset') )
 
