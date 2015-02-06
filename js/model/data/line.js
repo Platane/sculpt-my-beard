@@ -1,6 +1,7 @@
 var Shape = require('./shape')
   , pj = require('../../system/pathJob')
   , u = require('../../utils/point')
+  , h = require('../../model/mixin/historizable')
 
 var init = function(){
 
@@ -23,8 +24,7 @@ var pack = function(){
     return {
         line: this.line.slice().map( u.copy ),
         width: this.width.slice(),
-        // TODO deep copy this
-        sharpness: this.sharpness.slice()
+        sharpness: h.deepCopy( this.sharpness )
     }
 }
 

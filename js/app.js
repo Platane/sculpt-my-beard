@@ -57,6 +57,7 @@ var ctrlBall = {
     // react to user input
     dragPoint :                 require('./controller/drawZone/dragPoint'),
     dragWidth :                 require('./controller/drawZone/dragWidth'),
+    dragSharpness :             require('./controller/drawZone/dragSharpness'),
     drawZoneTranslate :         require('./controller/drawZone/translate'),
     drawZoneZoom :              require('./controller/drawZone/zoom'),
     timeLineMoveKey :           require('./controller/timeLine/key'),
@@ -69,7 +70,7 @@ var ctrlBall = {
     // react to alteration event
     applyTimeLine:              require('./staticController/applyTimeLine'),
     recompute:                  require('./staticController/recompute'),
-    optionnalCtrl:                  require('./staticController/optionnalCtrl'),
+    optionnalCtrl:              require('./staticController/optionnalCtrl'),
 }
 for( var i in ctrlBall ){
     ctrlBall[ i ] = Object.create( ctrlBall[ i ] ).init( modelBall, ed, ctrlBall )
@@ -92,6 +93,14 @@ face.chunk.mustach_left.width = [
     15,
     6
 ]
+face.chunk.mustach_left.sharpness = [
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+]
 
 face.chunk.mustach_right.line = [
     {x: 200-99, y: 25},
@@ -105,6 +114,14 @@ face.chunk.mustach_right.width = [
     15,
     6
 ]
+face.chunk.mustach_right.sharpness = [
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+]
 
 face.chunk.beard_mid.vertex = [
     {x: 100-50, y: 100},
@@ -114,7 +131,14 @@ face.chunk.beard_mid.vertex = [
     {x: 100+10, y: 160},
     {x: 100-10, y: 160}
 ]
-
+face.chunk.beard_mid.sharpness = [
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+    {before: 0.15, after: 0.15},
+]
 
 
 

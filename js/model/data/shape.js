@@ -16,15 +16,14 @@ var init = function( ){
 }
 
 var recompute = function(){
-    this.bezierPath = pj.bezify( this.vertex, 0.15 )
+    this.bezierPath = pj.bezify( this.vertex, this.sharpness )
     return this
 }
 
 var pack = function(){
     return {
         vertex: this.vertex.slice().map( u.copy ),
-        // TODO deep copy this
-        sharpness: this.sharpness.slice()
+        sharpness: historizable.deepCopy( this.sharpness )
     }
 }
 

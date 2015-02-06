@@ -9,10 +9,10 @@ var init = function( type ){
         },
         tool: {
             movePoint: true,
-            addPoint: true,
-            removePoint: true,
-            alterSharpness: true,
-            alterWidth: true,
+            //addPoint: true,
+            //removePoint: true,
+            alterWidth: false,
+            alterSharpness: false,
         },
         camera: {
             translate: true,

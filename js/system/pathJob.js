@@ -14,8 +14,8 @@ var resolveUncapSharpness = function( sharpness ){
         // _a a
         // -1 0
 
-        if( t = ( _a.next + a.before ) > 1 ){
-            _a.next /= t
+        if( t = ( _a.after + a.before ) > 1 ){
+            _a.after /= t
             a.before /= t
         }
     }
@@ -38,8 +38,8 @@ var bezify = function( pts, sharpness ){
     var _a = pts[ 0 ],
          a = pts[ 1 ],
         a_, e_, _e,
-        s_, _s
-
+        s_, _s,
+        k
 
     var bezierPath = []
     for( var i=pts.length; i--; ){
@@ -51,9 +51,10 @@ var bezify = function( pts, sharpness ){
         _a = pts[ i ]
 
         // compute fixed point ( depends on sharpness )
+        k = (i+1)%pts.length
 
-        _s = default_sharpness || sharpness[ i ].before
-        s_ = default_sharpness || sharpness[ i ].after
+        _s = default_sharpness || sharpness[ k ].before
+        s_ = default_sharpness || sharpness[ k ].after
 
         e_ = u.lerp( a, _a, _s )
         _e = u.lerp( a, a_, s_ )

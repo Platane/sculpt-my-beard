@@ -4,16 +4,34 @@ var Abstract = require('../../utils/Abstract')
   , svg = require('./svg-util')
 
 var arc = function( p, n, r ){
-    var t = svg.create('circle')
-    t.setAttribute( 'cx', p.x )
-    t.setAttribute( 'cy', p.y )
-    t.setAttribute( 'r', r )
-    return t
 
-    var t = svg.create('path')
+    var aperture = 60 / 180*Math.PI
+
+    var r2 = Math.min( r*0.5, 10 )
+
     var nx = n.x*r
     var ny = n.y*r
-    var path = 'M'+(p.x+n.y)+' '+(p.y-n.x)+'A'+(p.x+n.x+n.y)+' '+(p.y+n.y-n.x)+' 0 0,1 '+(p.x+n.x)+' '+(p.y+n.y)
+
+    var n2x = n.x*r2
+    var n2y = n.y*r2
+
+    var cos = Math.cos( aperture )
+    var sin = Math.sin( aperture )
+
+    var t = svg.create('path')
+    var path = 'M'+p.x+' '+p.y
+              +'L'+(p.x + ny * sin + nx * cos)+' '+(p.y - nx * sin + ny * cos)
+              +'A'+r+' '+r+', 0, 0, 1,'+(p.x+nx)+' '+(p.y+ny)
+              +'A'+r+' '+r+', 0, 0, 1,'+(p.x - ny * sin + nx * cos)+' '+(p.y + nx * sin + ny * cos)
+              +'z'
+
+    var path = 'M'+(p.x + ny * sin + nx * cos)+' '+(p.y - nx * sin + ny * cos)
+              +'A'+r+' '+r+', 0, 0, 1,'+(p.x+nx)+' '+(p.y+ny)
+              +'A'+r+' '+r+', 0, 0, 1,'+(p.x - ny * sin + nx * cos)+' '+(p.y + nx * sin + ny * cos)
+              +'L'+(p.x - n2y * sin + n2x * cos)+' '+(p.y + n2x * sin + n2y * cos)
+              +'A'+r2+' '+r2+', 0, 0, 0,'+(p.x+n2x)+' '+(p.y+n2y)
+              +'A'+r2+' '+r2+', 0, 0, 0,'+(p.x + n2y * sin + n2x * cos)+' '+(p.y - n2x * sin + n2y * cos)
+              +'z'
     t.setAttribute( 'd', path )
     return t
 }
@@ -49,16 +67,31 @@ var render = function( ){
         var container = this.dom[ i ]
         var shape = face.chunk[ i ]
 
-        shape.vertex.map( proj ).forEach(function( p, a ){
+        var vertex
+
+        ( vertex = shape.vertex.map( proj ) ).forEach(function( p, a ){
 
             var a_ = (a+1)%shape.vertex.length
             var _a = (a-1+shape.vertex.length)%shape.vertex.length
 
-            var ac = arc( p, {x:1, y:1}, 6*zoom )
+            var _n = u.normalize( u.diff( vertex[ _a ] , p ))
+            var n_ = u.normalize( u.diff( vertex[ a_ ] , p ))
+
+            var _r = 15 + shape.sharpness[ a ].before * 60
+            var r_ = 15 + shape.sharpness[ a ].after * 60
+
+            var ac = arc( p, _n, _r )
             ac.setAttribute( 'class', 'control-sharpness-tic' )
             ac.setAttribute( 'data-i', a )
             ac.setAttribute( 'data-chunk', i )
             ac.setAttribute( 'data-sens', 'before' )
+            container.appendChild( ac )
+
+            var ac = arc( p, n_, r_ )
+            ac.setAttribute( 'class', 'control-sharpness-tic' )
+            ac.setAttribute( 'data-i', a )
+            ac.setAttribute( 'data-chunk', i )
+            ac.setAttribute( 'data-sens', 'after' )
             container.appendChild( ac )
 
         })

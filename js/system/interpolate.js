@@ -1,9 +1,7 @@
 var u = require('../utils/point')
 
 
-// a (1-alpha) + b alpha
-var lerpPoints = function( apts, bpts, alpha ){
-
+var lerpArray = function( apts, bpts, lerFn ){
     // ensure that the array are same lengthed
     while( apts.length < bpts.length )
         apts.push( u.copy( bpts[bpts.length-1] ) )
@@ -15,28 +13,7 @@ var lerpPoints = function( apts, bpts, alpha ){
     var res = []
 
     for(var i=0; i<apts.length; i++)
-        res.push( u.lerp( apts[i], bpts[i], alpha ) )
-
-    return res
-}
-
-// a (1-alpha) + b alpha
-var lerpNumber = function( apts, bpts, alpha ){
-
-    // ensure that the array are same lengthed
-    while( apts.length < bpts.length )
-        apts.push( u.copy( bpts[bpts.length-1] ) )
-
-    while( bpts.length < apts.length )
-        bpts.push( u.copy( apts[apts.length-1] ) )
-
-
-    var res = []
-
-    var aalpha = 1-alpha
-
-    for(var i=0; i<apts.length; i++)
-        res.push( aalpha * apts[i] + alpha * bpts[i] )
+        res.push( lerFn( apts[i], bpts[i] ) )
 
     return res
 }
@@ -45,15 +22,30 @@ var lerpNumber = function( apts, bpts, alpha ){
 var lerpPack = function( apack, bpack , alpha ){
     var res = {}
 
+    var aalpha = 1-alpha
+
     for( var i in apack )
         switch( i ){
             case 'line':
             case 'vertex':
-                res[ i ] = lerpPoints( apack[i], bpack[i], alpha )
+                res[ i ] = lerpArray( apack[i], bpack[i], function( a, b ){
+                    return u.lerp( a, b, alpha )
+                })
                 break
 
             case 'width':
-                res[ i ] = lerpNumber( apack[i], bpack[i], alpha )
+                res[ i ] = lerpArray( apack[i], bpack[i], function( a, b ){
+                    return a* aalpha + b* alpha
+                })
+                break
+
+            case 'sharpness':
+                res[ i ] = lerpArray( apack[i], bpack[i], function( a, b ){
+                    return {
+                        before: a.before* aalpha + b.before* alpha,
+                        after: a.after* aalpha + b.after* alpha
+                    }
+                })
                 break
         }
 
