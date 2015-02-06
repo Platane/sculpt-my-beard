@@ -91,11 +91,11 @@ var init = function( modelBall, ed, dom ){
 var showTooltip = function( event ){
     if( dom.hasClass( event.target , 'tb-switch') ){
 
-        var o = dom.offset( event.target )
+        var o = event.target.getBoundingClientRect()
 
         this.domTooltip.style.display = ''
-        this.domTooltip.style.top = ( o.top )+'px'
-        this.domTooltip.style.left = ( o.left + event.target.offsetWidth )+'px'
+        this.domTooltip.style.top = ( o.top + window.scrollY )+'px'
+        this.domTooltip.style.left = ( o.right + window.scrollX + 15 )+'px'
 
         this.domTooltip.innerHTML  = event.target.getAttribute('data-option')
     }

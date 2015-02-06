@@ -160,6 +160,35 @@
     }
 }
 .tb-tooltip {
+
+    @color: fade( extract( @chunk-colors, 2 ), 80% );
+
     position: absolute;
     z-index: 10;
+
+    font-family: axis, helvetica;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 14px;
+
+    background: @color;
+    padding: 5px 10px;
+    border-radius: 3px;
+    box-shadow: 5px 5px 5px 0 @shadow-color;
+
+
+
+
+    &:after {
+        content: '';
+        width: 0;
+        left: 0;
+        display: block;
+        position: absolute;
+        border-top: solid 7px transparent;
+        border-bottom: solid 7px transparent;
+        border-right: solid 7px @color;
+        left: -7px;
+        top: calc( ~" 50% - 7px" )
+    }
 }
