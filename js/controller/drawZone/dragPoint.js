@@ -46,6 +46,8 @@ var ticMove = function( event ){
 
 var ticUp = function( event ){
 
+    // TODO fix superposition
+    
     this.ed.dispatch( 'change:point', {
         point: this._point,
         shape: this._shape,

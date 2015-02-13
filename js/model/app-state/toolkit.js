@@ -4,13 +4,13 @@ var init = function( type ){
 
     this.options = {
         view: {
-            color: true,
+            color: false,
             stroke: false,
         },
         tool: {
             movePoint: true,
-            //addPoint: true,
-            //removePoint: true,
+            addPoint: true,
+            removePoint: true,
             alterWidth: false,
             alterSharpness: false,
         },
