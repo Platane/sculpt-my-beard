@@ -1,6 +1,6 @@
 {
   "name": "sculpt-my-beard",
-  "version":"0.2.0",
+  "version":"0.2.1",
   "description": "app to easily make svg animation",
   "repository" : {
     "type" : "git",
