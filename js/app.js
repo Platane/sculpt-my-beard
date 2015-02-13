@@ -13,7 +13,8 @@ var modelBall = {
     timeLineState : require('./model/app-state/timeLineState'),
     timeLine :      require('./model/data/timeLine'),
     toolkit :       require('./model/app-state/toolkit'),
-    history :       require('./model/history')
+    history :       require('./model/history'),
+    playerInfo :    require('./model/app-state/playerInfo')
 }
 for( var i in modelBall )
     modelBall[ i ] = Object.create( modelBall[ i ] ).init( )
@@ -64,6 +65,7 @@ var ctrlBall = {
     timeLineCursorDrag :        require('./controller/timeLine/cursor-drag'),
     timeLineCursorClick :       require('./controller/timeLine/cursor-click'),
     timeLineTranslate :         require('./controller/timeLine/viewport-translate'),
+    spaceToPlay :               require('./controller/timeLine/spaceToPlay'),
     toolbar :                   require('./controller/toolbar/toolkit'),
     ctrlZ :                     require('./controller/ctrlZ'),
 
@@ -71,6 +73,7 @@ var ctrlBall = {
     applyTimeLine:              require('./staticController/applyTimeLine'),
     recompute:                  require('./staticController/recompute'),
     optionnalCtrl:              require('./staticController/optionnalCtrl'),
+    executePlayer:              require('./staticController/executePlayer'),
 }
 for( var i in ctrlBall ){
     ctrlBall[ i ] = Object.create( ctrlBall[ i ] ).init( modelBall, ed, ctrlBall )

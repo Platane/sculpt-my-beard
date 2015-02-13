@@ -17,7 +17,7 @@ var dispatch = function( eventName, data ){
 
     var l = (this.listener || {})[ eventName ] || []
     for( var i = 0; i<l.length; i++)
-        l[i].fn(data, eventName)
+        l[i].fn(data||{}, eventName)
 
 
     // as the listen / unlisten is locked during the event loop, redo it here
