@@ -9,8 +9,8 @@ var init = function( type ){
         },
         tool: {
             movePoint: true,
-            addPoint: true,
-            removePoint: true,
+            //addPoint: true,
+            //removePoint: true,
             alterWidth: false,
             alterSharpness: false,
         },
