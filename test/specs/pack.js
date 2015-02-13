@@ -1,7 +1,7 @@
-var TimeLine = require('../../js/model/data/TimeLine')
-  , Face = require('../../js/model/data/Face')
-  , Shape = require('../../js/model/data/Shape')
-  , Line = require('../../js/model/data/Line')
+var TimeLine = require('../../js/model/data/timeLine')
+  , Face = require('../../js/model/data/face')
+  , Shape = require('../../js/model/data/shape')
+  , Line = require('../../js/model/data/line')
   , historizable = require('../../js/model/mixin/historizable')
 
 describe('deep copy', function(){
