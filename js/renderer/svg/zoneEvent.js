@@ -23,7 +23,7 @@ var relayEvent = function( event ){
             mouseEvent: event,
             pool  : event.target.getAttribute('data-pool'),
             chunk : event.target.getAttribute('data-chunk'),
-            i     : event.target.getAttribute('data-i'),
+            i     : +event.target.getAttribute('data-i'),
             x     : p.x,
             y     : p.y,
             screenY     : screenY,
@@ -36,7 +36,7 @@ var relayEvent = function( event ){
         this.ed.dispatch( 'ui-width-tic-'+event.type, {
             mouseEvent: event,
             chunk : event.target.getAttribute('data-chunk'),
-            i     : event.target.getAttribute('data-i'),
+            i     : +event.target.getAttribute('data-i'),
             x     : p.x,
             y     : p.y,
             screenY     : screenY,
@@ -49,7 +49,7 @@ var relayEvent = function( event ){
         this.ed.dispatch( 'ui-sharpness-tic-'+event.type, {
             mouseEvent: event,
             chunk : event.target.getAttribute('data-chunk'),
-            i     : event.target.getAttribute('data-i'),
+            i     : +event.target.getAttribute('data-i'),
             sens  : event.target.getAttribute('data-sens'),
             x     : p.x,
             y     : p.y,

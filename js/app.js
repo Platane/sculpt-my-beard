@@ -57,7 +57,7 @@ var ctrlBall = {
 
     // react to user input
     dragPoint :                 require('./controller/drawZone/dragPoint'),
-    //addPoint :                  require('./controller/drawZone/addPoint'),
+    addPoint :                  require('./controller/drawZone/addPoint'),
     dragWidth :                 require('./controller/drawZone/dragWidth'),
     dragSharpness :             require('./controller/drawZone/dragSharpness'),
     drawZoneTranslate :         require('./controller/drawZone/translate'),

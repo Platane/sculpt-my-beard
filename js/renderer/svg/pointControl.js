@@ -13,7 +13,7 @@ var tic = function( x, y ){
 var render = function( ){
     var face = this.model.face
     var proj = this.model.camera.project
-    var displayCtrl = this.model.toolkit.options.tool.movePoint
+    var displayCtrl = this.model.toolkit.options.tool.movePoint || this.model.toolkit.options.tool.addPoint
 
     for( var i in face.chunk ){
 

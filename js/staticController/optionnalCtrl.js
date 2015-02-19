@@ -33,6 +33,7 @@ var table = {
     'camera-translate' : 'drawZoneTranslate',
 
     'tool-movePoint' : 'dragPoint',
+    'tool-addPoint' : 'addPoint',
 }
 
 var changeToolkit = function( event ){

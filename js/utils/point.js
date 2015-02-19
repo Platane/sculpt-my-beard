@@ -6,6 +6,9 @@ u.scalaire = function( a, b ){
 u.norme = function( a ){
     return Math.sqrt( u.scalaire( a, a ) )
 }
+u.normeSqrt = function( a ){
+    return u.scalaire( a, a )
+}
 u.distanceSqrt = function( a, b ){
     var x = a.x - b.x
     var y = a.y - b.y

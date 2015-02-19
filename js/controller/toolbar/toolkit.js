@@ -23,8 +23,9 @@ var disable = function(){
 
 var click = function( event ){
 
-    this.model.toolkit.options[ event.category ][ event.option ] = !this.model.toolkit.options[ event.category ][ event.option ]
+    var n = !this.model.toolkit.options[ event.category ][ event.option ]
 
+    this.model.toolkit[ n ? 'enableTool' : 'disableTool' ]( event.category, event.option )
 
     this.ed.dispatch( 'change:toolkit', {
         wip: false,
