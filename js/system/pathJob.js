@@ -1,6 +1,15 @@
+/**
+ *  Collection of useful function to transform path
+ */
+
 var u = require('../utils/point')
 
-
+/**
+ *  Ensure that the sharpness array is consistent
+ *  Constraint is : for every edge the (i-1).after and (i).before sum value should be lower than 1
+ *
+ *  @private
+ */
 var resolveUncapSharpness = function( sharpness ){
 
     var _a = sharpness[ 0 ],
@@ -22,6 +31,14 @@ var resolveUncapSharpness = function( sharpness ){
 
     return sharpness
 }
+
+/**
+ *  given a closed path, return a path with control point where the vertecies have rounded corner
+ *  @param pts       {Array of {x,y}}          the path
+ *  @param sharpness {Array of {before,after}} these values determines how round should be the corner
+ *
+ *  @return {Array of {x,y,type}} the type define whever the point is a control point or a regular one
+ */
 var bezify = function( pts, sharpness ){
 
     var default_sharpness
@@ -70,6 +87,13 @@ var bezify = function( pts, sharpness ){
     return bezierPath
 }
 
+/**
+ *  given a line of point and a array of width, return a closed path which represent the expanded line
+ *  @param pts       {Array of {x,y}}          the line
+ *  @param hs        {Array of Number}         for each point, the width of the expanded line at this point ( first and last item will be considered 0 )
+ *
+ *  @return {Array of {x,y}} the closed path representing the expanded line
+ */
 var expandMustach = function( pts, hs ){
     return pts.reduce( function( p, a, i ){
         if( i==0 || i==pts.length-1 ){
