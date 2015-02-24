@@ -38,6 +38,9 @@ describe('applyTimeLine', function(){
 
         this.la = Object.keys( this.face.chunk )[0]
         this.shape = this.face.chunk[ this.la ]
+        this.shape.sharpness = [{before:0, after:0}]
+        this.shape.width = [0]
+        this.shape.line = [{x:0, y:0}]
     })
     describe('change face shape ', function(){
         beforeEach(function(){

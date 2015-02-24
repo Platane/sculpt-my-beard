@@ -22,7 +22,7 @@ var recompute = function(){
 
 var pack = function(){
     return {
-        line: this.line.slice().map( u.copy ),
+        line: h.deepCopy( this.line ),
         width: this.width.slice(),
         sharpness: h.deepCopy( this.sharpness )
     }

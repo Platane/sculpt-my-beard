@@ -22,7 +22,7 @@ var recompute = function(){
 
 var pack = function(){
     return {
-        vertex: this.vertex.slice().map( u.copy ),
+        vertex: historizable.deepCopy( this.vertex ),
         sharpness: historizable.deepCopy( this.sharpness )
     }
 }
