@@ -35,8 +35,7 @@ var ticDown = function( event ){
     this._point = {
         x:0,
         y:0,
-        justSpawn: true,
-        spawnFrom: 0
+        spawnFrom: ''
     }
     this._sharpness = { after: 0, before: 0 }
 
@@ -136,6 +135,7 @@ var ticMove = function( event ){
             this._shape.sharpness.splice( this._addedAt, 0, this._sharpness )
             if( this._shape.width )
                 this._shape.width.splice( this._addedAt, 0, 0 )
+            this._point.spawnFrom = this._i >= this._addedAt ? 'after' : 'before'
         }
 
         // move it
@@ -154,6 +154,7 @@ var ticMove = function( event ){
         this.ed.dispatch('change:point', {
             point: this._point,
             shape: this._shape,
+            structuralChange: true,
             wip: true
         })
     }
@@ -165,6 +166,7 @@ var ticUp = function( event ){
         this.ed.dispatch('change:point', {
             point: this._point,
             shape: this._shape,
+            structuralChange: true,
             wip: false
         })
 
