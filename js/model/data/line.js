@@ -24,7 +24,8 @@ var pack = function(){
     return {
         line: h.deepCopy( this.line ),
         width: this.width.slice(),
-        sharpness: h.deepCopy( this.sharpness )
+        sharpness: h.deepCopy( this.sharpness ),
+        reindex: this.reindex ? this.reindex.slice() : null
     }
 }
 

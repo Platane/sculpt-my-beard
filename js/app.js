@@ -106,49 +106,7 @@ face.chunk.mustach_left.sharpness = [
     {before: 0.15, after: 0.15},
 ]
 
-face.chunk.mustach_right.line = [
-    {x: 200-99, y: 25},
-    {x: 200-130, y: 36.5},
-    {x: 200-189.75, y: 36.7},
-    {x: 200-201.5, y: 84}
-]
-face.chunk.mustach_right.width = [
-    10,
-    12,
-    15,
-    6
-]
-face.chunk.mustach_right.sharpness = [
-    {before: 0.15, after: 0.15},
-    {before: 0.15, after: 0.15},
-    {before: 0.15, after: 0.15},
-    {before: 0.15, after: 0.15},
-    {before: 0.15, after: 0.15},
-    {before: 0.15, after: 0.15},
-]
-
-face.chunk.beard_mid.vertex = [
-    {x: 100-50, y: 100},
-    {x: 100-20, y: 110},
-    {x: 100+20, y: 110},
-    {x: 100+50, y: 100},
-    {x: 100+10, y: 160},
-    {x: 100-10, y: 160}
-]
-face.chunk.beard_mid.sharpness = [
-    {before: 0.15, after: 0.15},
-    {before: 0.15, after: 0.15},
-    {before: 0.15, after: 0.15},
-    {before: 0.15, after: 0.15},
-    {before: 0.15, after: 0.15},
-    {before: 0.15, after: 0.15},
-]
-
-
-
 face.chunk.mustach_left.recompute()
-face.chunk.mustach_right.recompute()
-face.chunk.beard_mid.recompute()
 
 
 
@@ -178,7 +136,5 @@ ed.listen( 'change:toolkit', pl_render ) // TODO only catch relevant stuff
 
 
 
-ed.dispatch( 'change:shape', {shape:face.chunk.mustach_right} )
 ed.dispatch( 'change:shape', {shape:face.chunk.mustach_left} )
-ed.dispatch( 'change:shape', {shape:face.chunk.beard_mid} )
 ed.dispatch( 'change:toolkit' )

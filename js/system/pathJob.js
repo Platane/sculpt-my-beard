@@ -93,6 +93,9 @@ var bezify = function( pts, sharpness ){
  *  @param hs        {Array of Number}         for each point, the width of the expanded line at this point ( first and last item will be considered 0 )
  *
  *  @return {Array of {x,y}} the closed path representing the expanded line
+ *
+ * strutured like this (for a 8 length line ) _6 _5 _4 _3 _2 _1   0   1_ 2_ 3_ 4_ 5_ 6_  7
+ *
  */
 var expandMustach = function( pts, hs ){
     return pts.reduce( function( p, a, i ){

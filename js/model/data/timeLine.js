@@ -18,6 +18,7 @@ var sortFn = function(a, b){return a.date<b.date ? -1 : 1}
 var addOrSetKey = function( chunk, date, pack ){
 
     // TODO smart thing
+    // about the sorting for example
 
     if( !this.keys[ chunk ] )
         this.keys[ chunk ] = []

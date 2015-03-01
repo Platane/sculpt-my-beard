@@ -25,7 +25,7 @@ describe('applyTimeLine', function(){
 
         //bootstrap
 
-        this.face = Object.create( Face ).init()
+        var face = this.face = Object.create( Face ).init()
         this.timeLine = Object.create( TimeLine ).init()
         this.timeLineState = Object.create( TimeLineState ).init()
 
@@ -36,16 +36,16 @@ describe('applyTimeLine', function(){
         }).enable()
 
 
-        this.la = Object.keys( this.face.chunk )[0]
+        this.la = Object.keys( this.face.chunk ).reduce(function(p,x){
+            return !face.chunk[ x ].line ? x : p
+        })
         this.shape = this.face.chunk[ this.la ]
         this.shape.sharpness = [{before:0, after:0}]
-        this.shape.width = [0]
-        this.shape.line = [{x:0, y:0}]
+        this.shape.vertex = [{x:0, y:0}]
     })
     describe('change face shape ', function(){
         beforeEach(function(){
-            this.shape.width = [4]
-            this.shape.line = [{x:100, y:100}]
+            this.shape.vertex = [{x:100, y:100}]
 
             this.timeLineState.cursor = 17
 
@@ -64,16 +64,12 @@ describe('applyTimeLine', function(){
             expect( this.timeLine.keys[ this.la ][ 0 ].date ).toBe( 17 )
         })
         it('should create a key with the current shape state', function(){
-            expect( this.timeLine.keys[ this.la ][ 0 ].pack.width.length ).toBe( 1 )
-            expect( this.timeLine.keys[ this.la ][ 0 ].pack.line.length ).toBe( 1 )
-            expect( this.timeLine.keys[ this.la ][ 0 ].pack.width[ 0 ] ).toBe( 4 )
-            expect( this.timeLine.keys[ this.la ][ 0 ].pack.line[ 0 ].x ).toBe( 100 )
+            expect( this.timeLine.keys[ this.la ][ 0 ].pack.vertex.length ).toBe( 1 )
+            expect( this.timeLine.keys[ this.la ][ 0 ].pack.vertex[ 0 ].x ).toBe( 100 )
         })
         it('should create a key with a deep copy as pack', function(){
-            this.shape.width[ 0 ] = 5
-            this.shape.line[ 0 ].x = 5
-            expect( this.timeLine.keys[ this.la ][ 0 ].pack.width[ 0 ] ).toBe( 4 )
-            expect( this.timeLine.keys[ this.la ][ 0 ].pack.line[ 0 ].x ).toBe( 100 )
+            this.shape.vertex[ 0 ].x = 5
+            expect( this.timeLine.keys[ this.la ][ 0 ].pack.vertex[ 0 ].x ).toBe( 100 )
         })
         it('should throw change:timeLine once', function(){
             expect( this.cb.called() ).toBe( 1 )
@@ -85,15 +81,14 @@ describe('applyTimeLine', function(){
         describe('two keys, ', function(){
 
             beforeEach(function(){
-                this.shape.width = [100]
-                this.shape.line = [{x:100, y:100}]
+
+                this.shape.vertex = [{x:100, y:100}]
                 this.timeLineState.cursor = 10
                 ed.dispatch('change:shape',{
                     shape: this.shape
                 })
 
-                this.shape.width = [200]
-                this.shape.line = [{x:200, y:100}]
+                this.shape.vertex = [{x:200, y:100}]
                 this.timeLineState.cursor = 20
                 ed.dispatch('change:shape',{
                     shape: this.shape
@@ -114,19 +109,11 @@ describe('applyTimeLine', function(){
                     expect( this.cb.called() ).toBe( 1 )
                 })
                 it('shape params should be interpolated', function(){
-                    expect( this.shape.width[0] ).toBe( 120 )
-                    expect( this.shape.line[0].x ).toBe( 120 )
+                    expect( this.shape.vertex[0].x ).toBe( 120 )
                 })
                 it('keys params should remained unchanged', function(){
-                    expect( this.timeLine.keys[ this.la ][ 0 ].pack.width.length ).toBe( 1 )
-                    expect( this.timeLine.keys[ this.la ][ 1 ].pack.width.length ).toBe( 1 )
-                    expect( this.timeLine.keys[ this.la ][ 0 ].pack.width[0] ).toBe( 100 )
-                    expect( this.timeLine.keys[ this.la ][ 1 ].pack.width[0] ).toBe( 200 )
-
-                    expect( this.timeLine.keys[ this.la ][ 0 ].pack.line.length ).toBe( 1 )
-                    expect( this.timeLine.keys[ this.la ][ 1 ].pack.line.length ).toBe( 1 )
-                    expect( this.timeLine.keys[ this.la ][ 0 ].pack.line[0].x ).toBe( 100 )
-                    expect( this.timeLine.keys[ this.la ][ 1 ].pack.line[0].x ).toBe( 200 )
+                    expect( this.timeLine.keys[ this.la ][ 0 ].pack.vertex[0].x ).toBe( 100 )
+                    expect( this.timeLine.keys[ this.la ][ 1 ].pack.vertex[0].x ).toBe( 200 )
                 })
             })
         })
@@ -134,25 +121,25 @@ describe('applyTimeLine', function(){
         describe('many keys, ', function(){
 
             beforeEach(function(){
-                this.shape.width = [100]
+                this.shape.vertex = [{x:100, y:100}]
                 this.timeLineState.cursor = 10
                 ed.dispatch('change:shape',{
                     shape: this.shape
                 })
 
-                this.shape.width = [200]
+                this.shape.vertex = [{x:200, y:100}]
                 this.timeLineState.cursor = 20
                 ed.dispatch('change:shape',{
                     shape: this.shape
                 })
 
-                this.shape.width = [300]
+                this.shape.vertex = [{x:300, y:100}]
                 this.timeLineState.cursor = 30
                 ed.dispatch('change:shape',{
                     shape: this.shape
                 })
 
-                this.shape.width = [400]
+                this.shape.vertex = [{x:400, y:100}]
                 this.timeLineState.cursor = 40
                 ed.dispatch('change:shape',{
                     shape: this.shape
@@ -173,7 +160,7 @@ describe('applyTimeLine', function(){
                     expect( this.cb.called() ).toBe( 1 )
                 })
                 it('shape params should be interpolated', function(){
-                    expect( this.shape.width[0] ).toBe( 120 )
+                    expect( this.shape.vertex[0].x ).toBe( 120 )
                 })
             })
             describe('between others', function(){
@@ -188,7 +175,7 @@ describe('applyTimeLine', function(){
                     expect( this.cb.called() ).toBe( 1 )
                 })
                 it('shape params should be interpolated', function(){
-                    expect( this.shape.width[0] ).toBe( 360 )
+                    expect( this.shape.vertex[0].x ).toBe( 360 )
                 })
             })
             describe('before all', function(){
@@ -203,7 +190,7 @@ describe('applyTimeLine', function(){
                     expect( this.cb.called() ).toBe( 1 )
                 })
                 it('shape params should be interpolated', function(){
-                    expect( this.shape.width[0] ).toBe( 100 )
+                    expect(this.shape.vertex[0].x ).toBe( 100 )
                 })
             })
             describe('after all', function(){
@@ -218,7 +205,7 @@ describe('applyTimeLine', function(){
                     expect( this.cb.called() ).toBe( 1 )
                 })
                 it('shape params should be interpolated', function(){
-                    expect( this.shape.width[0] ).toBe( 400 )
+                    expect( this.shape.vertex[0].x ).toBe( 400 )
                 })
             })
         })

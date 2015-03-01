@@ -7,10 +7,11 @@ var Abstract = require('../../utils/Abstract')
 var init = function( ){
 
     // expose this
-    this.vertex = [];
-    this.sharpness = [];
+    this.vertex = []
+    this.sharpness = []
+    this.reindex
 
-    this.bezierPath = [];
+    this.bezierPath = []
 
     return this
 }
@@ -23,7 +24,8 @@ var recompute = function(){
 var pack = function(){
     return {
         vertex: historizable.deepCopy( this.vertex ),
-        sharpness: historizable.deepCopy( this.sharpness )
+        sharpness: historizable.deepCopy( this.sharpness ),
+        reindex: this.reindex ? this.reindex.slice() : null
     }
 }
 
