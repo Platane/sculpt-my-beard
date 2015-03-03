@@ -29,8 +29,13 @@ var pack = function(){
     }
 }
 
+var addPoint =  function(){}
+var removePoint =  function(){}
+
 module.exports = Object.create( Shape ).extend({
     init: init,
     recompute: recompute,
     pack: pack,
+    addPoint: addPoint,
+    removePoint: removePoint,
 })

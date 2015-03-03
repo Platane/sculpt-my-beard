@@ -33,12 +33,15 @@ var ticDown = function( event ){
     var pool = this._pool = this._shape[ event.pool ]
     var i = this._i = event.i
     this._point = {
-        x:0,
-        y:0
+        vertex: {
+            x:0,
+            y:0
+        },
+        sharpness: {
+            x:0,
+            y:0
+        }
     }
-    this._sharpness = { after: 0.15, before: 0.15 }
-    this._sharpness2 = { after: 0.15, before: 0.15 }
-    this._reindex = this._shape.reindex ? null : pool.map(function(x, i){ return i })
 
     // save the clicked point, the next one and the previous one
 
@@ -105,20 +108,7 @@ var ticMove = function( event ){
         // or the point should be on the shape but at another place
         // delete
 
-        this._pool.splice( this._addedAt, 1 )
-        if( this._shape.width ){
-            this._shape.width.splice( this._addedAt, 1 )
-            var l = this._shape.sharpness.length /2 -2
-            this._shape.sharpness.splice( l + this._addedAt, 1 )
-            this._shape.sharpness.splice( l - this._addedAt, 1 )
-        } else
-            this._shape.sharpness.splice( this._addedAt, 1 )
-
-        for( var k = this._addedAt == this._i ? this._i : this._i+2; k<this._shape.reindex.length; k++ )
-            this._shape.reindex[ k ] --
-        this._shape.reindex.splice( this._addedAt, 1 )
-        if ( this._reindex )
-            this._shape.reindex = null
+        this._shape.removePoint( this._addedAt, this._addedAt == this._i )
     }
 
     // the point as been deleted
@@ -135,31 +125,15 @@ var ticMove = function( event ){
     // add the point
     } else if( this._addedAt != i && acceptable ){
 
-        // add the items
-        this._pool.splice( (this._addedAt = i), 0, this._point )
-        if( this._shape.width ){
-            this._shape.width.splice( this._addedAt, 0, 0 )
-            var l = this._shape.sharpness.length /2
-            this._shape.sharpness.splice( l + this._addedAt, 0, this._sharpness )
-            this._shape.sharpness.splice( l - this._addedAt, 0, this._sharpness2 )
-        } else
-            this._shape.sharpness.splice( this._addedAt, 0, this._sharpness )
-
-        if ( this._reindex )
-            this._shape.reindex = this._reindex
-        this._shape.reindex.splice( this._addedAt, 0, this._i )
-        for( var k = after ? this._i+2 : this._i; k<this._shape.reindex.length; k++ )
-            this._shape.reindex[ k ] ++
+        // add the point
+        this._shape.addPoint( this._addedAt, after, this._point )
 
 
         // set the values
         var l = 2
         var n = after ? this.n_ : this._n
-        this._point.x = this.p.x + n.x * l
-        this._point.y = this.p.y + n.y * l
-
-        if( this._shape.width )
-            this._shape.width[ this._addedAt ] = 0
+        this._point.vertex.x = this.p.x + n.x * l
+        this._point.vertex.y = this.p.y + n.y * l
 
         // notify
         this.ed.dispatch('change:point', {
