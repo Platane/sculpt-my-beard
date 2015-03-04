@@ -2,6 +2,118 @@
  *  Collection functions used to interpolate the face from a state to another one
  */
 
+var u = require('../utils/point')
+
+
+/**
+ *  The a and b array may not have the same length, in case a point have been delete/added
+ *  In that case, the added point should be considered to be the same as the one from where it spawn
+ *
+ *  @return {a:{Array of number}, b:{Array of number}} as indexes for building the comparable vector for a and b
+ */
+var diffArray = function( a, b ){
+    var ia = []
+    var ib = []
+
+    var x = 0
+    for( var i=0; i<a.length; i++ ){
+        if( a[i].spawnFrom ){
+            // this point just appear
+            // no matter what its cordinates are, consider it's the same as the one from which its spawn
+
+            // check if it's not delete right after
+            // in this case don't it
+
+            var k=i
+            while( a[k].spawnFrom == 'before' ){
+                k = ( k -1+a.length ) % a.length
+            }
+            while( a[k].spawnFrom == 'after' ){
+                k = ( k +1 ) % a.length
+            }
+            ia.push( k )
+        } else if ( a[i].absorbedBy ){
+            // ignore it
+        } else {
+            ia.push( i )
+        }
+    }
+
+    var x = 0
+    for( var i=0; i<b.length; i++ ){
+        if( b[i].spawnFrom ){
+            // this point will appear
+            // ignore it for this intervalle
+        } else if ( b[i].absorbedBy ){
+            var k=i
+            while( b[k].absorbedBy == 'before' ){
+                k = ( k -1+b.length ) % b.length
+            }
+            while( b[k].absorbedBy == 'after' ){
+                k = ( k +1 ) % b.length
+            }
+            ib.push( k )
+        } else {
+            ib.push( i+x )
+        }
+    }
+
+
+    return {
+        a: ia,
+        b: ib
+    }
+}
+
+var bigArray = []
+for (var i=256; i--;)
+    bigArray[i] = i
+var indexOut = function( structuralChanges, l ){
+
+    var i,k
+
+    // build identity array
+    var arr = []
+    for ( i=l; i--; )
+        arr[i] = i
+
+    // alter
+    for( i=0; i<structuralChanges.length; i++ )
+        if( structuralChanges[i].type == 'add' ){
+            // add
+            // should out normally
+            // ignore
+        } else {
+            // remove
+            // should mask the removed point
+            arr.splice(structuralChanges[i].i,1)
+        }
+
+    return arr
+}
+var indexIn = function( structuralChanges, l ){
+
+    var i,k
+
+    // build identity array
+    var arr = []
+    for ( i=l; i--; )
+        arr[i] = i
+
+    // alter
+    for( i=0; i<structuralChanges.length; i++ )
+        if( structuralChanges[i].type == 'add' ){
+            // add
+            // should in as the point dont exist
+            arr.splice(structuralChanges[i].i,1)
+        } else {
+            // remove
+            // should in normally
+            // ignore
+        }
+
+    return arr
+}
 
 var lerpFn = {
     'point': function(alpha, aalpha, a, b){
@@ -20,94 +132,55 @@ var lerpFn = {
         }
     },
 }
-lerpFn['line'] = lerpFn['point']
-lerpFn['vertex'] = lerpFn['point']
+
+lerpFn['vertex'] = lerpFn['line'] = lerpFn['point']
 lerpFn['width'] = lerpFn['number']
 
 
 // a (1-alpha) + b alpha
 // when alpha is low, the result is closer to a
-var bigarray = []
-for(var i=0;i<256;i++)
-    bigarray.push(i)
 var lerpPack = function( apack, bpack , alpha ){
     var res = {}
 
     var aalpha = 1-alpha
 
-    var aindex = apack.reindex || bigarray
-    var bindex = bpack.reindex || bigarray
+    var pool = apack.line ? 'line' : 'vertex'
+    var aindex = indexOut( apack.structuralChanges, apack[ pool ].length )
+    var bindex = indexIn( bpack.structuralChanges, bpack[ pool ].length )
 
-    var lerpfn, ap, bp, l, l2, k
-
-    for( var i in apack ){
+    for( var i in apack )
         switch( i ){
             case 'sharpness' :
-                if( apack.line ){
-
-                    lerpfn = lerpFn[ i ]
-                    ap = apack[ i ]
-                    bp = bpack[ i ]
-                    l = apack.line.length
-                    l2 = apack[ i ].length
-
-                    var arr = []
-
-                    // 0
-                    arr.push( lerpfn( alpha, aalpha, ap[ l-2- aindex[ 0 ] ], bp[ l-2- bindex[ 0 ] ] )  )
-
-                    // [ 1.. l-2 ]
-                    for( k=1; k<l-1; k++ ){
-
-                        arr.unshift( lerpfn(
-                            alpha,
-                            aalpha,
-                            ap[ l-2-aindex[ k ] ],
-                            bp[ l-2-bindex[ k ] ]
-                        ))
-                        arr.push( lerpfn(
-                            alpha,
-                            aalpha,
-                            ap[ l-2+aindex[ k ] ],
-                            bp[ l-2+bindex[ k ] ]
-                        ))
-                    }
-
-                    // l-1
-                    arr.push( lerpfn( alpha, aalpha, ap[ l-2+ aindex[ l-1 ] ], bp[ l-2+ bindex[ l-1 ] ] )  )
-
-                    res[ i ] = arr
-
+                if( pool == 'line' ){
+                    res[ i ] = lerpLineSharpness( aindex, bindex, apack[ i ], bpack[ i ], alpha, aalpha )
                     break
-                } else
-                    ; // pass to next case
+                }
             case 'vertex' :
-            case 'width' :
             case 'line' :
-                lerpfn = lerpFn[ i ]
-                ap = apack[ i ]
-                bp = bpack[ i ]
-                l = ap.length
+            case 'width' :
+
+                var lerpfn = lerpFn[ i ]
+                var ap = apack[ i ]
+                var bp = bpack[ i ]
 
                 var arr = []
 
-                for( k=0; k<l; k++ )
+
+                for( var k=0; k<aindex.length; k++ )
                     arr.push( lerpfn( alpha, aalpha, ap[ aindex[ k ] ], bp[ bindex[ k ] ] )  )
 
                 res[ i ] = arr
-            break
         }
-    }
-
-    // reindex
-    if ( alpha == 0 )
-        res.reindex = apack.reindex ? apack.reindex.slice() : null
-    else if ( alpha == 1 )
-        res.reindex = bpack.reindex ? bpack.reindex.slice() : null
 
     return res
 }
+var lerpLineSharpness = function( aindex, bindex, apack, bpack , alpha, aalpha ){
+    return apack
+}
 
 module.exports = {
-    lerpPack: lerpPack
+    lerpPack: lerpPack,
+    t:{
+        diffArray: diffArray
+    }
 }

@@ -56,16 +56,20 @@ var Abstract = require('../utils/Abstract')
 
          // TODO detect when the shape does not change, dont ask for redraw then
 
-
-         if( date <= k[ 0 ].date )
+         var exactOn
+         if( date <= k[ 0 ].date ){
              fchunk[ chunk ].unpack( k[ 0 ].pack )
-
-         else if( date >= k[ k.length-1 ].date )
+             exactOn = date == k[ 0 ].date
+         }
+         else if( date >= k[ k.length-1 ].date ){
+             exactOn = date == k[ k.length-1 ].date
              fchunk[ chunk ].unpack( k[ k.length-1 ].pack )
-
+         }
          else {
 
              for( var i=1; i<k.length && k[i].date<date; i++ );
+
+             exactOn = date == k[i].date
 
              var a = k[i-1],
                  b = k[i]
@@ -74,6 +78,9 @@ var Abstract = require('../utils/Abstract')
 
              fchunk[ chunk ].unpack( interpolate.lerpPack( a.pack, b.pack , alpha ) )
          }
+
+         if( !exactOn )
+             fchunk[ chunk ].structuralChanges = []
 
          ed.dispatch( 'change:point', {
              wip: event.wip,
