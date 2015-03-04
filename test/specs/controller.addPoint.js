@@ -1,3 +1,4 @@
+/*
 var Face = require('../../js/model/data/face')
   , Ed = require('../../js/system/eventDispatcher')
   , AddPoint = require('../../js/controller/drawZone/addPoint')
@@ -78,3 +79,4 @@ describe('controller', function(){
         })
     })
 })
+*/
