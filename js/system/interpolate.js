@@ -139,14 +139,17 @@ lerpFn['width'] = lerpFn['number']
 
 // a (1-alpha) + b alpha
 // when alpha is low, the result is closer to a
-var lerpPack = function( apack, bpack , alpha ){
+var lerpPack = function( akey, bkey , alpha ){
     var res = {}
 
     var aalpha = 1-alpha
 
+    var apack = akey.pack
+    var bpack = bkey.pack
+
     var pool = apack.line ? 'line' : 'vertex'
-    var aindex = indexOut( apack.structuralChanges, apack[ pool ].length )
-    var bindex = indexIn( bpack.structuralChanges, bpack[ pool ].length )
+    var aindex = indexOut( akey.structuralChanges, apack[ pool ].length )
+    var bindex = indexIn( bkey.structuralChanges, bpack[ pool ].length )
 
     for( var i in apack )
         switch( i ){

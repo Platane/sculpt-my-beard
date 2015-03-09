@@ -76,7 +76,7 @@ var Abstract = require('../utils/Abstract')
 
              var alpha = ( date - a.date )/( b.date - a.date )
 
-             fchunk[ chunk ].unpack( interpolate.lerpPack( a.pack, b.pack , alpha ) )
+             fchunk[ chunk ].unpack( interpolate.lerpPack( a, b , alpha ) )
          }
 
          if( !exactOn )

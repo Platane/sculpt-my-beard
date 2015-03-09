@@ -1,10 +1,13 @@
 var Abstract = require('../../utils/Abstract')
-, u = require('../../utils/point')
+  , u = require('../../utils/point')
+  , sc = require('../../system/structuralChangesMethods')
 
 var init = function( modelBall , ed ){
 
     this.model = {
         face: modelBall.face,
+        timeLine: modelBall.timeLine,
+        timeLineState: modelBall.timeLineState,
     }
 
     this.ed = ed
@@ -73,12 +76,55 @@ var click = function( event ){
             // contact
 
             // alpha=s/l,  p = (1-alpha)*a + alpha*b
-            shapes[ k ].addPoint( ( i+points.length-1 )%points.length, s/l )
+            addPoint.call( this, k , ( i+points.length-1 )%points.length, 1-s/l )
 
             return
         }
     }
+}
 
+var addPoint = function( chunk, pointIndex, k ){
+
+    var timeLine = this.model.timeLine
+    var face = this.model.face
+    var c = this.model.timeLineState.cursor
+    var keys = timeLine.keys[ chunk ]
+
+    // find the interval
+    var _ax=-1, bx=-1
+
+    if ( c <= keys[0].date ){
+        //bx = 0
+    } else if ( c >= keys[ keys.length-1 ].date ){
+        //_ax = keys.length-1
+    } else {
+        for( bx=0; keys[ bx ].date<c; bx++ );
+        //_ax = i-1
+    }
+
+    // grab the far pack
+    var farPack
+    if ( bx>=0 ){
+        farPack = keys[bx]
+    }
+
+    // add the point
+    face.chunk[ chunk ].addPoint( pointIndex, k )
+
+    // grab the current pack or create it if needed
+    var curPack = timeLine.addOrSetKey( chunk, c, face.chunk[ chunk ].pack() )
+
+    // add on curPack
+    sc.add( curPack.structuralChanges, pointIndex+1, k )
+
+    // remove on farPack
+    if( farPack ){
+        sc.del( farPack.structuralChanges, pointIndex+1, k )
+        // TODO add as barycenter
+        
+    }
+
+    this.ed.dispatch('change:timeLine')
 }
 
 module.exports = Object.create( Abstract ).extend({

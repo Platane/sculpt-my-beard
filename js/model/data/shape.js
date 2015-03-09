@@ -13,8 +13,6 @@ var init = function( ){
 
     this.bezierPath = []
 
-    this.structuralChanges = []
-
     return this
 }
 
@@ -37,7 +35,6 @@ var pack = function(){
     return {
         vertex: historizable.deepCopy( this.vertex ),
         sharpness: historizable.deepCopy( this.sharpness ),
-        structuralChanges: historizable.deepCopy( this.structuralChanges ),
     }
 }
 
@@ -51,8 +48,6 @@ var addPoint = function( at, k ){
 
     this.vertex.splice( at+1, 0, p )
     this.sharpness.splice( at+1, 0, s )
-
-    sc.add( this.structuralChanges, at+1, k )
 }
 var removePoint = function( at, k ){
 

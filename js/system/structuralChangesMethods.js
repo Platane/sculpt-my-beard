@@ -40,7 +40,7 @@ var del = function( arr, i, k ){
     }
 
     // push the change
-    arr.push({type: 'remove', i:i, k:k})
+    arr.push({type: 'del', i:i, k:k})
 }
 
 

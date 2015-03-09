@@ -21,13 +21,13 @@ var init = function( ){
 var pack = function(){
     var o = {}
     for( var i in this.chunk )
-        o[ i ] = this.chunck[ i ].pack()
+        o[ i ] = this.chunk[ i ].pack()
     return o
 }
 
 var unpack = function( o ){
     for( var i in this.chunk )
-        this.chunck[ i ].unpack( o[ i ] )
+        this.chunk[ i ].unpack( o[ i ] )
     return this
 }
 

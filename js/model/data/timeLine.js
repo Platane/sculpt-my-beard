@@ -23,13 +23,16 @@ var addOrSetKey = function( chunk, date, pack ){
         this.keys[ chunk ] = []
 
     for(var i=this.keys[ chunk ].length; i--;)
-        if( this.keys[ chunk ][ i ].date == date )
-            return void (this.keys[ chunk ][ i ].pack = pack)
+        if( this.keys[ chunk ][ i ].date == date ){
+            this.keys[ chunk ][ i ].pack = pack
+            return this.keys[ chunk ][ i ]
+        }
 
     var k
     this.keys[ chunk ].push(k = {
         date: date,
-        pack: pack
+        pack: pack,
+        structuralChanges: []
     })
     this.keys[ chunk ].sort( sortFn )
 
