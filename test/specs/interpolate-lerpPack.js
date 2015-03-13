@@ -7,6 +7,7 @@ var Face = require('../../js/model/data/face')
 describe('interpolate', function(){
     describe('lerpPack', function(){
         describe('shape', function(){
+            /*
             describe('no structural changes', function(){
                 beforeEach(function(){
 
@@ -51,7 +52,6 @@ describe('interpolate', function(){
                     expect( this.shape3.sharpness[1].after ).toBe( 0 )
                 })
             })
-            /*
             describe('spawn point', function(){
                 beforeEach(function(){
 
