@@ -91,20 +91,13 @@ var addPoint = function( chunk, pointIndex, k ){
     var keys = timeLine.keys[ chunk ]
 
     // find the interval
-    var _ax=-1, bx=-1
+    var bx=-1
 
-    if ( c <= keys[0].date ){
-        //bx = 0
-    } else if ( c >= keys[ keys.length-1 ].date ){
-        //_ax = keys.length-1
-    } else {
-        for( bx=0; keys[ bx ].date<c; bx++ );
-        //_ax = i-1
-    }
+    for( bx=0; bx<keys.length && keys[ bx ].date<c; bx++ );
 
     // grab the far pack
     var farPack
-    if ( bx>=0 ){
+    if ( bx>=keys.length ){
         farPack = keys[bx]
     }
 
@@ -121,7 +114,7 @@ var addPoint = function( chunk, pointIndex, k ){
     if( farPack ){
         sc.del( farPack.structuralChanges, pointIndex+1, k )
         // TODO add as barycenter
-        
+
     }
 
     this.ed.dispatch('change:timeLine')
