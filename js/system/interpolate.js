@@ -65,56 +65,6 @@ var diffArray = function( a, b ){
     }
 }
 
-var bigArray = []
-for (var i=256; i--;)
-    bigArray[i] = i
-var indexOut = function( structuralChanges, l ){
-
-    var i,k
-
-    // build identity array
-    var arr = []
-    for ( i=l; i--; )
-        arr[i] = i
-
-    // alter
-    for( i=0; i<structuralChanges.length; i++ )
-        if( structuralChanges[i].type == 'add' ){
-            // add
-            // should out normally
-            // ignore
-        } else {
-            // remove
-            // should mask the removed point
-            arr.splice(structuralChanges[i].i,1)
-        }
-
-    return arr
-}
-var indexIn = function( structuralChanges, l ){
-
-    var i,k
-
-    // build identity array
-    var arr = []
-    for ( i=l; i--; )
-        arr[i] = i
-
-    // alter
-    for( i=0; i<structuralChanges.length; i++ )
-        if( structuralChanges[i].type == 'add' ){
-            // add
-            // should in as the point dont exist
-            arr.splice(structuralChanges[i].i,1)
-        } else {
-            // remove
-            // should in normally
-            // ignore
-        }
-
-    return arr
-}
-
 var lerpFn = {
     'point': function(alpha, aalpha, a, b){
         return {
@@ -183,6 +133,8 @@ var lerpLineSharpness = function( aindex, bindex, apack, bpack , alpha, aalpha )
 
 module.exports = {
     lerpPack: lerpPack,
+    lerpFn: lerpFn,
+    
     t:{
         diffArray: diffArray
     }
