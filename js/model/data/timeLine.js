@@ -54,6 +54,44 @@ var setKeyDate = function( chunk, key, date ){
     return key
 }
 
+var locate = function( chunk, date ){
+
+    var keys = this.keys[ chunk ]
+
+    // dichotomie
+
+    var a = 0
+    var b = keys.length-1
+    var e
+
+    if ( date < keys[ a ].date ){
+
+        return { a: null, b: keys[ a ] }
+
+    }else if ( keys[ b ].date <= date ){
+
+        return { a: keys[ b ], b: null }
+
+    }else{
+
+        do{
+
+            e = (a+b)>>1
+
+            if( keys[ e ].date <= date )
+
+                a = e
+
+            else
+
+                b = e
+
+        }while( b-a>1 )
+
+        return { a: keys[ e ], b: keys[ e +1 ] }
+    }
+}
+
 module.exports = Object.create( Abstract )
 .extend( historizable )
 .extend({
@@ -62,4 +100,5 @@ module.exports = Object.create( Abstract )
     setKeyDate: setKeyDate,
     removeKey: removeKey,
 
+    locate: locate
 })
