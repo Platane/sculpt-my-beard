@@ -74,7 +74,7 @@ var locate = function( chunk, date ){
 
     }else{
 
-        do{
+        while( b-a>1 ){
 
             e = (a+b)>>1
 
@@ -85,8 +85,9 @@ var locate = function( chunk, date ){
             else
 
                 b = e
-
-        }while( b-a>1 )
+        }
+        
+        e = (a+b)>>1
 
         return { a: keys[ e ], b: keys[ e +1 ] }
     }

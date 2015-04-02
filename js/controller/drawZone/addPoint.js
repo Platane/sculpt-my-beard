@@ -99,16 +99,7 @@ var addPoint = function( chunk, pointIndex, k ){
     var keys = timeLine.keys[ chunk ]
 
     // find the interval
-    var bx=-1
-
-    for( bx=0; bx<keys.length && keys[ bx ].date<cursor; bx++ );
-
-    // grab the far pack
-    var bKey
-    if ( bx<keys.length ){
-        bKey = keys[bx]
-    }
-
+    var bKey = timeLine.locate( chunk, cursor ).b
 
     // grab the current pack or create it if needed
     var aKey = timeLine.addOrSetKey( chunk, cursor, face.chunk[ chunk ].pack() )
@@ -119,7 +110,7 @@ var addPoint = function( chunk, pointIndex, k ){
     // notify
     this.ed.dispatch('change:timeLine')
 
-    // TODO better route to force interpolation recomputing 
+    // TODO better route to force interpolation recomputing
     this.ed.dispatch('change:timeLineState-cursor')
 }
 

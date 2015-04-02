@@ -52,27 +52,22 @@ var Abstract = require('../utils/Abstract')
          return
 
      for( var chunk in keys ){
-         var k = keys[ chunk ]
-
 
          // TODO detect when the shape does not change, dont ask for redraw then
 
-         if( date <= k[ 0 ].date ){
-             fchunk[ chunk ].unpack( sc.packOut( k[ 0 ] ) )
+         var key = this.model.timeLine.locate( chunk, date )
+
+         if( !key.a ){
+             fchunk[ chunk ].unpack( sc.packIn( key.b ) )
          }
-         else if( date >= k[ k.length-1 ].date ){
-             fchunk[ chunk ].unpack( sc.packOut( k[ k.length-1 ] ) )
+         else if( !key.b ){
+             fchunk[ chunk ].unpack( sc.packOut( key.a ) )
          }
          else {
 
-             for( var i=1; i<k.length && k[i].date<=date; i++ );
+             var alpha = ( date - key.a.date )/( key.b.date - key.a.date )
 
-             var a = k[i-1],
-                 b = k[i]
-
-             var alpha = ( date - a.date )/( b.date - a.date )
-
-             fchunk[ chunk ].unpack( interpolate.lerpPack( a, b , alpha ) )
+             fchunk[ chunk ].unpack( interpolate.lerpPack( key.a, key.b , alpha ) )
          }
 
          // notify
