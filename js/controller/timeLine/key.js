@@ -26,17 +26,7 @@ var disable = function(){
     ed.unlisten( 'ui-mouseup', this )
 }
 
-var lineClick = function( event ){
-    var shape = this.model.face.chunk[ event.chunk ]
-    var date = event.date
-    var tls = this.model.timeLineState
 
-    this.model.timeLine.addOrSetKey( event.chunk, tls.quantify(date), shape.pack() );
-
-    ed.dispatch( 'change:timeLine', {
-        wip: false
-    })
-}
 var keyDown = function( event ){
     this._chunk = event.chunk
     this.h = event.y
