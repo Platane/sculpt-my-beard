@@ -215,6 +215,21 @@ var packOut = pack.bind( null, indexOut )
 var packIn = pack.bind( null, indexIn )
 
 
+
+
+var indexOutToAbsolute = function( aKey, i ){
+
+    var aSc = aKey.structuralChanges
+
+    var ia
+    var al = ( aKey.pack.line || aKey.pack.vertex ).length
+
+    var indexA = indexOut( aSc, al )
+    for( ia=0; indexA[ ia ] < i; ia++ );
+
+    return ia
+}
+
 /**
  * @param i   {Number}      is the index of the point in the aKey outpout !!! ( which is also the bKey input )
  */
@@ -222,17 +237,31 @@ var isConstraint = function( aKey, i ){
 
     var aSc = aKey.structuralChanges
 
-    // find the index in the pack
-    var ia
     var al = ( aKey.pack.line || aKey.pack.vertex ).length
 
-    var indexA = indexOut( aSc, al )
-    for( ia=0; indexA[ ia ] < i; ia++ );
+    var ia = indexOutToAbsolute( aKey, i )
 
     // check if the point is added or remove at this frame
     for( var k=aSc.length; k-- && aSc[k].i != ia ; );
 
-    return k>= 0 ? aSc[k] : false
+    if( k>= 0 )
+        return { 'onEdge': aSc[k] }
+
+
+    // check if the point before is added or removed
+    ia = (ia+al-1) % al
+    for( var k=aSc.length; k-- && aSc[k].i != ia ; );
+
+    if( k>= 0 )
+        return { 'before': aSc[k] }
+
+    // check if the point before is added or removed
+    ia = (ia+2) % al
+    for( var k=aSc.length; k-- && aSc[k].i != ia ; );
+
+    if( k>= 0 )
+        return { 'after': aSc[k] }
+
 }
 
 module.exports = {
@@ -243,4 +272,5 @@ module.exports = {
     packIn: packIn,
 
     isConstraint: isConstraint,
+    indexOutToAbsolute: indexOutToAbsolute
 }
