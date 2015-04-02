@@ -232,7 +232,7 @@ var isConstraint = function( aKey, i ){
     // check if the point is added or remove at this frame
     for( var k=aSc.length; k-- && aSc[k].i != ia ; );
 
-    return k>= 0
+    return k>= 0 ? aSc[k] : false
 }
 
 module.exports = {

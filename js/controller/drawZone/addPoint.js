@@ -32,7 +32,7 @@ var click = function( event ){
 
     var shapes = this.model.face.chunk
 
-    var tol = 15
+    var tol = 8
 
     for( var k in shapes ){
 
@@ -77,6 +77,10 @@ var click = function( event ){
                 continue
 
             // contact
+
+            // check if the new point is not to close to another point
+            if( s<10 || l-s<10 )
+                continue
 
             // alpha=s/l,  p = (1-alpha)*a + alpha*b
             addPoint.call( this, k , i , 1-s/l )
