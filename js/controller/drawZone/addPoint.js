@@ -86,6 +86,11 @@ var click = function( event ){
     }
 }
 
+/**
+ * find the pack before and after the current point,
+ * delegate to structuralChange to actually add the point
+ * @private
+ */
 var addPoint = function( chunk, pointIndex, k ){
 
     var timeLine = this.model.timeLine
@@ -113,6 +118,9 @@ var addPoint = function( chunk, pointIndex, k ){
 
     // notify
     this.ed.dispatch('change:timeLine')
+
+    // TODO better route to force interpolation recomputing 
+    this.ed.dispatch('change:timeLineState-cursor')
 }
 
 module.exports = Object.create( Abstract ).extend({
