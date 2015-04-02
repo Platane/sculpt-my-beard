@@ -27,6 +27,9 @@ var disable = function(){
 
 var click = function( event ){
 
+    // detect collision with the edges
+    // if a collision is detected, delegate to the addpoint function
+
     var shapes = this.model.face.chunk
 
     var tol = 15
@@ -76,7 +79,7 @@ var click = function( event ){
             // contact
 
             // alpha=s/l,  p = (1-alpha)*a + alpha*b
-            addPoint.call( this, k , ( i+points.length-1 )%points.length, 1-s/l )
+            addPoint.call( this, k , i , 1-s/l )
 
             return
         }
@@ -87,36 +90,28 @@ var addPoint = function( chunk, pointIndex, k ){
 
     var timeLine = this.model.timeLine
     var face = this.model.face
-    var c = this.model.timeLineState.cursor
+    var cursor = this.model.timeLineState.cursor
     var keys = timeLine.keys[ chunk ]
 
     // find the interval
     var bx=-1
 
-    for( bx=0; bx<keys.length && keys[ bx ].date<c; bx++ );
+    for( bx=0; bx<keys.length && keys[ bx ].date<cursor; bx++ );
 
     // grab the far pack
-    var farPack
-    if ( bx>=keys.length ){
-        farPack = keys[bx]
+    var bKey
+    if ( bx<keys.length ){
+        bKey = keys[bx]
     }
 
-    // add the point
-    face.chunk[ chunk ].addPoint( pointIndex, k )
 
     // grab the current pack or create it if needed
-    var curPack = timeLine.addOrSetKey( chunk, c, face.chunk[ chunk ].pack() )
+    var aKey = timeLine.addOrSetKey( chunk, cursor, face.chunk[ chunk ].pack() )
 
-    // add on curPack
-    sc.add( curPack.structuralChanges, pointIndex+1, k )
+    // add the point
+    sc.add( aKey, bKey, pointIndex, k )
 
-    // remove on farPack
-    if( farPack ){
-        sc.del( farPack.structuralChanges, pointIndex+1, k )
-        // TODO add as barycenter
-
-    }
-
+    // notify
     this.ed.dispatch('change:timeLine')
 }
 

@@ -1,6 +1,7 @@
 var Abstract = require('../utils/Abstract')
   , ed = require('../system/eventDispatcher')
   , interpolate = require('../system/interpolate')
+  , sc = require('../system/structuralChangesMethods')
 
  var init = function( modelBall ){
 
@@ -56,20 +57,15 @@ var Abstract = require('../utils/Abstract')
 
          // TODO detect when the shape does not change, dont ask for redraw then
 
-         var exactOn
          if( date <= k[ 0 ].date ){
-             fchunk[ chunk ].unpack( k[ 0 ].pack )
-             exactOn = date == k[ 0 ].date
+             fchunk[ chunk ].unpack( sc.packOut( k[ 0 ] ) )
          }
          else if( date >= k[ k.length-1 ].date ){
-             exactOn = date == k[ k.length-1 ].date
-             fchunk[ chunk ].unpack( k[ k.length-1 ].pack )
+             fchunk[ chunk ].unpack( sc.packOut( k[ k.length-1 ] ) )
          }
          else {
 
              for( var i=1; i<k.length && k[i].date<date; i++ );
-
-             exactOn = date == k[i].date
 
              var a = k[i-1],
                  b = k[i]
@@ -79,9 +75,7 @@ var Abstract = require('../utils/Abstract')
              fchunk[ chunk ].unpack( interpolate.lerpPack( a, b , alpha ) )
          }
 
-         if( !exactOn )
-             fchunk[ chunk ].structuralChanges = []
-
+         // notify
          ed.dispatch( 'change:point', {
              wip: event.wip,
              shape: fchunk[ chunk ],
